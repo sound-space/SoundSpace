@@ -1,4 +1,5 @@
 'use strict'
+process.env.BABEL_ENV="development"
 
 const { resolve } = require('path')
 
