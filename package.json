@@ -57,7 +57,8 @@
   "scripts": {
     "start-server": "node server",
     "build-client": "webpack -w",
-    "start": "npm run start-server & npm run build-client"
+    "start": "npm run start-server & npm run build-client",
+    "seed": "node server/db/seed/index.js"
   },
   "eslintConfig": {
     "extends": "react-app"
