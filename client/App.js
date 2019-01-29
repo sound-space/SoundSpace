@@ -18,6 +18,7 @@ export default class App extends React.Component {
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
     this.getChannelsFromServer();
+    this.socket.on('done', () => console.log('song finished!'));
   }
 
   getHashParams = () => {
@@ -101,7 +102,7 @@ export default class App extends React.Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          uris: ['spotify:track:3HMrMZ56giBGJYcCMSRijs'],
+          uris: ['spotify:track:2pZsQqXFgcY03vRyZxSQhU'],
         }),
       }
     );

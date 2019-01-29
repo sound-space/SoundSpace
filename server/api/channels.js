@@ -3,7 +3,6 @@ const { User, Channel } = require('../db/models');
 module.exports = router;
 
 router.get('/', async (req, res, next) => {
-  console.log('this');
   try {
     // if (req.user) {
     const channels = await Channel.findAll();
@@ -46,6 +45,15 @@ router.get('/:channelId/user', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+router.get('/:channelId/recommendations', async (req, res, next) => {
+  //Query Songs model for most popular songs, except the song that is currently playing, to get a seed
+  //Drop all rows in Songs model that have this channel's ID, except the song that is currently playing
+  //Set the row that isPlaying to be isLast = false
+  //Use this seed to request Spotify API for recommendations
+  //Add all songs from the result to the Songs model, and choose one to be isLast = true
+  console.log('Getting recommendations from Spotify...');
 });
 
 router.post('/', async (req, res, next) => {

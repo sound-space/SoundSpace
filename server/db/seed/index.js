@@ -1,7 +1,7 @@
 'use strict';
 
 const db = require('../db');
-const { User, Channel } = require('../models');
+const { User, Channel, Song } = require('../models');
 
 async function seed() {
   await db.sync({ force: true });
@@ -49,10 +49,38 @@ async function seed() {
     }),
   ]);
 
+  const songs = await Promise.all([
+    Song.create({
+      songId: '3HMrMZ56giBGJYcCMSRijs', //Johnny B Goode
+      votes: 2,
+      played: true,
+    }),
+    Song.create({
+      songId: '2GCFcbxm61rSA8gzsDk6NJ', //Hammer to Fall
+      votes: 3,
+      played: true,
+    }),
+    Song.create({
+      songId: '4DhbiXEuV7JxSR0wuqetTa', //Free Ride
+      votes: 1,
+      played: true,
+    }),
+    //Not played yet!
+    Song.create({
+      songId: '2pZsQqXFgcY03vRyZxSQhU', //HMOTU
+      isLast: true,
+    }),
+  ]);
+
   await users[0].setChannels([channels[1].id]);
   await users[1].setChannels([channels[0].id]);
   await users[2].setChannels([channels[1].id]);
   await users[3].setChannels([channels[2].id]);
+
+  await songs[0].setChannel(channels[1].id);
+  await songs[1].setChannel(channels[1].id);
+  await songs[2].setChannel(channels[1].id);
+  await songs[3].setChannel(channels[1].id);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${channels.length} channels`);
