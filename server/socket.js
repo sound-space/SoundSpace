@@ -35,30 +35,38 @@ module.exports = io =>
 
 //Call this when a song finishes playing
 async function playNewSong(channelId) {
+  console.log(`Playing new song for channel ${channelId}`);
+  //Find any unplayed song to play
   const songToPlay = await Song.findOne({
     where: {
       channelId,
       played: false,
     },
   });
+  //Find the currently playing song
   const songToUpdate = await Song.findOne({
     where: {
       channelId,
       isPlaying: true,
     },
   });
+  //Change the currently playing song to not currently playing
   await songToUpdate.update({
     isPlaying: false,
   });
+  //Change the new song to playing
   await songToPlay.update({
     played: true,
     isPlaying: true,
   });
-  //If the song is the last in the Song table for the channel, get new songs
   const token = await authenticate();
+  //If the song is the last in the Song table for the channel, get new songs
   if (songToPlay.isLast === true) {
     console.log(`Last song for channel ${channelId}, generating new songs`);
     getRecommendation(token, channelId);
+    songToPlay.update({
+      isLast: false,
+    });
   }
   const songInfo = await getSongDetails(token, songToPlay.songId);
   // //Wait the length of the song, then tell client that song is done
