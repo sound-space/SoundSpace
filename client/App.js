@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import createClientSocket from 'socket.io-client';
 
-const { IP } = require('../global');
+const IP = 'http://localhost:8080';
 
 export default class App extends React.Component {
   constructor() {
@@ -17,6 +17,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
+    this.getChannelsFromServer();
   }
 
   getHashParams = () => {
@@ -47,22 +48,22 @@ export default class App extends React.Component {
 
   createEventHandlers = () => {
     this.player.on('initialization_error', e => {
-      console.error(e);
+      console.error('init error:', e);
     });
     this.player.on('authentication_error', e => {
-      console.error(e);
-      this.setState({ loggedIn: false });
+      console.error('auth error:', e);
+      // this.setState({ loggedIn: false });
     });
     this.player.on('account_error', e => {
-      console.error(e);
+      console.error('account error:', e);
     });
     this.player.on('playback_error', e => {
-      console.error(e);
+      console.error('playback error:', e);
     });
 
     // Playback status updates
     this.player.on('player_state_changed', state => {
-      console.log(state);
+      console.log('player state changes:', state);
     });
 
     // Ready
@@ -107,7 +108,8 @@ export default class App extends React.Component {
   };
 
   getChannelsFromServer = async () => {
-    const { data } = await axios.get('/');
+    const { data } = await axios.get('/api/channels');
+    console.log(data);
     this.setState({
       channels: data,
     });
@@ -127,7 +129,7 @@ export default class App extends React.Component {
                 <div
                   className="channel-in-list"
                   onClick={async () => {
-                    await this.socket.emit('room', 'roomId');
+                    await this.socket.emit('room', channel.id);
                   }}
                   key={i}
                 >

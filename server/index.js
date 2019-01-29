@@ -5,9 +5,12 @@ const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const path = require('path');
-const { IP } = require('../global');
+const IP = 'http://localhost:8080';
 const redirect_uri = `${IP}/callback`;
+const volleyball = require('volleyball');
+const bodyParser = require('body-parser');
 const PORT = 8080;
+
 const scope =
   'user-read-private user-read-email user-read-playback-state user-modify-playback-state streaming user-read-birthdate';
 const socketio = require('socket.io');
@@ -18,12 +21,22 @@ app
   .use(cors())
   .use(cookieParser());
 
+// logging middleware
+app.use(volleyball);
+
+// body parsing middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/api', require('./api')); // include our routes!
+
 app.get('/', (req, res, next) => {
   res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));
 });
 
 app.get('/login', function(req, res) {
   // your application requests authorization
+  console.log('ABOUT TO REDIRECT TO SPOTIFY AUTH');
   res.redirect(
     'https://accounts.spotify.com/authorize?' +
       querystring.stringify({
@@ -57,8 +70,9 @@ app.get('/callback', function(req, res) {
 
   request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
-      let access_token = body.access_token,
-        refresh_token = body.refresh_token;
+      let access_token = body.access_token;
+
+      let refresh_token = body.refresh_token;
       const options = {
         url: 'https://api.spotify.com/v1/me',
         headers: { Authorization: 'Bearer ' + access_token },
@@ -81,6 +95,11 @@ app.get('/callback', function(req, res) {
       );
     }
   });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).send(err.message || 'Internal server error');
 });
 
 // start server
