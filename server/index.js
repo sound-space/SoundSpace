@@ -8,6 +8,8 @@ const path = require('path')
 const redirect_uri = 'http://localhost:8080/callback'
 const PORT = 8080
 const scope = 'user-read-private user-read-email user-read-playback-state user-modify-playback-state streaming user-read-birthdate'
+const socketio = require('socket.io');
+
 
 const app = express()
 app.use(express.static(path.resolve(__dirname, '..', 'public')))
@@ -78,7 +80,10 @@ app.get('/callback', function(req, res) {
     }
   })
 })
-    
-    
-app.listen(PORT, () => console.log(`Listening on ${PORT}`))
-    
+
+// start server
+const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`))
+
+// start listening to socket connections
+const io = socketio.listen(server)
+require('./socket')(io)
