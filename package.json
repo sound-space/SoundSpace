@@ -80,6 +80,12 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.3.1",
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
+    "pg": "^7.8.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.42.0",
+    "socket.io": "^2.2.0"
   }
 }
