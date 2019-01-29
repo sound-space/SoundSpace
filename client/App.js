@@ -1,18 +1,24 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
+import createClientSocket from 'socket.io-client';
+
+const { IP } = require('../global');
 
 export default class App extends React.Component {
-  
   constructor() {
-    super()
-    this.state= {
-      body: this.getHashParams()
-    }
+    super();
+    this.state = {
+      channels: [{ name: 'Dummy' }],
+      loggedIn: false,
+      body: this.getHashParams(),
+    };
+    this.socket = createClientSocket(IP);
   }
-  
+
   componentDidMount() {
-    this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000)
+    this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
   }
-  
+
   getHashParams = () => {
     var hashParams = {};
     var e,
@@ -22,15 +28,12 @@ export default class App extends React.Component {
       hashParams[e[1]] = decodeURIComponent(e[2]);
     }
     return hashParams;
-  }
-  
+  };
+
   checkForPlayer = () => {
-    const token = this.state.body.access_token
+    const token = this.state.body.access_token;
     if (window.Spotify) {
-      clearInterval(this.playerCheckInterval)
-      console.log('Player available');
-      // clearInterval(this.playerCheckInterval);
-      console.log('token before initializing Player:', token)
+      clearInterval(this.playerCheckInterval);
       this.player = new window.Spotify.Player({
         name: 'SoundSpace Spotify Player',
         getOAuthToken: cb => {
@@ -38,12 +41,10 @@ export default class App extends React.Component {
         },
       });
       this.createEventHandlers();
-
-      // finally, connect!
       this.player.connect();
     }
-  }
-  
+  };
+
   createEventHandlers = () => {
     this.player.on('initialization_error', e => {
       console.error(e);
@@ -70,15 +71,13 @@ export default class App extends React.Component {
       console.log('deviceId:', device_id);
       this.deviceId = device_id;
       console.log('Let the music play on!');
-      this.setState({ deviceId: device_id });
+      this.setState({ loggedIn: true, deviceId: device_id });
 
       this.transferPlaybackHere();
-    })
-  }
-  
+    });
+  };
+
   transferPlaybackHere = async () => {
-    console.log('transferring', this.deviceId);
-    console.log('token on playback transfer:', this.state.body.access_token)
     // await fetch('https://api.spotify.com/v1/me/player', {
     //   method: 'PUT',
     //   headers: {
@@ -101,18 +100,44 @@ export default class App extends React.Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          uris: ['spotify:track:2YZZ8qsDdvC008LgtpMoI6'],
+          uris: ['spotify:track:3HMrMZ56giBGJYcCMSRijs'],
         }),
       }
     );
-  }
-  
+  };
+
+  getChannelsFromServer = async () => {
+    const { data } = await axios.get('/');
+    this.setState({
+      channels: data,
+    });
+  };
+
   render() {
     return (
       <div>
-        <h1>Hello World</h1>
-        <p>{JSON.stringify(this.state.body)}</p>
+        <h1>SoundSpace</h1>
+        <div>{JSON.stringify(this.state.body)}</div>
+        {/* Only render channels when logged in */}
+        <h2>Channels</h2>
+        {this.state.loggedIn && (
+          <div>
+            {this.state.channels.map((channel, i) => {
+              return (
+                <div
+                  className="channel-in-list"
+                  onClick={async () => {
+                    await this.socket.emit('room', 'roomId');
+                  }}
+                  key={i}
+                >
+                  {channel.name}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
-    )
+    );
   }
 }
