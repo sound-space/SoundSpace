@@ -46,22 +46,22 @@ export default class App extends React.Component {
   
   createEventHandlers = () => {
     this.player.on('initialization_error', e => {
-      console.error(e);
+      console.error('init error:', e);
     });
     this.player.on('authentication_error', e => {
-      console.error(e);
-      this.setState({ loggedIn: false });
+      console.error('auth error:', e);
+      // this.setState({ loggedIn: false });
     });
     this.player.on('account_error', e => {
-      console.error(e);
+      console.error('account error:', e);
     });
     this.player.on('playback_error', e => {
-      console.error(e);
+      console.error('playback error:', e);
     });
 
     // Playback status updates
     this.player.on('player_state_changed', state => {
-      console.log(state);
+      console.log('player state changes:', state);
     });
 
     // Ready
