@@ -29,15 +29,23 @@ async function seed() {
   const channels = await Promise.all([
     Channel.create({
       name: 'Rock',
+      currentlyPlaying: '123',
+      currPlayingStartTime: Date.now(),
     }),
     Channel.create({
       name: 'Pop',
+      currentlyPlaying: '123',
+      currPlayingStartTime: Date.now(),
     }),
     Channel.create({
       name: 'Alternative',
+      currentlyPlaying: '123',
+      currPlayingStartTime: Date.now(),
     }),
     Channel.create({
       name: 'Instrumental',
+      currentlyPlaying: '123',
+      currPlayingStartTime: Date.now(),
     }),
   ]);
 
