@@ -9,8 +9,9 @@ const redirect_uri = 'http://localhost:8080/callback'
 const volleyball = require('volleyball')
 const bodyParser = require('body-parser')
 const PORT = 8080
-const scope =
-  'user-read-private user-read-email user-read-playback-state user-modify-playback-state streaming user-read-birthdate'
+
+const scope = 'user-read-private user-read-email user-read-playback-state user-modify-playback-state streaming user-read-birthdate'
+const socketio = require('socket.io');
 
 const app = express()
 app
@@ -101,4 +102,9 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).send(err.message || 'Internal server error')
 })
 
-app.listen(PORT, () => console.log(`Listening on ${PORT}`))
+// start server
+const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`))
+
+// start listening to socket connections
+const io = socketio.listen(server)
+require('./socket')(io)
