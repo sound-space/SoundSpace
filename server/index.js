@@ -10,6 +10,7 @@ const redirect_uri = `${IP}/callback`
 const volleyball = require('volleyball')
 const bodyParser = require('body-parser')
 const PORT = 8080
+const url = require('url')
 
 const scope =
   'user-read-private user-read-email user-read-playback-state user-modify-playback-state streaming user-read-birthdate'
@@ -83,7 +84,8 @@ app.get('/callback', function (req, res) {
       request.get(options, function (error, response, body) {
         if (error) console.log(error)
         let myResponse = { ...body, access_token, refresh_token }
-        res.redirect('/home/#' + querystring.stringify(myResponse))
+        // res.json(myResponse)
+        res.redirect('/home/' + querystring.stringify(myResponse))
       })
     } else {
       console.log('error in post response')
@@ -95,6 +97,10 @@ app.get('/callback', function (req, res) {
       )
     }
   })
+})
+
+app.get('/home/:id', (req,res,next) => {
+  res.redirect('/#/home/' + req.params.id)
 })
 
 app.use((err, req, res, next) => {

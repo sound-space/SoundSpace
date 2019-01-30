@@ -17,6 +17,7 @@ class Player extends React.Component {
   }
 
   checkForPlayer = () => {
+
     const token = this.props.user.access_token
     if (window.Spotify) {
       clearInterval(this.playerCheckInterval)
@@ -58,7 +59,7 @@ class Player extends React.Component {
       console.log('deviceId:', device_id)
       this.deviceId = device_id
       console.log('Let the music play on!')
-      this.props.setDevice(deviceId)
+      this.props.setDevice(this.deviceId)
     })
   }
 

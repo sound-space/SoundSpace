@@ -14,7 +14,7 @@ const initialState = {
 
 // Action Types
 const GET_USER = 'GET_USER'
-const SET_USER = 'SET_USER'
+export const SET_USER = 'SET_USER'
 const SET_DEVICE = 'SET_DEVICE'
 
 // action creator
@@ -34,8 +34,7 @@ export const setDevice = deviceId => ({
 
 // Thunk
 export const fetchUser = () => async dispatch => {
-  const { data } = await Axios.get('/login')
-  dispatch(setUser(data))
+  await Axios.get('/login')
 }
 
 const reducer = (state = initialState, action) => {
@@ -51,7 +50,7 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-const middleware = applyMiddleware(thunkMiddleware)
+const middleware = applyMiddleware(thunkMiddleware, createLogger)
 const store = createStore(reducer, middleware)
 
 export default store

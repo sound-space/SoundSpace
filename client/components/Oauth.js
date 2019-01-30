@@ -9,7 +9,7 @@ class Oauth extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  logIn: dispatch => fetchUser()
+  logIn: () => dispatch(fetchUser())
 })
 
 export default connect(
