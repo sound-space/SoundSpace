@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import createClientSocket from 'socket.io-client'
 import { transferPlaybackHere, checkForPlayer, createEventHandlers } from '../EmbedPlayer'
+import '../styles/ChannelViewStyles.css'
 const IP = 'http://localhost:8080'
 
 
@@ -38,15 +39,19 @@ export default class ChannelView extends Component {
   render() {
     return (
       <div className='channel-view-container'>
+        
         <h1>This is the Channel View</h1>
+        <h2>Current Song: None</h2>
         
-        <button onClick={() => this.vote(1)}>
-          Upvote!
-        </button>
+        <div className='vote-button-container'>
+          <button onClick={() => this.vote(1)}>
+            Upvote!
+          </button>
+          <button onClick={() => this.vote(-1)}>
+            Downvote!
+          </button>
+        </div>
         
-        <button onClick={() => this.vote(-1)}>
-          Downvote!
-        </button>
       </div>
     )
   }
