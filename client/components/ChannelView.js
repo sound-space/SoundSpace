@@ -5,6 +5,14 @@ export default class ChannelView extends Component {
     return (
       <div className='channel-view-container'>
         <h1>This is the Channel View</h1>
+        
+        <button>
+          Upvote!
+        </button>
+        
+        <button>
+          Downvote!
+        </button>
       </div>
     )
   }
