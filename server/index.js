@@ -35,7 +35,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('/login', function(req, res) {
-  // your application requests authorization
+  // application requests authorization
   console.log('ABOUT TO REDIRECT TO SPOTIFY AUTH');
   res.redirect(
     'https://accounts.spotify.com/authorize?' +
@@ -49,8 +49,7 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/callback', function(req, res) {
-  // your application requests refresh and access tokens
-  // after checking the state parameter
+  // application requests refresh and access tokens
 
   const code = req.query.code || null;
   const authOptions = {
@@ -71,7 +70,6 @@ app.get('/callback', function(req, res) {
   request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       let access_token = body.access_token;
-
       let refresh_token = body.refresh_token;
       const options = {
         url: 'https://api.spotify.com/v1/me',

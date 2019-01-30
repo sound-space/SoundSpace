@@ -87,7 +87,7 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
-router.put('/:channelId/song', async (req,res,next) => {
+router.put('/:channelId/votes', async (req,res,next) => {
   try {
     const songToVoteOn = await Song.findOne({
       where: {
@@ -97,7 +97,7 @@ router.put('/:channelId/song', async (req,res,next) => {
     })
     if(songToVoteOn) {
       songToVoteOn.votes += req.body.vote
-      songToVoteOn.save()
+      await songToVoteOn.save()
       res.status(204).send('Successfully voted on song!')
     }
     else {
