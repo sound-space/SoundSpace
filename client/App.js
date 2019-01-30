@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import createClientSocket from 'socket.io-client';
+import createClientSocket from 'socket.io-client'
 
 const IP = 'http://localhost:8080';
 
@@ -48,7 +48,7 @@ export default class App extends React.Component {
       this.createEventHandlers();
       this.player.connect();
     }
-  };
+  }
 
   createEventHandlers = () => {
     this.player.on('initialization_error', e => {
@@ -79,8 +79,8 @@ export default class App extends React.Component {
       this.setState({ loggedIn: true, deviceId: device_id });
 
       this.transferPlaybackHere();
-    });
-  };
+    })
+  }
 
   transferPlaybackHere = async () => {
     // await fetch('https://api.spotify.com/v1/me/player', {
@@ -108,8 +108,8 @@ export default class App extends React.Component {
           uris: ['spotify:track:5oD2Z1OOx1Tmcu2mc9sLY2'],
         }),
       }
-    );
-  };
+    )
+  }
 
   getChannelsFromServer = async () => {
     const { data } = await axios.get('/api/channels');
@@ -139,11 +139,11 @@ export default class App extends React.Component {
                 >
                   {channel.name}
                 </div>
-              );
+              )
             })}
           </div>
         )}
       </div>
-    );
+    )
   }
 }
