@@ -1,28 +1,57 @@
 import { createStore, applyMiddleware } from 'redux'
+import Axios from 'axios'
+import thunkMiddleware from 'redux-thunk'
+import createLogger from 'redux-logger'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 const initialState = {
   channels: [],
   isLoggedIn: false,
-  body: {}
+  body: {},
+  user: {},
+  deviceId: ''
 }
 
 // Action Types
 const GET_USER = 'GET_USER'
+const SET_USER = 'SET_USER'
+const SET_DEVICE = 'SET_DEVICE'
 
 // action creator
 export const getUser = () => ({
   type: GET_USER
 })
 
-const reducerName = (state = initialState, action) => {
+export const setUser = userInfo => ({
+  type: SET_USER,
+  payload: userInfo
+})
+
+export const setDevice = deviceId => ({
+  type: SET_DEVICE,
+  payload: deviceId
+})
+
+// Thunk
+export const fetchUser = () => async dispatch => {
+  const { data } = await Axios.get('/login')
+  dispatch(setUser(data))
+}
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER:
       return { ...state, isLoggedIn: true }
+    case SET_USER:
+      return { ...state, user: action.payload }
+    case SET_DEVICE:
+      return { ...state, deviceId: action.payload }
     default:
       return state
   }
 }
 
-const store = createStore(reducerName)
+const middleware = applyMiddleware(thunkMiddleware)
+const store = createStore(reducer, middleware)
 
 export default store

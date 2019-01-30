@@ -1,9 +1,9 @@
 import React from 'react'
-import { Route, HashRouter, Switch } from 'react-router-dom'
+import { Route, HashRouter, BrowserRouter, Switch } from 'react-router-dom'
 import Home from './components/Home'
-import Channel from './components/Channel'
-import User from './components/User'
+import Player from './components/Player'
 import Landing from './components/Landing'
+// import Oauth from './components/Oauth'
 
 const App = () => (
   <HashRouter>
@@ -11,9 +11,8 @@ const App = () => (
       <main>
         <Switch>
           <Route exact path='/' component={Landing} />
+          <Route path='/callback*' component={Player} />
           <Route path='/login' component={Home} />
-          <Route path='/channels' component={Channel} />
-          <Route path='/users' component={User} />
         </Switch>
       </main>
     </div>

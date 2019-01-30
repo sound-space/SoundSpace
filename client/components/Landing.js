@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar'
+import { Link } from 'react-router-dom'
 
 const Landing = () => {
   return (
@@ -16,8 +17,10 @@ const Landing = () => {
           className='uk-slideshow-items'
           style={{
             width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
+            maxHeight: '25%',
+            padding: '100px 0',
+            // display: 'flex',
+            // flexDirection: 'column',
             margin: '0 auto'
           }}
         >
@@ -63,9 +66,11 @@ const Landing = () => {
           margin: '0 auto'
         }}
       >
-        <button className='uk-button uk-button-secondary uk-button-large'>
-          Large button
-        </button>
+        <a href='/login'>
+          <button className='uk-button uk-button-secondary uk-button-large'>
+            {/* <Link to='/oauth'>Login</Link> */}
+          </button>
+        </a>
       </p>
     </div>
   )
