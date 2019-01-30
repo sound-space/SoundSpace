@@ -96,7 +96,7 @@ router.put('/:channelId/votes', async (req,res,next) => {
       }
     })
     if(songToVoteOn) {
-      songToVoteOn.votes += req.body.vote
+      songToVoteOn.votes += Number(req.body.vote)
       await songToVoteOn.save()
       res.status(204).send('Successfully voted on song!')
     }

@@ -1,10 +1,10 @@
 'use strict'
-process.env.BABEL_ENV="development"
+process.env.BABEL_ENV = 'development'
 
 const { resolve } = require('path')
 
 module.exports = {
-  entry: ['babel-polyfill', './client/main'],
+  entry: ['babel-polyfill', './client/index'],
   output: {
     path: resolve(__dirname, 'public'),
     filename: 'bundle.js'
@@ -24,17 +24,11 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        use: ['style-loader', 'css-loader']
       }
     ]
   }
 }
-
-
-
 
 // const fs = require('fs');
 // const path = require('path');
@@ -59,7 +53,6 @@ module.exports = {
 // const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 // const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 // const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
-
 
 // // Source maps are resource heavy and can cause out of memory issue for large source files.
 // const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -337,7 +330,7 @@ module.exports = {
 //               options: {
 //                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
 //                 eslintPath: require.resolve('eslint'),
-                
+
 //               },
 //               loader: require.resolve('eslint-loader'),
 //             },
@@ -370,7 +363,7 @@ module.exports = {
 //                 customize: require.resolve(
 //                   'babel-preset-react-app/webpack-overrides'
 //                 ),
-                
+
 //                 plugins: [
 //                   [
 //                     require.resolve('babel-plugin-named-asset-import'),
@@ -410,7 +403,7 @@ module.exports = {
 //                 ],
 //                 cacheDirectory: true,
 //                 cacheCompression: isEnvProduction,
-                
+
 //                 // If an error happens in a package, it's possible to be
 //                 // because it was compiled. Thus, we don't want the browser
 //                 // debugger to show the original code. Instead, the code
