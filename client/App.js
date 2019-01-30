@@ -19,6 +19,9 @@ export default class App extends React.Component {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
     this.getChannelsFromServer();
     this.socket.on('done', () => console.log('song finished!'));
+    this.socket.on('song-info', songInfo =>
+      console.log('Got info from server', songInfo)
+    );
   }
 
   getHashParams = () => {

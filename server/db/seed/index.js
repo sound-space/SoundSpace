@@ -29,24 +29,21 @@ async function seed() {
   const channels = await Promise.all([
     Channel.create({
       name: 'Rock',
-      currentlyPlaying: '123',
-      currPlayingStartTime: Date.now(),
+      timestamp: Date.now(),
     }),
-    Channel.create({
-      name: 'Pop',
-      currentlyPlaying: '123',
-      currPlayingStartTime: Date.now(),
-    }),
-    Channel.create({
-      name: 'Alternative',
-      currentlyPlaying: '123',
-      currPlayingStartTime: Date.now(),
-    }),
-    Channel.create({
-      name: 'Instrumental',
-      currentlyPlaying: '123',
-      currPlayingStartTime: Date.now(),
-    }),
+    // Channel.create({
+    //   name: 'Pop',
+    //   timestamp: Date.now(),
+    // }),
+    // Channel.create({
+    //   name: 'Alternative',
+    //   currentlyPlaying: '123',
+    //   currPlayingStartTime: Date.now(),
+    // }),
+    // Channel.create({
+    //   name: 'Instrumental',
+    //   timestamp: Date.now(),
+    // }),
   ]);
 
   const songs = await Promise.all([
@@ -79,16 +76,16 @@ async function seed() {
     }),
   ]);
 
-  await users[0].setChannels([channels[1].id]);
+  await users[0].setChannels([channels[0].id]);
   await users[1].setChannels([channels[0].id]);
-  await users[2].setChannels([channels[1].id]);
-  await users[3].setChannels([channels[2].id]);
+  await users[2].setChannels([channels[0].id]);
+  await users[3].setChannels([channels[0].id]);
 
-  await songs[0].setChannel(channels[1].id);
-  await songs[1].setChannel(channels[1].id);
-  await songs[2].setChannel(channels[1].id);
-  await songs[3].setChannel(channels[1].id);
-  await songs[4].setChannel(channels[1].id);
+  await songs[0].setChannel(channels[0].id);
+  await songs[1].setChannel(channels[0].id);
+  await songs[2].setChannel(channels[0].id);
+  await songs[3].setChannel(channels[0].id);
+  await songs[4].setChannel(channels[0].id);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${channels.length} channels`);
