@@ -105,4 +105,6 @@ const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 // start listening to socket connections
 const io = socketio.listen(server);
-require('./socket')(io);
+const { socketComm, singularity } = require('./socket');
+socketComm(io);
+singularity(io);

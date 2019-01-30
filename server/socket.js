@@ -2,39 +2,61 @@ const { User, Channel, Song } = require('./db/models');
 const axios = require('axios');
 const { client_id, client_secret } = require('../credentials');
 
-module.exports = io =>
+//Gets called when server starts
+const singularity = async io => {
+  const songsChannels = await Song.findAll({
+    where: {
+      isPlaying: true,
+    },
+    include: [
+      {
+        model: Channel,
+      },
+    ],
+  });
+  //Look at every start song, starting every channel's song and sending it to the proper socket channels
+  songsChannels.forEach(async songChannel => {
+    const token = await authenticate();
+    const songInfo = await getSongDetails(token, songChannel.dataValues.songId);
+    io.in(songChannel.dataValues.channel.dataValues.id).emit('song-info', {
+      songId: songInfo.id,
+      timestamp: songChannel.dataValues.channel.dataValues.timestamp,
+    });
+    setTimeout(
+      async () => playNewSong(io, songChannel.dataValues.channel.dataValues.id),
+      songInfo.duration_ms
+    );
+  });
+};
+
+const socketComm = async io => {
   io.on('connection', function(socket) {
     console.log('Connecting to socket', socket.id);
-
     socket.on('room', async function(channelId) {
       console.log('Client joining room', channelId);
-
-      //Get a token
-      const token = await authenticate();
-
-      playNewSong(channelId);
-
-      // getRecommendation(token, channelId);
-
-      //Find details on Jonny B Goode
-      // const songInfo = await getSongDetails(token, '5oD2Z1OOx1Tmcu2mc9sLY2');
-      // //Wait the length of the song, then tell client that song is done
-      // setTimeout(() => {
-      //   socket.emit('done');
-      // }, songInfo.duration_ms);
-
       socket.join(channelId);
+      const songInfo = await Song.findOne({
+        where: {
+          isPlaying: true,
+        },
+        include: [{ model: Channel }],
+      });
+      socket.emit('song-info', {
+        songId: songInfo.songId,
+        timestamp: songInfo.channel.dataValues.timestamp,
+      });
     });
-
-    // socket.on('')
 
     socket.on('disconnect', () => {
       console.log(`Connection ${socket.id} has left`);
     });
   });
+};
+
+module.exports = { socketComm, singularity };
 
 //Call this when a song finishes playing
-async function playNewSong(channelId) {
+async function playNewSong(io, channelId) {
   console.log(`Playing new song for channel ${channelId}`);
   //Find any unplayed song to play. If isLast is the only unplayed song, choose that one
   let songToPlay;
@@ -78,12 +100,24 @@ async function playNewSong(channelId) {
       isLast: false,
     });
   }
+  const channel = await Channel.findById(channelId);
+  await channel.update({
+    timestamp: Date.now(),
+  });
+
   const songInfo = await getSongDetails(token, songToPlay.songId);
-  // //Wait the length of the song, then tell client that song is done
-  setTimeout(() => {
-    playNewSong(channelId);
+  io.in(channelId).emit('song-info', {
+    songId: songInfo.id,
+    timestamp: channel.timestamp,
+  });
+
+  setTimeout(async () => {
+    await channel.update({
+      timestamp: Date.now(),
+    });
+
+    playNewSong(io, channelId);
   }, songInfo.duration_ms);
-  return songToPlay;
 }
 
 //Get most popular tracks for a channel in Songs, generate a seed, get recommendations, add them into Songs
