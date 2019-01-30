@@ -61,7 +61,7 @@ export default {
       //   device_id
       // })
       this.socket.on('song-info', songInfo => {
-        // console.log('socket song info running')
+        console.log('song-info:', songInfo)
         this.setTrack(songInfo.songId, songInfo.timestamp, this.state.device_id)
         this.setState({
           currentSongId: songInfo.songId
