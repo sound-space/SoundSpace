@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Channel } = require('../db/models');
+const { User, Channel, Song } = require('../db/models');
 module.exports = router;
 
 router.get('/', async (req, res, next) => {
@@ -86,3 +86,26 @@ router.put('/:id', async (req, res, next) => {
     next(error);
   }
 });
+
+router.put('/:channelId/votes', async (req,res,next) => {
+  try {
+    const songToVoteOn = await Song.findOne({
+      where: {
+        channelId: req.params.channelId,
+        isPlaying: true
+      }
+    })
+    if(songToVoteOn) {
+      songToVoteOn.votes += req.body.vote
+      await songToVoteOn.save()
+      res.status(204).send('Successfully voted on song!')
+    }
+    else {
+      res.status(404).send('That song was not found, cannot register vote.')
+    }
+  }
+  catch(err) {
+    console.error(err)
+    next(err)
+  }
+})
