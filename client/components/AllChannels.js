@@ -13,7 +13,7 @@ class AllChannels extends Component {
       <div>
         <h1>Channels</h1>
         {this.props.channels.map(channel => {
-          return <ChannelCard channel={channel} />
+          return <ChannelCard key={channel.id} channel={channel} />
         })}
       </div>
     )
