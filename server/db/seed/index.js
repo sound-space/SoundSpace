@@ -65,9 +65,16 @@ async function seed() {
       votes: 1,
       played: true,
     }),
-    //Not played yet!
+    //Currently playing
+    Song.create({
+      songId: '5oD2Z1OOx1Tmcu2mc9sLY2', //You Suffer
+      played: true,
+      isPlaying: true,
+    }),
+    //Not played yet! Last song
     Song.create({
       songId: '2pZsQqXFgcY03vRyZxSQhU', //HMOTU
+      played: false,
       isLast: true,
     }),
   ]);
@@ -81,6 +88,7 @@ async function seed() {
   await songs[1].setChannel(channels[1].id);
   await songs[2].setChannel(channels[1].id);
   await songs[3].setChannel(channels[1].id);
+  await songs[4].setChannel(channels[1].id);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${channels.length} channels`);
