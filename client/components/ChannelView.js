@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import createClientSocket from 'socket.io-client'
-import { transferPlaybackHere, checkForPlayer, createEventHandlers, setTrack } from '../EmbedPlayer'
+import Methods from '../EmbedPlayer'
 import '../styles/ChannelViewStyles.css'
+const { transferPlaybackHere, checkForPlayer, createEventHandlers, setTrack } = Methods
 const IP = 'http://localhost:8080'
 
 
@@ -11,7 +12,9 @@ export default class ChannelView extends Component {
     super()
     this.state = {
       voted: false,
-      currentSongId: ''
+      currentSongId: '',
+      body: this.getHashParams(),
+      device_id: ''
     }
     this.socket = createClientSocket(IP)
     this.setTrack = setTrack.bind(this)
@@ -20,14 +23,27 @@ export default class ChannelView extends Component {
     this.createEventHandlers = createEventHandlers.bind(this)
   }
   
+  getHashParams = () => {
+    var hashParams = {};
+    var e,
+      r = /([^&;=]+)=?([^&;]*)/g,
+      q = window.location.hash.substring(1);
+    while ((e = r.exec(q))) {
+      hashParams[e[1]] = decodeURIComponent(e[2]);
+    }
+    return hashParams;
+  }
+  
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000)
-    this.socket.on('song-info', songInfo => {
-      this.setTrack(songInfo.songId, songInfo.timestamp)
-      this.setState({
-        currentSongId: songInfo.songId
-      })
-    })
+    // this.socket.emit('room', 1)
+    // this.socket.on('song-info', songInfo => {
+    //   console.log('socket song info running')
+    //   this.setTrack(songInfo.songId, songInfo.timestamp, this.state.device_id)
+    //   this.setState({
+    //     currentSongId: songInfo.songId
+    //   })
+    // })
   }
   
   vote = async (userVote) => {
