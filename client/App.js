@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import createClientSocket from 'socket.io-client';
+import createClientSocket from 'socket.io-client'
 
 const IP = 'http://localhost:8080';
 

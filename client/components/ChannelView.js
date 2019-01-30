@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { playerCheckInterval, transferPlaybackHere, checkForPlayer, createEventHandlers } from '../EmbedPlayer'
+import createClientSocket from 'socket.io-client'
+import { transferPlaybackHere, checkForPlayer, createEventHandlers } from '../EmbedPlayer'
+const IP = 'http://localhost:8080'
+
 
 export default class ChannelView extends Component {
   constructor() {
@@ -8,10 +11,15 @@ export default class ChannelView extends Component {
     this.state = {
       voted: false
     }
-    this.playerCheckInterval = playerCheckInterval.bind(this)
+    this.socket = createClientSocket(IP)
     this.transferPlaybackHere = transferPlaybackHere.bind(this)
     this.checkForPlayer = checkForPlayer.bind(this)
     this.createEventHandlers = createEventHandlers.bind(this)
+  }
+  
+  componentDidMount() {
+    this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000)
+    this.socket.on('done', () => console.log('song finished!'))
   }
   
   vote = async (userVote) => {

@@ -1,5 +1,4 @@
 module.exports = {
-  playerCheckInterval: setInterval(() => this.checkForPlayer(), 1000),
   
   checkForPlayer() {
     const token = this.state.body.access_token;
