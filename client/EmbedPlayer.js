@@ -1,41 +1,6 @@
-import React from 'react';
-import axios from 'axios';
-import createClientSocket from 'socket.io-client'
-
-const IP = 'http://localhost:8080';
-
-export default class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      channels: [{ name: 'Dummy' }],
-      loggedIn: false,
-      body: this.getHashParams(),
-    };
-    this.socket = createClientSocket(IP);
-  }
-
-  componentDidMount() {
-    this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
-    this.getChannelsFromServer();
-    this.socket.on('done', () => console.log('song finished!'));
-    this.socket.on('song-info', songInfo =>
-      console.log('Got info from server', songInfo)
-    );
-  }
-
-  getHashParams = () => {
-    var hashParams = {};
-    var e,
-      r = /([^&;=]+)=?([^&;]*)/g,
-      q = window.location.hash.substring(1);
-    while ((e = r.exec(q))) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-    return hashParams;
-  };
-
-  checkForPlayer = () => {
+module.exports = {
+  
+  checkForPlayer() {
     const token = this.state.body.access_token;
     if (window.Spotify) {
       clearInterval(this.playerCheckInterval);
@@ -48,9 +13,9 @@ export default class App extends React.Component {
       this.createEventHandlers();
       this.player.connect();
     }
-  }
-
-  createEventHandlers = () => {
+  },
+  
+  createEventHandlers() {
     this.player.on('initialization_error', e => {
       console.error('init error:', e);
     });
@@ -80,9 +45,9 @@ export default class App extends React.Component {
 
       this.transferPlaybackHere();
     })
-  }
-
-  transferPlaybackHere = async () => {
+  },
+  
+  async transferPlaybackHere() {
     // await fetch('https://api.spotify.com/v1/me/player', {
     //   method: 'PUT',
     //   headers: {
@@ -108,42 +73,6 @@ export default class App extends React.Component {
           uris: ['spotify:track:5oD2Z1OOx1Tmcu2mc9sLY2'],
         }),
       }
-    )
-  }
-
-  getChannelsFromServer = async () => {
-    const { data } = await axios.get('/api/channels');
-    console.log(data);
-    this.setState({
-      channels: data,
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <h1>SoundSpace</h1>
-        <div>{JSON.stringify(this.state.body)}</div>
-        {/* Only render channels when logged in */}
-        <h2>Channels</h2>
-        {this.state.loggedIn && (
-          <div>
-            {this.state.channels.map((channel, i) => {
-              return (
-                <div
-                  className="channel-in-list"
-                  onClick={async () => {
-                    await this.socket.emit('room', channel.id);
-                  }}
-                  key={i}
-                >
-                  {channel.name}
-                </div>
-              )
-            })}
-          </div>
-        )}
-      </div>
     )
   }
 }
