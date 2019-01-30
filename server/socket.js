@@ -36,13 +36,23 @@ module.exports = io =>
 //Call this when a song finishes playing
 async function playNewSong(channelId) {
   console.log(`Playing new song for channel ${channelId}`);
-  //Find any unplayed song to play
-  const songToPlay = await Song.findOne({
+  //Find any unplayed song to play. If isLast is the only unplayed song, choose that one
+  let songToPlay;
+  songToPlay = await Song.findOne({
     where: {
       channelId,
       played: false,
+      isLast: false,
     },
   });
+  if (!songToPlay) {
+    songToPlay = await Song.findOne({
+      where: {
+        channelId,
+        played: false,
+      },
+    });
+  }
   //Find the currently playing song
   const songToUpdate = await Song.findOne({
     where: {
