@@ -20,7 +20,6 @@ export default class ChannelView extends Component {
   
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000)
-    this.socket.on('done', () => console.log('song finished!'))
   }
   
   vote = async (userVote) => {
