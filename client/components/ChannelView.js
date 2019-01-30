@@ -22,13 +22,13 @@ export default class ChannelView extends Component {
   
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000)
-    this.socket.on('song-info', songInfo =>
-      // console.log('Got info from server', songInfo)
+    this.socket.on('song-info', songInfo => {
       this.setTrack(songInfo.songId, songInfo.timestamp)
       this.setState({
         currentSongId: songInfo.songId
       })
-    )
+    }
+  )
   }
   
   vote = async (userVote) => {
