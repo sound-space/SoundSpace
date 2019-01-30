@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import createClientSocket from 'socket.io-client'
-import { transferPlaybackHere, checkForPlayer, createEventHandlers } from '../EmbedPlayer'
+import { transferPlaybackHere, checkForPlayer, createEventHandlers, setTrack } from '../EmbedPlayer'
 import '../styles/ChannelViewStyles.css'
 const IP = 'http://localhost:8080'
 
@@ -10,9 +10,11 @@ export default class ChannelView extends Component {
   constructor() {
     super()
     this.state = {
-      voted: false
+      voted: false,
+      currentSongId: ''
     }
     this.socket = createClientSocket(IP)
+    this.setTrack = setTrack.bind(this)
     this.transferPlaybackHere = transferPlaybackHere.bind(this)
     this.checkForPlayer = checkForPlayer.bind(this)
     this.createEventHandlers = createEventHandlers.bind(this)
@@ -20,6 +22,13 @@ export default class ChannelView extends Component {
   
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000)
+    this.socket.on('song-info', songInfo =>
+      // console.log('Got info from server', songInfo)
+      this.setTrack(songInfo.songId, songInfo.timestamp)
+      this.setState({
+        currentSongId: songInfo.songId
+      })
+    )
   }
   
   vote = async (userVote) => {
@@ -40,7 +49,7 @@ export default class ChannelView extends Component {
       <div className='channel-view-container'>
         
         <h1>This is the Channel View</h1>
-        <h2>Current Song: None</h2>
+        <h2>Current Song: {this.state.currentSongId || 'None'}</h2>
         
         <div className='vote-button-container'>
           <button onClick={() => this.vote(1)}>

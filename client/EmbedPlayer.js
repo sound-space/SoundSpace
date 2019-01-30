@@ -1,4 +1,20 @@
 module.exports = {
+  setTrack(songId, timestamp) {
+    fetch(
+      `https://api.spotify.com/v1/me/player/play`,
+      {
+        method: 'PUT',
+        headers: {
+          authorization: `Bearer ${this.state.body.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uris: [`spotify:track:${songId}`],
+          position_ms: Date.now()-timestamp
+        }),
+      }
+    )
+  },
   
   checkForPlayer() {
     const token = this.state.body.access_token;
