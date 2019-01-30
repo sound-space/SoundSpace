@@ -35,9 +35,9 @@ app.get('/', (req, res, next) => {
   res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'))
 })
 
-app.get('/login', function (req, res) {
-  // your application requests authorization
-  console.log('ABOUT TO REDIRECT TO SPOTIFY AUTH')
+app.get('/login', function(req, res) {
+  // application requests authorization
+  console.log('ABOUT TO REDIRECT TO SPOTIFY AUTH');
   res.redirect(
     'https://accounts.spotify.com/authorize?' +
       querystring.stringify({
@@ -49,9 +49,8 @@ app.get('/login', function (req, res) {
   )
 })
 
-app.get('/callback', function (req, res) {
-  // your application requests refresh and access tokens
-  // after checking the state parameter
+app.get('/callback', function(req, res) {
+  // application requests refresh and access tokens
 
   const code = req.query.code || null
   const authOptions = {
@@ -71,9 +70,8 @@ app.get('/callback', function (req, res) {
 
   request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
-      let access_token = body.access_token
-
-      let refresh_token = body.refresh_token
+      let access_token = body.access_token;
+      let refresh_token = body.refresh_token;
       const options = {
         url: 'https://api.spotify.com/v1/me',
         headers: { Authorization: 'Bearer ' + access_token },
@@ -112,5 +110,7 @@ app.use((err, req, res, next) => {
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 
 // start listening to socket connections
-const io = socketio.listen(server)
-require('./socket')(io)
+const io = socketio.listen(server);
+const { socketComm, singularity } = require('./socket');
+socketComm(io);
+singularity(io);

@@ -1,9 +1,8 @@
 const router = require('express').Router();
-const { User, Channel } = require('../db/models');
+const { User, Channel, Song } = require('../db/models');
 module.exports = router;
 
 router.get('/', async (req, res, next) => {
-  console.log('this');
   try {
     // if (req.user) {
     const channels = await Channel.findAll();
@@ -48,6 +47,15 @@ router.get('/:channelId/user', async (req, res, next) => {
   }
 });
 
+router.get('/:channelId/recommendations', async (req, res, next) => {
+  //Query Songs model for most popular songs, except the song that is currently playing, to get a seed
+  //Drop all rows in Songs model that have this channel's ID, except the song that is currently playing
+  //Set the row that isPlaying to be isLast = false
+  //Use this seed to request Spotify API for recommendations
+  //Add all songs from the result to the Songs model, and choose one to be isLast = true
+  console.log('Getting recommendations from Spotify...');
+});
+
 router.post('/', async (req, res, next) => {
   try {
     if (req.user && !req.channel.name) {
@@ -78,3 +86,26 @@ router.put('/:id', async (req, res, next) => {
     next(error);
   }
 });
+
+router.put('/:channelId/votes', async (req,res,next) => {
+  try {
+    const songToVoteOn = await Song.findOne({
+      where: {
+        channelId: req.params.channelId,
+        isPlaying: true
+      }
+    })
+    if(songToVoteOn) {
+      songToVoteOn.votes += req.body.vote
+      await songToVoteOn.save()
+      res.status(204).send('Successfully voted on song!')
+    }
+    else {
+      res.status(404).send('That song was not found, cannot register vote.')
+    }
+  }
+  catch(err) {
+    console.error(err)
+    next(err)
+  }
+})
