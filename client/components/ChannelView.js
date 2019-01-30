@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+import axios from 'axios'
+import { playerCheckInterval, transferPlaybackHere, checkForPlayer, createEventHandlers } from '../EmbedPlayer'
 
 export default class ChannelView extends Component {
   constructor() {
