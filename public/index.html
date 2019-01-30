@@ -1,17 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>SoundSpace</title>
     <link rel="stylesheet" href="/index.css" />
-    <script defer src="/bundle.js"></script>    
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/css/uikit.min.css"
+    />
+    <script defer src="/bundle.js"></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/js/uikit.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/js/uikit-icons.min.js"
+    ></script>
   </head>
   <body>
     <div id="root"></div>
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <script>
       window.onSpotifyWebPlaybackSDKReady = () => {
-        window.Spotify = Spotify;
-      };
+        window.Spotify = Spotify
+      }
     </script>
   </body>
-</html> 
+</html>
