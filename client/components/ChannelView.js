@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import createClientSocket from 'socket.io-client'
 import Methods from '../EmbedPlayer'
+import { connect } from 'react-redux'
 import '../styles/ChannelViewStyles.css'
 const { transferPlaybackHere, checkForPlayer, createEventHandlers, setTrack } = Methods
 const IP = 'http://localhost:8080'
 
 
-export default class ChannelView extends Component {
+class ChannelView extends Component {
   constructor() {
     super()
     this.state = {
@@ -71,3 +72,11 @@ export default class ChannelView extends Component {
     )
   }
 }
+
+const mapState = state => {
+  return {
+    access_token: state.user.access_token
+  }
+}
+
+export default connect(mapState, null)(ChannelView)

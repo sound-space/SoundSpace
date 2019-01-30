@@ -31,7 +31,7 @@ export default {
   },
 
   checkForPlayer() {
-    const token = this.state.body.access_token;
+    const token = this.props.access_token
     if (window.Spotify) {
       clearInterval(this.playerCheckInterval);
       this.player = new window.Spotify.Player({
