@@ -8,6 +8,10 @@ export default class ChannelView extends Component {
     this.state = {
       voted: false
     }
+    this.playerCheckInterval = playerCheckInterval.bind(this)
+    this.transferPlaybackHere = transferPlaybackHere.bind(this)
+    this.checkForPlayer = checkForPlayer.bind(this)
+    this.createEventHandlers = createEventHandlers.bind(this)
   }
   
   vote = async (userVote) => {
