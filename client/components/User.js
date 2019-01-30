@@ -1,5 +1,15 @@
 import React from 'react'
+import Navbar from './Navbar'
 
-const User = () => <div>Hello User</div>
+const User = () => {
+  return (
+    <div>
+      <nav>
+        <Navbar />
+      </nav>
+      <div>Hello User</div>
+    </div>
+  )
+}
 
 export default User
