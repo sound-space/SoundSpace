@@ -19,7 +19,7 @@ class AllChannels extends Component {
           <div className='uk-text-center'>
             <div
               className='uk-inline-clip uk-transition-toggle uk-light'
-              tabindex='0'
+              tabIndex='0'
             >
               <img style={{ cursor: 'pointer' }} src='./assets/dj.jpg' />
               <div className='uk-position-center'>

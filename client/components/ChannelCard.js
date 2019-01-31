@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const ChannelCard = props => (
   <div className='uk-text-center'>
-    <div className='uk-inline-clip uk-transition-toggle' tabindex='0'>
+    <div className='uk-inline-clip uk-transition-toggle' tabIndex='0'>
       <Link to={`/channels/${props.channel.id}`}>
         <img src='./assets/dj.jpg' />
       </Link>
