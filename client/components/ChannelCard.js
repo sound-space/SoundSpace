@@ -5,7 +5,10 @@ const ChannelCard = props => (
   <div className='uk-text-center'>
     <div className='uk-inline-clip uk-transition-toggle' tabIndex='0'>
       <Link to={`/channels/${props.channel.id}`}>
-        <img src='./assets/dj.jpg' />
+        <img
+          style={{ minWidth: '200px', minHeight: '200px', objectFit: 'cover' }}
+          src={props.channel.imageURL}
+        />
       </Link>
       <div className='uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-default'>
         <p className='uk-h4 uk-margin-remove'>(Name of Song)</p>
