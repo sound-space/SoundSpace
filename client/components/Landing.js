@@ -38,8 +38,8 @@ const Landing = () => {
               href='/login'
             >
               <button
-                style={{ fontSize: '30px' }}
-                className='uk-button uk-button-secondary uk-button-large'
+                style={{ fontSize: '20px' }}
+                className='uk-button uk-button-primary'
               >
                 Sign In
               </button>
