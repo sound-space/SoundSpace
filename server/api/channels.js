@@ -48,10 +48,20 @@ router.get('/:channelId/user', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
+  const { name, description, imageURL } = req.body
   try {
-    if (req.user && !req.channel.name) {
-      const newChannel = await Channel.create(req.body.name);
-      res.json(newChannel);
+    if (req.user) {
+      const [newChannel, isNew] = await Channel.findOrCreate({
+        name,
+        description,
+        imageURL
+      })
+      if(isNew) {
+        res.json(newChannel)
+      }
+      else {
+        res.json({error: 'Song already exists'})
+      }
     } else if (req.user && req.channel.name === req.body.name) {
       res.send('Channel already exists!');
     } else {
