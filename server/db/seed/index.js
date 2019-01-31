@@ -1,111 +1,137 @@
-'use strict'
+'use strict';
 
-const db = require('../db')
-const { User, Channel, Song } = require('../models')
+const db = require('../db');
+const { User, Channel, Song } = require('../models');
 
-async function seed () {
-  await db.sync({ force: true })
-  console.log('db synced!')
+async function seed() {
+  await db.sync({ force: true });
+  console.log('db synced!');
 
   const users = await Promise.all([
     User.create({
       name: 'Eric',
-      spotifyId: '34'
+      spotifyId: '34',
     }),
     User.create({
       name: 'Mike',
-      spotifyId: '515'
+      spotifyId: '515',
     }),
     User.create({
       name: 'Justin',
-      spotifyId: '581'
+      spotifyId: '581',
     }),
     User.create({
       name: 'Dimtry',
-      spotifyId: '820'
-    })
-  ])
+      spotifyId: '820',
+    }),
+  ]);
 
   const channels = await Promise.all([
     Channel.create({
       name: 'Rock',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     }),
     Channel.create({
       name: 'Pop',
-      timestamp: Date.now()
+      timestamp: Date.now(),
     }),
     Channel.create({
-      name: 'Alternative',
-      currentlyPlaying: '123',
-      currPlayingStartTime: Date.now()
+      name: 'Rap',
+      timestamp: Date.now(),
     }),
-    Channel.create({
-      name: 'Instrumental',
-      timestamp: Date.now()
-    })
-  ])
+  ]);
 
   const songs = await Promise.all([
+    //Rock
     Song.create({
       songId: '3HMrMZ56giBGJYcCMSRijs', // Johnny B Goode
       votes: 2,
-      played: true
+      played: true,
     }),
     Song.create({
       songId: '2GCFcbxm61rSA8gzsDk6NJ', // Hammer to Fall
       votes: 3,
-      played: true
+      played: true,
     }),
     Song.create({
       songId: '4DhbiXEuV7JxSR0wuqetTa', // Free Ride
       votes: 1,
-      played: true
+      played: true,
     }),
     // Currently playing
     Song.create({
       songId: '5oD2Z1OOx1Tmcu2mc9sLY2', // You Suffer
       played: true,
-      isPlaying: true
+      isPlaying: true,
     }),
-    // Not played yet! Last song
     Song.create({
       songId: '2pZsQqXFgcY03vRyZxSQhU', // HMOTU
       played: false,
-      isLast: true
-    })
-  ])
+      isLast: true,
+    }),
+    //Pop
+    Song.create({
+      songId: '5P5cGNzqh6A353N3ShDK6Y', //Bad Romance
+      isPlaying: true,
+    }),
+    Song.create({
+      songId: '1D9KEXIrlmPUkMTdYzqgX4', //Thriller
+    }),
+    Song.create({
+      songId: '32OlwWuMpZ6b0aN2RZOeMS', //Uptown Funk
+      isLast: true,
+    }),
+    //Rap
+    Song.create({
+      songId: '19a3JfW8BQwqHWUMbcqSx8', //Famous
+      isLast: true,
+    }),
+    Song.create({
+      songId: '6PG3IgH4LXxvg2Q6tHYEhE', //Humble
+      isPlaying: true,
+    }),
+  ]);
 
-  await users[0].setChannels([channels[0].id])
-  await users[1].setChannels([channels[0].id])
-  await users[2].setChannels([channels[0].id])
-  await users[3].setChannels([channels[0].id])
+  await users[0].setChannels([channels[0].id]);
+  await users[1].setChannels([channels[0].id]);
+  await users[2].setChannels([channels[0].id]);
+  await users[3].setChannels([channels[0].id]);
 
-  await songs[0].setChannel(channels[0].id)
-  await songs[1].setChannel(channels[0].id)
-  await songs[2].setChannel(channels[0].id)
-  await songs[3].setChannel(channels[0].id)
-  await songs[4].setChannel(channels[0].id)
+  //Rock
+  await songs[0].setChannel(channels[0].id);
+  await songs[1].setChannel(channels[0].id);
+  await songs[2].setChannel(channels[0].id);
+  await songs[3].setChannel(channels[0].id);
+  await songs[4].setChannel(channels[0].id);
 
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded ${channels.length} channels`)
-  console.log(`seeded successfully`)
+  //Pop
+  await songs[5].setChannel(channels[1].id);
+  await songs[6].setChannel(channels[1].id);
+  await songs[7].setChannel(channels[1].id);
+
+  //Rap
+  await songs[8].setChannel(channels[2].id);
+  await songs[9].setChannel(channels[2].id);
+
+  console.log(`seeded ${users.length} users`);
+  console.log(`seeded ${channels.length} channels`);
+  console.log(`seeded successfully`);
 }
 
 // We've separated the `seed` function from the `runSeed` function.
 // This way we can isolate the error handling and exit trapping.
 // The `seed` function is concerned only with modifying the database.
-async function runSeed () {
-  console.log('seeding...')
+async function runSeed() {
+  console.log('seeding...');
   try {
-    await seed()
+    await seed();
   } catch (err) {
-    console.error(err)
-    process.exitCode = 1
+    console.error(err);
+    process.exitCode = 1;
   } finally {
-    console.log('closing db connection')
-    await db.close()
-    console.log('db connection closed')
+    console.log('closing db connection');
+    await db.close();
+    console.log('db connection closed');
   }
 }
 
@@ -113,8 +139,8 @@ async function runSeed () {
 // `Async` functions always return a promise, so we can use `catch` to handle
 // any errors that might occur inside of `seed`.
 if (module === require.main) {
-  runSeed()
+  runSeed();
 }
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed
+module.exports = seed;
