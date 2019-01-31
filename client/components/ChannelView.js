@@ -4,11 +4,16 @@ import createClientSocket from 'socket.io-client'
 import Methods from '../EmbedPlayer'
 import { connect } from 'react-redux'
 import '../styles/ChannelViewStyles.css'
-const { transferPlaybackHere, checkForPlayer, createEventHandlers, setTrack } = Methods
+const {
+  transferPlaybackHere,
+  checkForPlayer,
+  createEventHandlers,
+  setTrack
+} = Methods
 const IP = 'http://localhost:8080'
 
 class ChannelView extends Component {
-  constructor() {
+  constructor () {
     super()
     this.state = {
       voted: false,
@@ -22,7 +27,7 @@ class ChannelView extends Component {
     this.checkForPlayer = checkForPlayer.bind(this)
     this.createEventHandlers = createEventHandlers.bind(this)
   }
-  
+
   // getHashParams = () => {
   //   var hashParams = {};
   //   var e,
@@ -33,40 +38,39 @@ class ChannelView extends Component {
   //   }
   //   return hashParams;
   // }
-  
-  componentDidMount() {
+
+  componentDidMount () {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000)
   }
-  
-  vote = async (userVote) => {
-    if(this.state.voted) return
+
+  vote = async userVote => {
+    if (this.state.voted) return
     try {
-      await axios.put(`api/channels/${this.props.match.params.id}/votes`, {vote: userVote})
+      await axios.put(`api/channels/${this.props.match.params.id}/votes`, {
+        vote: userVote
+      })
       this.setState({
         voted: true
       })
-    }
-    catch(err) {
+    } catch (err) {
       console.log(err)
     }
   }
-  
-  render() {
+
+  render () {
     return (
       <div className='channel-view-container'>
-        
         <h1>This is the Channel View</h1>
         <h2>Current Song: {this.state.currentSongId || 'None'}</h2>
-        
+
         <div className='vote-button-container'>
-          <button onClick={() => this.vote(1)}>
-            Upvote!
-          </button>
-          <button onClick={() => this.vote(-1)}>
-            Downvote!
-          </button>
+          <ion-icon class='up' name='thumbs-up' onClick={() => this.vote(1)} />
+          <ion-icon
+            class='down'
+            name='thumbs-down'
+            onClick={() => this.vote(-1)}
+          />
         </div>
-        
       </div>
     )
   }
@@ -78,4 +82,7 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState, null)(ChannelView)
+export default connect(
+  mapState,
+  null
+)(ChannelView)
