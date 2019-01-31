@@ -26,7 +26,12 @@ class AllChannels extends Component {
               uk-toggle='target: #channelFormId'
             >
               <img
-                style={{ cursor: 'pointer', minHeight: '100%' }}
+                style={{
+                  cursor: 'pointer',
+                  minWidth: '200px',
+                  minHeight: '200px',
+                  objectFit: 'cover'
+                }}
                 src='./assets/instruments.jpg'
               />
               <div className='uk-position-center'>

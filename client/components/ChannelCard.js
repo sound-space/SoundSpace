@@ -3,16 +3,10 @@ import { Link } from 'react-router-dom'
 
 const ChannelCard = props => (
   <div className='uk-text-center'>
-    <div
-      style={{
-        objectFit: 'cover'
-      }}
-      className='uk-inline-clip uk-transition-toggle'
-      tabIndex='0'
-    >
+    <div className='uk-inline-clip uk-transition-toggle' tabIndex='0'>
       <Link to={`/channels/${props.channel.id}`}>
         <img
-          // style={{ minWidth: '100%', minHeight: '100%' }}
+          style={{ minWidth: '200px', minHeight: '200px', objectFit: 'cover' }}
           src={props.channel.imageURL}
         />
       </Link>
