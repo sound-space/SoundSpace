@@ -11,49 +11,41 @@ const Landing = () => {
       <div
         style={{
           width: '100%',
-          maxHeight: '80%'
+          height: '100%'
         }}
-        className='uk-position-relative uk-visible-toggle uk-light'
-        tabIndex='-1'
-        uk-slideshow='autoplay: true'
       >
-        <h1
+        <div
+          className='uk-height-large uk-background-cover uk-light uk-flex'
+          uk-parallax='bgy: -200'
           style={{
-            zIndex: '10',
-            position: 'absolute',
-            fontSize: '100px',
-            textAlign: 'center',
-            left: '50%',
-            fontFamily: 'Tajawal, sans-serif'
+            height: '600px',
+            backgroundImage: 'url(./assets/instruments.jpg)'
           }}
         >
-          Sound Space
-        </h1>
-        <ul className='uk-slideshow-items'>
-          <li>
-            <div
-              className='uk-background-cover uk-height-large uk-panel uk-flex uk-flex-center uk-flex-middle'
-              style={{ backgroundImage: 'url(./assets/dj.jpg)' }}
+          <h1
+            style={{ fontSize: '60px' }}
+            className='uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical'
+          >
+            Sound Space
+            <a
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                margin: ' 50px 0',
+                alignItems: 'center'
+              }}
+              href='/login'
             >
-              <p className='uk-h4'>Cover</p>{' '}
-            </div>
-          </li>
-          <li>
-            <img src='./assets/instruments.jpg' alt='' uk-cover='true' />
-          </li>
-          <li>
-            <img src='./assets/words.jpg' alt='' uk-cover='true' />
-          </li>
-          <li>
-            <img src='./assets/album.jpg' alt='' uk-cover='true' />
-          </li>
-          <li>
-            <img src='./assets/headphones.jpg' alt='' uk-cover='true' />
-          </li>
-          <li>
-            <img src='./assets/turntable.jpg' alt='' uk-cover='true' />
-          </li>
-        </ul>
+              <button
+                style={{ fontSize: '30px' }}
+                className='uk-button uk-button-secondary uk-button-large'
+              >
+                Sign In
+              </button>
+            </a>
+          </h1>
+        </div>
 
         <a
           className='uk-position-center-left uk-position-small uk-hidden-hover'
@@ -68,21 +60,6 @@ const Landing = () => {
           uk-slideshow-item='next'
         />
       </div>
-      <a
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          position: 'absolute',
-          // left: '45%'
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-        href='/login'
-      >
-        <button className='uk-button uk-button-secondary uk-button-large'>
-          LOG IN
-        </button>
-      </a>
     </div>
   )
 }
