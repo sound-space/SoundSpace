@@ -21,7 +21,7 @@ class AllChannels extends Component {
           <div className='uk-text-center'>
             <div
               // onClick={this.newChannel.bind(this)}
-              className='  uk-inline-clip uk-transition-toggle uk-light'
+              className='uk-inline-clip uk-transition-toggle uk-light'
               tabIndex='0'
               uk-toggle='target: #channelFormId'
             >

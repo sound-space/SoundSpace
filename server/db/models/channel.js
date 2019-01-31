@@ -20,7 +20,7 @@ const Channel = db.define('channel', {
     }
   },
   description: {
-    type: Sequelize.TEXT
+    type: Sequelize.STRING(50)
   }
 })
 
