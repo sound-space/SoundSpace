@@ -25,6 +25,7 @@ export function checkForPlayer() {
     });
     this.createEventHandlers();
     this.player.connect();
+    this.props.exportPlayer(this.player)
   }
 }
 
