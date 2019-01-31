@@ -48,15 +48,32 @@ router.get('/:channelId/user', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
+  const { name, description, imageURL } = req.body
   try {
-    if (req.user && !req.channel.name) {
-      const newChannel = await Channel.create(req.body.name);
-      res.json(newChannel);
-    } else if (req.user && req.channel.name === req.body.name) {
-      res.send('Channel already exists!');
-    } else {
-      res.send('You must be logged in to create a new channel');
-    }
+    // if (req.user) {
+      const [newChannel, isNew] = await Channel.findOrCreate({
+        where: {
+          name,
+          description,
+          imageURL
+        },
+        defaults: {
+          name,
+          description,
+          imageURL
+        }
+      })
+      if(isNew) {
+        res.json(newChannel)
+      }
+      else {
+        res.status(409).json({error: 'Channel already exists'})
+      }
+    // } else if (req.user && req.channel.name === req.body.name) {
+    //   res.send('Channel already exists!');
+    // } else {
+    //   res.send('You must be logged in to create a new channel');
+    // }
   } catch (error) {
     next(error);
   }
