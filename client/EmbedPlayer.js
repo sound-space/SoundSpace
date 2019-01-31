@@ -89,9 +89,9 @@ export function setTrack(songId, timestamp, deviceId) {
       // this.setState({ loggedIn: true, deviceId: device_id })
       // this.setTrack(device_id)
     })
-  },
+  }
 
-  async transferPlaybackHere() {
+  export async function transferPlaybackHere() {
     await fetch('https://api.spotify.com/v1/me/player', {
       method: 'PUT',
       headers: {
