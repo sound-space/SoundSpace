@@ -32,15 +32,21 @@ const singularity = async io => {
 const socketComm = async io => {
   io.on('connection', function(socket) {
     console.log('Connecting to socket', socket.id);
+    socket.on('leave', function(channelId) {
+      console.log('Client leaving room', channelId);
+      socket.leave(channelId);
+    });
     socket.on('room', async function(channelId) {
       console.log('Client joining room', channelId);
       socket.join(channelId);
       const songInfo = await Song.findOne({
         where: {
+          channelId,
           isPlaying: true,
         },
         include: [{ model: Channel }],
       });
+      //Send info about current song in this channel + timestamp to user
       socket.emit('song-info', {
         songId: songInfo.songId,
         timestamp: songInfo.channel.dataValues.timestamp,
