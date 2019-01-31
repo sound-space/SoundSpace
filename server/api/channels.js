@@ -52,9 +52,16 @@ router.post('/', async (req, res, next) => {
   try {
     // if (req.user) {
       const [newChannel, isNew] = await Channel.findOrCreate({
-        name,
-        description,
-        imageURL
+        where: {
+          name,
+          description,
+          imageURL
+        },
+        defaults: {
+          name,
+          description,
+          imageURL
+        }
       })
       if(isNew) {
         res.json(newChannel)
