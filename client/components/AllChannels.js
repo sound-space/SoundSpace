@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchChannels } from '../store'
 import ChannelCard from './ChannelCard'
+import ChannelForm from './ChannelForm'
 
 class AllChannels extends Component {
   componentDidMount () {
@@ -11,6 +12,7 @@ class AllChannels extends Component {
   render () {
     return (
       <div style={{ margin: '0 50px' }}>
+        <ChannelForm />
         <h1>Channels</h1>
         <div
           className='uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-match uk-grid-small'
@@ -18,9 +20,10 @@ class AllChannels extends Component {
         >
           <div className='uk-text-center'>
             <div
-              onClick={this.newChannel}
-              className='uk-inline-clip uk-transition-toggle uk-light'
+              // onClick={this.newChannel.bind(this)}
+              className='  uk-inline-clip uk-transition-toggle uk-light'
               tabIndex='0'
+              uk-toggle='target: #channelFormId'
             >
               <img
                 style={{ cursor: 'pointer', minHeight: '100%' }}

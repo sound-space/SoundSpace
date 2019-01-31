@@ -5,17 +5,14 @@ const ChannelCard = props => (
   <div className='uk-text-center'>
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        overflow: 'hidden'
+        objectFit: 'cover'
       }}
       className='uk-inline-clip uk-transition-toggle'
       tabIndex='0'
     >
       <Link to={`/channels/${props.channel.id}`}>
         <img
-          style={{ width: '140%', height: '140%' }}
+          // style={{ minWidth: '100%', minHeight: '100%' }}
           src={props.channel.imageURL}
         />
       </Link>
