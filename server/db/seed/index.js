@@ -35,18 +35,18 @@ async function seed () {
     Channel.create({
       name: 'Pop',
       timestamp: Date.now(),
-      imageURL: './assets/dj.jpg'
+      // imageURL: './assets/dj.jpg'
     }),
     Channel.create({
       name: 'Techno',
       timestamp: Date.now(),
-      imageURL: './assets/turntable.jpg',
+      // imageURL: './assets/turntable.jpg',
       description: 'Imagine clubbing, and dance to these beats!'
     }),
     Channel.create({
       name: 'Rap',
       timestamp: Date.now(),
-      imageURL: './assets/words.jpg',
+      // imageURL: './assets/words.jpg',
       description: 'Come for the coolest lyrics around.'
     })
   ])

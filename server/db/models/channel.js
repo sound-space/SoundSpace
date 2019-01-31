@@ -13,7 +13,8 @@ const Channel = db.define('channel', {
   },
   imageURL: {
     type: Sequelize.STRING,
-    defaultValue: './assets/ss_logo.png',
+    defaultValue: 'https://static.thenounproject.com/png/80779-200.png',
+    // allowNull: true,
     validate: {
       isUrl: true
     }
