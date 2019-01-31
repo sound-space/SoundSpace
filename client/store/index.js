@@ -2,7 +2,6 @@ import { createStore, applyMiddleware } from 'redux'
 import Axios from 'axios'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
-import { composeWithDevTools } from 'redux-devtools-extension'
 
 const initialState = {
   channels: [],
@@ -16,6 +15,7 @@ const initialState = {
 const GET_USER = 'GET_USER'
 export const SET_USER = 'SET_USER'
 const SET_DEVICE = 'SET_DEVICE'
+const SET_CHANNELS = 'SET_CHANNELS'
 
 // action creator
 export const getUser = () => ({
@@ -32,9 +32,20 @@ export const setDevice = deviceId => ({
   payload: deviceId
 })
 
+export const setChannels = channels => ({
+  type: SET_CHANNELS,
+  payload: channels
+})
+
 // Thunk
 export const fetchUser = () => async dispatch => {
   await Axios.get('/login')
+}
+
+export const fetchChannels = () => async dispatch => {
+  const { data } = await Axios.get('/api/channels')
+  console.log(data)
+  dispatch(setChannels(data))
 }
 
 const reducer = (state = initialState, action) => {
@@ -45,6 +56,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, user: action.payload }
     case SET_DEVICE:
       return { ...state, deviceId: action.payload }
+    case SET_CHANNELS:
+      return { ...state, channels: action.payload }
     default:
       return state
   }

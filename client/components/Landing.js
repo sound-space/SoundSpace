@@ -1,13 +1,9 @@
 import React from 'react'
-import Navbar from './Navbar'
-import { Link } from 'react-router-dom'
 
 const Landing = () => {
   return (
     <div>
-      <nav>
-        <Navbar />
-      </nav>
+
       <div
         className='uk-position-relative uk-visible-toggle uk-light'
         tabIndex='-1'
@@ -58,7 +54,7 @@ const Landing = () => {
         />
       </div>
       <p
-        uk-margin
+        uk-margin='true'
         style={{
           width: '25%',
           display: 'flex',
@@ -68,7 +64,7 @@ const Landing = () => {
       >
         <a href='/login'>
           <button className='uk-button uk-button-secondary uk-button-large'>
-            {/* <Link to='/oauth'>Login</Link> */}
+            LOG IN
           </button>
         </a>
       </p>

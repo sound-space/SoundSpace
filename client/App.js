@@ -1,26 +1,27 @@
 import React from 'react'
-import { Route, HashRouter, BrowserRouter, Switch, } from 'react-router-dom'
-import Home from './components/Home'
-import Player from './components/Player'
-import ChannelView from './components/ChannelView'
+import { Route, Switch } from 'react-router-dom'
 import Landing from './components/Landing'
 import Oauth from './components/Oauth'
 import UserInfo from './components/UserInfo'
-
-
+import ChannelView from './components/ChannelView'
+import AllChannels from './components/AllChannels'
+import Navbar from './components/Navbar'
 
 const App = () => (
-    <div>
-      <main>
-        <Switch>
-          <Route path='/channels/:id' component={ChannelView}/>
-          <Route path='/channels' component={Landing}/>
-          <Route path='/home' component={UserInfo} />
-          <Route path='/login' component={Oauth} />
-          <Route exact path='/' component={Landing} />
-        </Switch>
-      </main>
-    </div>
+  <div>
+    <nav>
+      <Navbar />
+    </nav>
+    <main>
+      <Switch>
+      <Route path='/channels/:id' component={ChannelView}/>
+        <Route path='/channels' component={AllChannels} />
+        <Route path='/home' component={UserInfo} />
+        <Route path='/login' component={Oauth} />
+        <Route exact path='/' component={Landing} />
+      </Switch>
+    </main>
+  </div>
 )
 
 export default App
