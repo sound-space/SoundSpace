@@ -41,7 +41,7 @@ class AllChannels extends Component {
 }
 
 const mapStateToProps = state => ({
-  channels: state.channels
+  channels: state.channelsObj.channels
 })
 
 const mapDispatchToProps = dispatch => ({
