@@ -36,6 +36,8 @@
     "jest-resolve": "23.6.0",
     "mini-css-extract-plugin": "0.4.3",
     "optimize-css-assets-webpack-plugin": "5.0.1",
+    "passport": "^0.4.0",
+    "passport-spotify": "^1.0.1",
     "pg": "^7.8.0",
     "pnp-webpack-plugin": "1.1.0",
     "postcss-flexbugs-fixes": "4.1.0",

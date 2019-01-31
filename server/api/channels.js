@@ -50,6 +50,7 @@ router.get('/:channelId/user', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   const { name, description, imageURL } = req.body
   try {
+<<<<<<< HEAD
     // if (req.user) {
       const [newChannel, isNew] = await Channel.findOrCreate({
         where: {
@@ -74,6 +75,16 @@ router.post('/', async (req, res, next) => {
     // } else {
     //   res.send('You must be logged in to create a new channel');
     // }
+=======
+    if (req.user && !req.channel.name) {
+      const newChannel = await Channel.create(req.body.name);
+      res.json(newChannel);
+    } else if (req.user && req.channel.name === req.body.name) {
+      res.send('Channel already exists!');
+    } else {
+      res.send('You must bke logged in to create a new channel');
+    }
+>>>>>>> SpotifySearch
   } catch (error) {
     next(error);
   }
