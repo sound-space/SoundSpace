@@ -21,16 +21,28 @@ export const makeChannels = channels => ({
 
 // Thunks
 export const fetchChannels = () => async dispatch => {
-  const { data } = await Axios.get('/api/channels')
-  dispatch(getChannels(data))
+  try {
+    const { data } = await Axios.get('/api/channels')
+    dispatch(getChannels(data))
+  } catch (error) {
+    console.error(error)
+  }
 }
 
-export const postChannels = () => async dispatch => {
-  const { data } = await Axios.post('/api/channels')
-  if (data.error) {
-    alert('Channel already exist, Channel name required')
+export const postChannels = body => async dispatch => {
+  if (body.imageURL === '') {
+    body.imageURL = 'https://static.thenounproject.com/png/80779-200.png'
   }
-  dispatch(makeChannels(data))
+  try {
+    const { data } = await Axios.post('/api/channels', body)
+    if (data.error) {
+      alert('Channel already exist, Channel name required')
+    } else {
+      dispatch(makeChannels(data))
+    }
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 export default function (state = channelsObj, action) {

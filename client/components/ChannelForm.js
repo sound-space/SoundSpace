@@ -21,7 +21,7 @@ class ChannelForm extends Component {
 
   handleSubmit (evt) {
     evt.preventDefault()
-    this.props.postChannels()
+    this.props.createChannels(this.state)
   }
 
   render () {
@@ -76,7 +76,7 @@ class ChannelForm extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  postChannels: () => dispatch(postChannels())
+  createChannels: body => dispatch(postChannels(body))
 })
 
 export default connect(
