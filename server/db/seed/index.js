@@ -37,8 +37,7 @@ async function seed () {
     }),
     Channel.create({
       name: 'Alternative',
-      currentlyPlaying: '123',
-      currPlayingStartTime: Date.now()
+      timestamp: Date.now()
     }),
     Channel.create({
       name: 'Instrumental',

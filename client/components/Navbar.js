@@ -11,11 +11,11 @@ const NavBar = props => {
           <img style={{ width: '100px' }} src='./assets/ss_logo.png' />
         </Link>
       </div>
-      {props.user.id && 
+      {props.user.id && (
         <div className='uk-navbar-right' style={{ marginRight: '40px' }}>
           <Link to='/logout'>Log Out</Link>
         </div>
-      }
+      )}
     </nav>
   )
 }
