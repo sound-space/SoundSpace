@@ -63,6 +63,17 @@ export default {
     });
   },
 
+  async stopPlayer() {
+    console.log('Pausing playback');
+    await fetch('https://api.spotify.com/v1/me/player/pause', {
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${this.props.user.access_token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  },
+
   async transferPlaybackHere() {
     await fetch('https://api.spotify.com/v1/me/player', {
       method: 'PUT',

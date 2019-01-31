@@ -32,6 +32,10 @@ const singularity = async io => {
 const socketComm = async io => {
   io.on('connection', function(socket) {
     console.log('Connecting to socket', socket.id);
+    socket.on('leave', function(channelId) {
+      console.log('Client leaving room', channelId);
+      socket.leave(channelId);
+    });
     socket.on('room', async function(channelId) {
       console.log('Client joining room', channelId);
       socket.join(channelId);

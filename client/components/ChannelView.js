@@ -5,6 +5,7 @@ import Methods from '../EmbedPlayer';
 import { connect } from 'react-redux';
 import '../styles/ChannelViewStyles.css';
 const {
+  stopPlayer,
   transferPlaybackHere,
   checkForPlayer,
   createEventHandlers,
@@ -21,6 +22,7 @@ class ChannelView extends Component {
       device_id: '',
     };
     this.socket = createClientSocket(IP);
+    this.stopPlayer = stopPlayer.bind(this);
     this.setTrack = setTrack.bind(this);
     this.transferPlaybackHere = transferPlaybackHere.bind(this);
     this.checkForPlayer = checkForPlayer.bind(this);
@@ -29,6 +31,12 @@ class ChannelView extends Component {
 
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
+  }
+
+  componentWillUnmount() {
+    //If navigating away from ChannelView, disconnect from socket and stop player
+    this.socket.emit('leave', this.props.match.params.id);
+    this.stopPlayer();
   }
 
   vote = async userVote => {
