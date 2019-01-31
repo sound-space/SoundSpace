@@ -2,42 +2,50 @@ import React from 'react';
 
 const Landing = () => {
   return (
-    <div>
+    <div
+      style={{
+        height: '1500px',
+      }}
+    >
+      <div />
       <div
-        className="uk-position-relative uk-visible-toggle uk-light"
-        tabIndex="-1"
-        uk-slideshow="autoplay: true"
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
       >
-        <ul
-          className="uk-slideshow-items"
+        <div
+          className="uk-height-large uk-background-cover uk-light uk-flex"
+          uk-parallax="bgy: -200"
           style={{
-            width: '100%',
-            maxHeight: '25%',
-            padding: '100px 0',
-            // display: 'flex',
-            // flexDirection: 'column',
-            margin: '0 auto',
+            height: '600px',
+            backgroundImage: 'url(./assets/instruments.jpg)',
           }}
         >
-          <li>
-            <img src="./assets/dj.jpg" alt="" uk-cover="true" />
-          </li>
-          <li>
-            <img src="./assets/instruments.jpg" alt="" uk-cover="true" />
-          </li>
-          <li>
-            <img src="./assets/words.jpg" alt="" uk-cover="true" />
-          </li>
-          <li>
-            <img src="./assets/album.jpg" alt="" uk-cover="true" />
-          </li>
-          <li>
-            <img src="./assets/headphones.jpg" alt="" uk-cover="true" />
-          </li>
-          <li>
-            <img src="./assets/turntable.jpg" alt="" uk-cover="true" />
-          </li>
-        </ul>
+          <h1
+            style={{ fontSize: '60px' }}
+            className="uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical"
+          >
+            Sound Space
+            <a
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                margin: ' 50px 0',
+                alignItems: 'center',
+              }}
+              href="/login"
+            >
+              <button
+                style={{ fontSize: '20px' }}
+                className="uk-button uk-button-primary"
+              >
+                Sign In
+              </button>
+            </a>
+          </h1>
+        </div>
 
         <a
           className="uk-position-center-left uk-position-small uk-hidden-hover"
@@ -52,21 +60,6 @@ const Landing = () => {
           uk-slideshow-item="next"
         />
       </div>
-      <p
-        uk-margin="true"
-        style={{
-          width: '25%',
-          display: 'flex',
-          flexDirection: 'column',
-          margin: '0 auto',
-        }}
-      >
-        <a href="/login">
-          <button className="uk-button uk-button-secondary uk-button-large">
-            LOG IN
-          </button>
-        </a>
-      </p>
     </div>
   );
 };

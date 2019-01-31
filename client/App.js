@@ -14,7 +14,7 @@ const App = () => (
     </nav>
     <main>
       <Switch>
-      <Route path='/channels/:id' component={ChannelView}/>
+        <Route path='/channels/:id' component={ChannelView} />
         <Route path='/channels' component={AllChannels} />
         <Route path='/home' component={UserInfo} />
         <Route path='/login' component={Oauth} />

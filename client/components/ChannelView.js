@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import createClientSocket from 'socket.io-client';
-import Methods from '../EmbedPlayer';
 import { connect } from 'react-redux';
 import '../styles/ChannelViewStyles.css';
-const {
-  stopPlayer,
+import {
   transferPlaybackHere,
   checkForPlayer,
   createEventHandlers,
   setTrack,
-} = Methods;
+  stopPlayer,
+} from '../EmbedPlayer';
 const IP = 'http://localhost:8080';
 
 class ChannelView extends Component {
