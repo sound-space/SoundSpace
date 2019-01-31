@@ -37,10 +37,12 @@ const socketComm = async io => {
       socket.join(channelId);
       const songInfo = await Song.findOne({
         where: {
+          channelId,
           isPlaying: true,
         },
         include: [{ model: Channel }],
       });
+      //Send info about current song in this channel + timestamp to user
       socket.emit('song-info', {
         songId: songInfo.songId,
         timestamp: songInfo.channel.dataValues.timestamp,

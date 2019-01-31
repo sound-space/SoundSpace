@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import createClientSocket from 'socket.io-client';
-import {setUser} from '../store'
+import { setUser } from '../store';
 import { connect } from 'react-redux';
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 
 const IP = 'http://localhost:8080';
 
@@ -17,7 +17,7 @@ class UserInfo extends React.Component {
   }
 
   componentDidMount() {
-    this.props.setUser(this.state.body)
+    this.props.setUser(this.state.body);
   }
 
   getHashParams = () => {
@@ -32,14 +32,15 @@ class UserInfo extends React.Component {
   };
 
   render() {
-    return (
-    <Redirect push to="/channels" />
-    );
+    return <Redirect push to="/channels" />;
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    setUser: (userInfo) => dispatch(setUser(userInfo))
-})
+const mapDispatchToProps = dispatch => ({
+  setUser: userInfo => dispatch(setUser(userInfo)),
+});
 
-export default connect(null, mapDispatchToProps)(UserInfo)
+export default connect(
+  null,
+  mapDispatchToProps
+)(UserInfo);

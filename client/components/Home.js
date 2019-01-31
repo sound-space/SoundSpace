@@ -69,9 +69,8 @@ export default class App extends React.Component {
     // Ready
     this.player.on('ready', data => {
       let { device_id } = data;
-      console.log('deviceId:', device_id);
       this.deviceId = device_id;
-      console.log('Let the music play on!');
+      console.log('SoundSpace Player ready');
       this.setState({ loggedIn: true, deviceId: device_id });
 
       this.transferPlaybackHere();
@@ -79,18 +78,6 @@ export default class App extends React.Component {
   };
 
   transferPlaybackHere = async () => {
-    // await fetch('https://api.spotify.com/v1/me/player', {
-    //   method: 'PUT',
-    //   headers: {
-    //     authorization: `Bearer ${this.state.token}`,
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     device_ids: [this.deviceId],
-    //     play: true,
-    //   }),
-    // });
-
     //Play a track on the SoundSpace player
     fetch(
       `https://api.spotify.com/v1/me/player/play?device_id=${this.deviceId}`,
@@ -109,7 +96,6 @@ export default class App extends React.Component {
 
   getChannelsFromServer = async () => {
     const { data } = await axios.get('/api/channels');
-    console.log(data);
     this.setState({
       channels: data,
     });
