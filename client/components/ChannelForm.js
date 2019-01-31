@@ -1,42 +1,85 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { postChannels } from '../store/channels'
 
-const ChannelForm = () => (
-  <div id='channelFormId' uk-modal='true'>
-    <div className='uk-modal-dialog'>
-      <form>
-        <fieldset className='uk-fieldset'>
-          <legend className='uk-legend'>Make Your Channel</legend>
+class ChannelForm extends Component {
+  constructor () {
+    super()
+    this.state = {
+      name: '',
+      imageURL: '',
+      description: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  handleChange (evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value
+    })
+  }
 
-          <div className='uk-margin'>
-            <input className='uk-input' type='text' placeholder='Name' />
-          </div>
+  handleSubmit (evt) {
+    evt.preventDefault()
+    this.props.postChannels()
+  }
 
-          <div className='uk-margin'>
-            <input className='uk-input' type='text' placeholder='imageURL' />
-          </div>
+  render () {
+    const { name, imageURL, description } = this.state
 
-          <div className='uk-margin'>
-            <textarea
-              className='uk-textarea'
-              rows='5'
-              placeholder='Description'
-            />
-          </div>
+    return (
+      <div id='channelFormId' uk-modal='true'>
+        <div className='uk-modal-dialog'>
+          <form onSubmit={this.handleSubmit}>
+            <fieldset className='uk-fieldset'>
+              <legend className='uk-legend'>Make Your Channel</legend>
 
-          <div className='uk-margin'>
-            <input
-              className='uk-range'
-              type='range'
-              // value='2'
-              min='0'
-              max='10'
-              step='0.1'
-            />
-          </div>
-        </fieldset>
-      </form>
-    </div>
-  </div>
-)
+              <div className='uk-margin'>
+                <input
+                  onChange={this.handleChange}
+                  name='name'
+                  className='uk-input'
+                  value={name}
+                  type='text'
+                  placeholder='Name'
+                />
+              </div>
 
-export default ChannelForm
+              <div className='uk-margin'>
+                <input
+                  onChange={this.handleChange}
+                  name='imageURL'
+                  value={imageURL}
+                  className='uk-input'
+                  type='text'
+                  placeholder='imageURL'
+                />
+              </div>
+
+              <div className='uk-margin'>
+                <textarea
+                  onChange={this.handleChange}
+                  name='description'
+                  value={description}
+                  className='uk-textarea'
+                  rows='5'
+                  placeholder='Description'
+                />
+              </div>
+            </fieldset>
+            <button type='submit'>Submit</button>
+          </form>
+        </div>
+      </div>
+    )
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  postChannels: () => dispatch(postChannels())
+})
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ChannelForm)
