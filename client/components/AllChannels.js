@@ -18,10 +18,14 @@ class AllChannels extends Component {
         >
           <div className='uk-text-center'>
             <div
+              onClick={this.newChannel}
               className='uk-inline-clip uk-transition-toggle uk-light'
-              tabindex='0'
+              tabIndex='0'
             >
-              <img style={{ cursor: 'pointer' }} src='./assets/dj.jpg' />
+              <img
+                style={{ cursor: 'pointer', minHeight: '100%' }}
+                src='./assets/instruments.jpg'
+              />
               <div className='uk-position-center'>
                 <span
                   className='uk-transition-fade'

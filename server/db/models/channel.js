@@ -1,16 +1,23 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 
-const db = require('../db');
+const db = require('../db')
 
 const Channel = db.define('channel', {
   name: {
     type: Sequelize.STRING,
-    unique: true,
+    unique: true
   },
   // Time in MS
   timestamp: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATE
   },
-});
+  imageURL: {
+    type: Sequelize.STRING,
+    defaultValue: './assets/ss_logo.png'
+  },
+  description: {
+    type: Sequelize.TEXT
+  }
+})
 
-module.exports = Channel;
+module.exports = Channel
