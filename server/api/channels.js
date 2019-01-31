@@ -55,7 +55,7 @@ router.post('/', async (req, res, next) => {
     } else if (req.user && req.channel.name === req.body.name) {
       res.send('Channel already exists!');
     } else {
-      res.send('You must be logged in to create a new channel');
+      res.send('You must bke logged in to create a new channel');
     }
   } catch (error) {
     next(error);
