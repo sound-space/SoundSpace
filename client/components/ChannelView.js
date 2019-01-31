@@ -74,7 +74,7 @@ class ChannelView extends Component {
 
 const mapState = state => {
   return {
-    user: state.user
+    user: state.userObj.user
   }
 }
 

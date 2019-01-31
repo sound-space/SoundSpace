@@ -20,8 +20,8 @@ const NavBar = props => {
   )
 }
 
-const mapStateToProps = state => ({
-  user: state.user
-})
+const mapStateToProps = state => {
+  return {user: state.userObj.user}
+}
 
 export default connect(mapStateToProps)(NavBar)
