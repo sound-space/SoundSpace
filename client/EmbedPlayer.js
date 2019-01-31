@@ -1,6 +1,5 @@
-export default {
-  setTrack(songId, timestamp, deviceId) {
-    console.log('Setting Track, Id:', songId, 'timestamp:', timestamp);
+export function setTrack(songId, timestamp, deviceId) {
+    console.log('Setting Track, Id:', songId, 'timestamp:', timestamp)
     // fetch(`https://api.spotify.com/v1/me/player`, {
     //   method: 'PUT',
     //   headers: {
@@ -27,48 +26,48 @@ export default {
           position_ms: Date.now() - new Date(timestamp),
         }),
       }
-    );
-  },
+    )
+  }
 
-  checkForPlayer() {
+  export function checkForPlayer() {
     const token = this.props.user.access_token
     console.log(token)
     if (window.Spotify) {
-      clearInterval(this.playerCheckInterval);
+      clearInterval(this.playerCheckInterval)
       this.player = new window.Spotify.Player({
         name: 'SoundSpace Spotify Player',
         getOAuthToken: cb => {
-          cb(token);
+          cb(token)
         },
-      });
-      this.createEventHandlers();
-      this.player.connect();
+      })
+      this.createEventHandlers()
+      this.player.connect()
     }
-  },
+  }
 
-  createEventHandlers() {
+  export function createEventHandlers() {
     this.player.on('initialization_error', e => {
-      console.error('init error:', e);
-    });
+      console.error('init error:', e)
+    })
     this.player.on('authentication_error', e => {
-      console.error('auth error:', e);
-      // this.setState({ loggedIn: false });
-    });
+      console.error('auth error:', e)
+      // this.setState({ loggedIn: false })
+    })
     this.player.on('account_error', e => {
-      console.error('account error:', e);
-    });
+      console.error('account error:', e)
+    })
     this.player.on('playback_error', e => {
-      console.error('playback error:', e);
-    });
+      console.error('playback error:', e)
+    })
 
     // Playback status updates
     this.player.on('player_state_changed', state => {
-      console.log('player state changes:', state);
-    });
+      console.log('player state changes:', state)
+    })
 
     // Ready
     this.player.on('ready', data => {
-      let { device_id } = data;
+      let { device_id } = data
       // this.setState({
       //   device_id
       // })
@@ -78,18 +77,18 @@ export default {
           songInfo.songId,
           songInfo.timestamp,
           device_id
-        );
+        )
         this.setState({
           currentSongId: songInfo.songId,
-        });
-      });
-      this.socket.emit('room', 1);
-      console.log('deviceId:', device_id);
-      this.deviceId = device_id;
-      console.log('Let the music play on!');
+        })
+      })
+      this.socket.emit('room', 1)
+      console.log('deviceId:', device_id)
+      this.deviceId = device_id
+      console.log('Let the music play on!')
       // this.setState({ loggedIn: true, deviceId: device_id })
-      // this.setTrack(device_id);
-    });
+      // this.setTrack(device_id)
+    })
   },
 
   async transferPlaybackHere() {
@@ -103,7 +102,7 @@ export default {
         device_ids: [this.props.deviceId],
         play: true,
       }),
-    });
+    })
 
     //Play a track on the SoundSpace player
     fetch(
@@ -118,6 +117,5 @@ export default {
         //   uris: ['spotify:track:5oD2Z1OOx1Tmcu2mc9sLY2'],
         // }),
       }
-    );
-  },
-};
+    )
+  }
