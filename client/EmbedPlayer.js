@@ -15,11 +15,11 @@ export default {
     //   }),
     // });
     fetch(
-      `https://api.spotify.com/v1/me/player/play?device_id=${this.deviceId}`,
+      `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
       {
         method: 'PUT',
         headers: {
-          authorization: `Bearer ${this.state.body.access_token}`,
+          authorization: `Bearer ${this.props.user.access_token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -31,7 +31,8 @@ export default {
   },
 
   checkForPlayer() {
-    const token = this.props.access_token
+    const token = this.props.user.access_token
+    console.log(token)
     if (window.Spotify) {
       clearInterval(this.playerCheckInterval);
       this.player = new window.Spotify.Player({
@@ -76,7 +77,7 @@ export default {
         this.setTrack(
           songInfo.songId,
           songInfo.timestamp,
-          this.state.device_id
+          device_id
         );
         this.setState({
           currentSongId: songInfo.songId,
@@ -95,22 +96,22 @@ export default {
     await fetch('https://api.spotify.com/v1/me/player', {
       method: 'PUT',
       headers: {
-        authorization: `Bearer ${this.state.token}`,
+        authorization: `Bearer ${this.props.user.access_token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        device_ids: [this.deviceId],
+        device_ids: [this.props.deviceId],
         play: true,
       }),
     });
 
     //Play a track on the SoundSpace player
     fetch(
-      `https://api.spotify.com/v1/me/player/play?device_id=${this.deviceId}`,
+      `https://api.spotify.com/v1/me/player/play?device_id=${this.props.deviceId}`,
       {
         method: 'PUT',
         headers: {
-          authorization: `Bearer ${this.state.body.access_token}`,
+          authorization: `Bearer ${this.props.user.access_token}`,
           'Content-Type': 'application/json',
         },
         // body: JSON.stringify({

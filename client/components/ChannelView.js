@@ -7,14 +7,13 @@ import '../styles/ChannelViewStyles.css'
 const { transferPlaybackHere, checkForPlayer, createEventHandlers, setTrack } = Methods
 const IP = 'http://localhost:8080'
 
-
 class ChannelView extends Component {
   constructor() {
     super()
     this.state = {
       voted: false,
       currentSongId: '',
-      body: this.getHashParams(),
+      // body: this.getHashParams(),
       device_id: ''
     }
     this.socket = createClientSocket(IP)
@@ -24,16 +23,16 @@ class ChannelView extends Component {
     this.createEventHandlers = createEventHandlers.bind(this)
   }
   
-  getHashParams = () => {
-    var hashParams = {};
-    var e,
-      r = /([^&;=]+)=?([^&;]*)/g,
-      q = window.location.hash.substring(1);
-    while ((e = r.exec(q))) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-    return hashParams;
-  }
+  // getHashParams = () => {
+  //   var hashParams = {};
+  //   var e,
+  //     r = /([^&;=]+)=?([^&;]*)/g,
+  //     q = window.location.hash.substring(1);
+  //   while ((e = r.exec(q))) {
+  //     hashParams[e[1]] = decodeURIComponent(e[2]);
+  //   }
+  //   return hashParams;
+  // }
   
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000)
@@ -42,7 +41,7 @@ class ChannelView extends Component {
   vote = async (userVote) => {
     if(this.state.voted) return
     try {
-      await axios.put(`api/channels/${this.props.match.params.channelId}/votes`, {vote: userVote})
+      await axios.put(`api/channels/${this.props.match.params.id}/votes`, {vote: userVote})
       this.setState({
         voted: true
       })
@@ -75,7 +74,7 @@ class ChannelView extends Component {
 
 const mapState = state => {
   return {
-    access_token: state.user.access_token
+    user: state.user
   }
 }
 
