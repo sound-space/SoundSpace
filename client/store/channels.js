@@ -27,6 +27,9 @@ export const fetchChannels = () => async dispatch => {
 
 export const postChannels = () => async dispatch => {
   const { data } = await Axios.post('/api/channels')
+  if (data.error) {
+    alert('Channel already exist, Channel name required')
+  }
   dispatch(makeChannels(data))
 }
 
