@@ -6,22 +6,51 @@ import UserInfo from './components/UserInfo'
 import ChannelView from './components/ChannelView'
 import AllChannels from './components/AllChannels'
 import Navbar from './components/Navbar'
+import { connect } from 'react-redux'
+import { setPlayer } from './store/player'
+import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
-const App = () => (
-  <div>
-    <nav>
-      <Navbar />
-    </nav>
-    <main>
-      <Switch>
-        <Route path='/channels/:id' component={ChannelView} />
-        <Route path='/channels' component={AllChannels} />
-        <Route path='/home' component={UserInfo} />
-        <Route path='/login' component={Oauth} />
-        <Route exact path='/' component={Landing} />
-      </Switch>
-    </main>
-  </div>
-)
+class App extends React.Component {
+  constructor() {
+    super()
+    this.checkForPlayer = checkForPlayer.bind(this)
+    this.createEventHandlers = createEventHandlers.bind(this)
+    this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 200)
+  }
+  
+  render() {
+    return (
+      <div>
+        <nav>
+          <Navbar />
+        </nav>
+        <main>
+          <Switch>
+            <Route path='/channels/:id' component={ChannelView} />
+            <Route path='/channels' component={AllChannels} />
+            <Route path='/home' component={UserInfo} />
+            <Route path='/login' component={Oauth} />
+            <Route exact path='/' component={Landing} />
+          </Switch>
+        </main>
+      </div>
+    )
+  }
+}
 
-export default App
+function mapState(state) {
+  return {
+    user: state.userObj,
+    player: state.playerObj
+  }
+}
+
+function mapDispatch(dispatch) {
+  return {
+    exportPlayer(player) {
+      dispatch(setPlayer(player))
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(App)

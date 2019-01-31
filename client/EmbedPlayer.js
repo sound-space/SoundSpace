@@ -14,7 +14,7 @@ export function setTrack(songId, timestamp, deviceId) {
 
 export function checkForPlayer() {
   const token = this.props.user.access_token;
-  console.log(token);
+  // console.log(token);
   if (window.Spotify) {
     clearInterval(this.playerCheckInterval);
     this.player = new window.Spotify.Player({
