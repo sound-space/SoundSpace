@@ -11,15 +11,17 @@ const NavBar = props => {
           <img style={{ width: '100px' }} src='./assets/ss_logo.png' />
         </Link>
       </div>
-      <div className='uk-navbar-right' style={{ marginRight: '40px' }}>
-        <Link to='/logout'>Log Out</Link>
-      </div>
+      {props.user.id && 
+        <div className='uk-navbar-right' style={{ marginRight: '40px' }}>
+          <Link to='/logout'>Log Out</Link>
+        </div>
+      }
     </nav>
   )
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.isLoggedIn
+  user: state.user
 })
 
 export default connect(mapStateToProps)(NavBar)
