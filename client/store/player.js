@@ -5,10 +5,13 @@ const initialPlayer = {}
 const GOT_PLAYER = 'GOT_PLAYER'
 
 // Action creator
-export const setPlayer = (player) => ({
-  type: GOT_PLAYER,
-  player
-})
+export const setPlayer = (player) => {
+  console.log('Set Player is running, player:', player)
+  return {
+    type: GOT_PLAYER,
+    player
+  }
+}
 
 export default function(state = initialPlayer, action) {
   switch(action.type) {
