@@ -1,6 +1,7 @@
 const express = require('express')
 const request = require('request')
 const { client_id, client_secret } = require('../credentials')
+const { User } = require('./db/models')
 const querystring = require('querystring')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
@@ -29,24 +30,57 @@ app.use(volleyball)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
+// Passport Auth
+const SpotifyStrategy = require('passport-spotify').Strategy
+const passport = require('passport')
+
+passport.use(
+  new SpotifyStrategy(
+    {
+      clientID: client_id,
+      clientSecret: client_secret,
+      callbackURL: 'http://localhost:8080/callback'
+    },
+    function (accessToken, refreshToken, expires_in, profile, done) {
+      User.findOrCreate({ spotifyId: profile.id }, function (err, user) {
+        return done(err, user)
+      })
+    }
+  )
+)
+
+passport.serializeUser(function (user, done) {
+  done(null, user)
+})
+
+passport.deserializeUser(function (obj, done) {
+  done(null, obj)
+})
+
 app.use('/api', require('./api')) // include our routes!
 
 app.get('/', (req, res, next) => {
   res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'))
 })
 
-app.get('/login', function (req, res) {
-  // application requests authorization
-  res.redirect(
-    'https://accounts.spotify.com/authorize?' +
-      querystring.stringify({
-        response_type: 'code',
-        client_id: client_id,
-        scope: scope,
-        redirect_uri: redirect_uri
-      })
-  )
-})
+app.get(
+  '/login',
+  passport.authenticate('spotify', {
+    scope
+  }),
+  function (req, res) {
+    // application requests authorization
+    res.redirect(
+      'https://accounts.spotify.com/authorize?' +
+        querystring.stringify({
+          response_type: 'code',
+          client_id: client_id,
+          scope: scope,
+          redirect_uri: redirect_uri
+        })
+    )
+  }
+)
 
 app.get('/callback', function (req, res) {
   // application requests refresh and access tokens
