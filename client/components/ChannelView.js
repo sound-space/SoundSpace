@@ -4,6 +4,7 @@ import createClientSocket from 'socket.io-client';
 import { connect } from 'react-redux';
 import '../styles/ChannelViewStyles.css';
 import ChannelSideBar from "./ChannelSideBar"
+import Player from "./Player"
 import {
   transferPlaybackHere,
   checkForPlayer,
@@ -20,7 +21,8 @@ class ChannelView extends Component {
       voted: false,
       currentSongId: '',
       device_id: '',
-      showChannelsBar: false
+      showChannelsBar: false,
+      playerState: {}
     };
     this.socket = createClientSocket(IP)
     this.stopPlayer = stopPlayer.bind(this)
@@ -32,8 +34,11 @@ class ChannelView extends Component {
   }
 
   componentDidMount() {
-    this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
+    // this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
+    this.socket.emit('room', this.props.match.params.id);
+
   }
+
 
   componentWillUnmount() {
     //If navigating away from ChannelView, disconnect from socket and stop player
@@ -60,8 +65,9 @@ class ChannelView extends Component {
   };
 
   render() {
-    const {playerState} = this.props
-    const albumCoverUrl = playerState.track_window ? playerState.track_window.current_track.album.images[0] : '/assets/album.jpg'
+    const playerState = this.props.playerState
+    console.log("PLAYER STATE IN RENDER", playerState)
+    const albumCoverUrl = playerState.track_window ? playerState.track_window.current_track.album.images[0].url : '/assets/album.jpg'
     const currentTrackName =  playerState.track_window ? playerState.track_window.current_track.name : 'none'
     
     return (
@@ -75,10 +81,10 @@ class ChannelView extends Component {
         <article className="uk-comment uk-margin">
           <header className="uk-comment-header uk-grid-medium uk-flex-middle uk-grid-divider" uk-grid="true">
               <div className="uk-width-auto">
-                  <img className="uk-comment-avatar" src="/assets/album.jpg" width="80" height="80" alt=""/>
+                  <img className="uk-comment-avatar" src={albumCoverUrl} width="80" height="80" alt=""/>
               </div>
               <div className="uk-width-expand">
-                  <h4 className="uk-comment-title uk-margin-remove">Currently playing [current track]</h4>
+                  <h4 className="uk-comment-title uk-margin-remove">Currently playing {currentTrackName}</h4>
                   <ul className="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
                       <li>123 users</li>
                   </ul>
@@ -90,12 +96,14 @@ class ChannelView extends Component {
               <p>You are listening to channel {this.props.match.params.id}</p>
           </div>
         </article>
+        <Player channelId={this.props.match.params.id}/>
       </div>
     );
   }
 }
 
 const mapState = state => {
+  console.log("STATE IN MAPTOPROPS", state)
   return {
     user: state.userObj.user,
     player: state.playerObj,
