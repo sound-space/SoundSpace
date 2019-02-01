@@ -40,7 +40,7 @@ const socketComm = async io => {
   });
 };
 
-module.exports = { socketComm, singularity };
+module.exports = { socketComm, singularity, playNewSong };
 
 //Call this when a song finishes playing
 async function playNewSong(io, channelId) {

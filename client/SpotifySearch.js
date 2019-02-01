@@ -5,7 +5,7 @@ export async function search(query) {
     {
       method: 'GET',
       headers: {
-        authorization: `Bearer ${this.props.user.access_token}`,
+        authorization: `Bearer ${this.props.user.user.access_token}`,
         'Content-Type': 'application/json',
       },
     }

@@ -16,8 +16,8 @@ class ChannelForm extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSearch = this.handleSearch.bind(this)
-    this.search = search.bind(this)
+    this.handleSearch = this.handleSearch.bind(this);
+    this.search = search.bind(this);
   }
   handleChange(evt) {
     this.setState({
@@ -31,10 +31,23 @@ class ChannelForm extends Component {
   }
 
   async handleSearch(evt) {
-    const searchResults = await this.search(evt.target.value);
-    console.log(searchResults)
+    const { tracks } = await this.search(evt.target.value);
     this.setState({
-      searchResults,
+      searchResults: tracks.items,
+    });
+  }
+
+  addToSeed(song) {
+    let seed = this.state.songSeeds;
+    //Seed can't be more than 5
+    if (seed.length >= 5) return;
+    for (let i = 0; i < seed.length; i++) {
+      //Only add the track if it is not in the seed already
+      if (seed[i].id === song.id) return;
+    }
+    seed.push(song);
+    this.setState({
+      songSeeds: seed,
     });
   }
 
@@ -83,10 +96,33 @@ class ChannelForm extends Component {
                       required
                     />
                   </div>
-
                   <div>
-                    {this.state.searchResults.map(track => {
-                      return <div>{track}</div>;
+                    {this.state.songSeeds.map((track, i) => {
+                      return (
+                        <div key={i} onClick={() => this.addToSeed(track)}>
+                          {track.name} by{' '}
+                          {track.artists.map((artist, j) => {
+                            return j === track.artists.length - 1
+                              ? artist.name
+                              : artist.name + ', ';
+                          })}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <hr />
+                  <div>
+                    {this.state.searchResults.map((track, i) => {
+                      return (
+                        <div key={i} onClick={() => this.addToSeed(track)}>
+                          {track.name} by{' '}
+                          {track.artists.map((artist, j) => {
+                            return j === track.artists.length - 1
+                              ? artist.name
+                              : artist.name + ', ';
+                          })}
+                        </div>
+                      );
                     })}
                   </div>
 
@@ -128,8 +164,8 @@ const mapDispatchToProps = dispatch => ({
 
 function mapState(state) {
   return {
-    user: state.userObj
-  }
+    user: state.userObj,
+  };
 }
 
 export default connect(
