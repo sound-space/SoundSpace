@@ -8,7 +8,8 @@ class ChannelForm extends Component {
     this.state = {
       name: '',
       imageURL: '',
-      description: ''
+      description: '',
+      songSeeds: []
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -65,6 +66,10 @@ class ChannelForm extends Component {
                   rows='5'
                   placeholder='Description'
                 />
+              </div>
+              <div className='uk-search uk-search-default'>
+                <span uk-search-icon />
+                <input className="uk-search-input" type="search" placeholder="song seeds" />
               </div>
             </fieldset>
             <button type='submit'>Submit</button>
