@@ -52,6 +52,7 @@ async function seed() {
   const hammer = await Song.create({
     songId: '2GCFcbxm61rSA8gzsDk6NJ', // Hammer to Fall
     votes: 3,
+    isLast: true,
   });
   const romance = await Song.create({
     songId: '5P5cGNzqh6A353N3ShDK6Y', // Bad Romance
