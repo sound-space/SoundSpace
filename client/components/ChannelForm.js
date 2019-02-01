@@ -16,6 +16,8 @@ class ChannelForm extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSearch = this.handleSearch.bind(this)
+    this.search = search.bind(this)
   }
   handleChange(evt) {
     this.setState({
@@ -28,8 +30,9 @@ class ChannelForm extends Component {
     this.props.createChannels(this.state);
   }
 
-  async handleSearch(query) {
-    const searchResults = await search(query);
+  async handleSearch(evt) {
+    const searchResults = await this.search(evt.target.value);
+    console.log(searchResults)
     this.setState({
       searchResults,
     });
@@ -73,7 +76,7 @@ class ChannelForm extends Component {
 
                   <div className="uk-margin">
                     <input
-                      onChange={evt => this.handleSearch(evt.target.value)}
+                      onChange={this.handleSearch}
                       className="uk-input"
                       type="text"
                       placeholder="Search Songs"
@@ -123,7 +126,13 @@ const mapDispatchToProps = dispatch => ({
   createChannels: body => dispatch(postChannels(body)),
 });
 
+function mapState(state) {
+  return {
+    user: state.userObj
+  }
+}
+
 export default connect(
-  null,
+  mapState,
   mapDispatchToProps
 )(ChannelForm);
