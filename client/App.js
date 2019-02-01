@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import Landing from './components/Landing'
 import Oauth from './components/Oauth'
 import UserInfo from './components/UserInfo'
@@ -25,18 +25,29 @@ class App extends React.Component {
           <Navbar />
         </nav>
         <main>
-          <Switch>
-            <Route exact path='/channels' component={AllChannels} />
-            <Route path='/channels/:id' component={ChannelView} />
-            <Route path='/home' component={UserInfo} />
-            <Route path='/login' component={Oauth} />
-            <Route exact path='/' component={Landing} />
-          </Switch>
+        <Switch>
+          <Route exact path='/channels' component={AllChannels} />
+          <Route path='/channels/:id' component={ChannelView} />
+          <Route path='/home' component={UserInfo} />
+          <Route path='/login' component={Oauth} />
+          <Route exact path='/' component={Landing} />
+        </Switch>
+          {/* <Route component={Routes} /> */}
         </main>
       </div>
     )
   }
 }
+
+// const Routes = props => (
+//   <Switch>
+//     <Route exact path='/channels' component={AllChannels} />
+//     <Route path='/channels/:id' component={ChannelView} />
+//     <Route path='/home' component={UserInfo} />
+//     <Route path='/login' component={Oauth} />
+//     <Route exact path='/' component={Landing} />
+//   </Switch>
+// )
 
 function mapState(state) {
   return {
@@ -52,4 +63,4 @@ function mapState(state) {
 //   }
 // }
 
-export default connect(mapState, null)(App)
+export default withRouter(connect(mapState, null)(App))
