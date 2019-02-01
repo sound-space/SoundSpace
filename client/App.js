@@ -26,11 +26,11 @@ class App extends React.Component {
         </nav>
         <main>
         <Switch>
-        <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
+          <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
           <Route exact path='/channels' component={AllChannels} />
           <Route path='/channels/:id' component={ChannelView} />
           <Route path='/home' component={UserInfo} />
-          <Route path='/login' component={Oauth} />
+          {/* <Route path='/login' component={Oauth} /> */}
           <Route exact path='/' component={Landing} />
         </Switch>
           {/* <Route component={Routes} /> */}
