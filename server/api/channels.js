@@ -65,7 +65,6 @@ router.post('/', async (req, res, next) => {
       },
     });
     if (isNew) {
-      console.log('new!');
       res.json(newChannel);
     } else {
       res.status(409).json({ error: 'Channel already exists' });

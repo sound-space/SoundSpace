@@ -26,7 +26,6 @@ class ChannelForm extends Component {
   }
 
   handleSubmit(evt) {
-    evt.preventDefault();
     this.props.createChannels(this.state);
   }
 
