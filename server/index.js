@@ -1,7 +1,6 @@
 const express = require('express');
 const request = require('request');
 const { client_id, client_secret } = require('../credentials');
-const { User } = require('./db/models');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -10,6 +9,7 @@ const IP = 'http://localhost:8080';
 const redirect_uri = `${IP}/callback`;
 const volleyball = require('volleyball');
 const bodyParser = require('body-parser');
+const { User, Song } = require('./db/models');
 const PORT = 8080;
 const url = require('url');
 
@@ -144,6 +144,17 @@ const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 // start listening to socket connections
 const io = socketio.listen(server);
-const { socketComm, singularity } = require('./socket');
+const { socketComm, singularity, playNewSong } = require('./socket');
 socketComm(io);
 singularity(io);
+app.put('/startChannel', async (req, res, next) => {
+  //Check if no song already playing for the requested channel
+  const songIfExists = await Song.findOne({
+    where: {
+      channelId: req.body.channelId,
+      isPlaying: true,
+    },
+  });
+  //Only play if no song is already playing, this prevents network attacks from forcing channels to skip tracks
+  if (!songIfExists) playNewSong(io, req.body.channelId);
+});

@@ -4,29 +4,10 @@ const { client_id, client_secret } = require('../credentials');
 
 //Gets called when server starts
 const singularity = async io => {
-  const songsChannels = await Song.findAll({
-    where: {
-      isPlaying: true,
-    },
-    include: [
-      {
-        model: Channel,
-      },
-    ],
-  });
-  //Look at every start song, starting every channel's song and sending it to the proper socket channels
-  songsChannels.forEach(async songChannel => {
-    const token = await authenticate();
-    const songInfo = await getSongDetails(token, songChannel.dataValues.songId);
-    io.in(songChannel.dataValues.channel.dataValues.id).emit('song-info', {
-      songId: songInfo.id,
-      timestamp: songChannel.dataValues.channel.dataValues.timestamp,
-    });
-    setTimeout(
-      async () => playNewSong(io, songChannel.dataValues.channel.dataValues.id),
-      songInfo.duration_ms
-    );
-  });
+  const channels = await Channel.findAll();
+  for (let i = 0; i < channels.length; i++) {
+    playNewSong(io, channels[i].id);
+  }
 };
 
 const socketComm = async io => {
@@ -59,7 +40,7 @@ const socketComm = async io => {
   });
 };
 
-module.exports = { socketComm, singularity };
+module.exports = { socketComm, singularity, playNewSong };
 
 //Call this when a song finishes playing
 async function playNewSong(io, channelId) {
@@ -89,9 +70,11 @@ async function playNewSong(io, channelId) {
     },
   });
   //Change the currently playing song to not currently playing
-  await songToUpdate.update({
-    isPlaying: false,
-  });
+  if (songToUpdate) {
+    await songToUpdate.update({
+      isPlaying: false,
+    });
+  }
   //Change the new song to playing
   await songToPlay.update({
     played: true,
@@ -132,7 +115,6 @@ async function getRecommendation(token, channelId) {
     where: {
       channelId,
       played: true,
-      isPlaying: false,
     },
     limit: 2,
     order: [['votes', 'DESC']],

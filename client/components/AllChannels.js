@@ -11,7 +11,7 @@ class AllChannels extends Component {
 
   render () {
     return (
-      <div style={{ margin: '0 50px' }}>
+      <div style={{ padddingTop: '100px', margin: '0 50px' }}>
         <ChannelForm />
         <h1>Channels</h1>
         <div
@@ -21,7 +21,7 @@ class AllChannels extends Component {
           <div className='uk-text-center'>
             <div
               // onClick={this.newChannel.bind(this)}
-              className='  uk-inline-clip uk-transition-toggle uk-light'
+              className='uk-inline-clip uk-transition-toggle uk-light'
               tabIndex='0'
               uk-toggle='target: #channelFormId'
             >
@@ -32,7 +32,7 @@ class AllChannels extends Component {
                   minHeight: '200px',
                   objectFit: 'cover'
                 }}
-                src='./assets/instruments.jpg'
+                src='https://images.unsplash.com/photo-1513829596324-4bb2800c5efb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80'
               />
               <div className='uk-position-center'>
                 <span
