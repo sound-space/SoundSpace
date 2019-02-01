@@ -60,10 +60,9 @@ class ChannelView extends Component {
   };
 
   render() {
-    // Grab meta from the player if we have it
-    const player = this.props.player
-    const albumCoverUrl = player ? player.track_window.current_track.album.images[0] : "/assets/album.jpg"
-    const currentTrackName = player ? player.track_window.current_track.name : "none"
+    const {playerState} = this.props
+    const albumCoverUrl = playerState.track_window ? playerState.track_window.current_track.album.images[0] : '/assets/album.jpg'
+    const currentTrackName =  playerState.track_window ? playerState.track_window.current_track.name : 'none'
     
     return (
       <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left">
@@ -99,7 +98,8 @@ class ChannelView extends Component {
 const mapState = state => {
   return {
     user: state.userObj.user,
-    player: state.playerObj.player
+    player: state.playerObj,
+    playerState: state.playerStateObj
   };
 };
 

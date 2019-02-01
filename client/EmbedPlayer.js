@@ -1,4 +1,5 @@
 import { setPlayer } from './store/player'
+import { setPlayerState } from './store/playerState'
 
 
 export function setTrack(songId, timestamp, deviceId) {
@@ -47,6 +48,7 @@ export function createEventHandlers() {
   // Playback status updates
   this.player.on('player_state_changed', state => {
     console.log('player state changes:', state);
+    setPlayerState(state)
   });
 
   // Ready

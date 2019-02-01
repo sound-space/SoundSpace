@@ -6,7 +6,7 @@ const GOT_PLAYER = 'GOT_PLAYER'
 
 // Action creator
 export const setPlayer = (player) => {
-  console.log('Set Player is running, player:', player)
+  console.log('Set Player is running, type:',typeof player,'player:', player)
   return {
     type: GOT_PLAYER,
     player
