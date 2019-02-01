@@ -32,7 +32,7 @@ class AllChannels extends Component {
                   minHeight: '200px',
                   objectFit: 'cover'
                 }}
-                src='./assets/instruments.jpg'
+                src='https://images.unsplash.com/photo-1513829596324-4bb2800c5efb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80'
               />
               <div className='uk-position-center'>
                 <span
