@@ -45,6 +45,7 @@ class ChannelForm extends Component {
                       value={name}
                       type='text'
                       placeholder='Name'
+                      required
                     />
                   </div>
 
@@ -67,6 +68,7 @@ class ChannelForm extends Component {
                       className='uk-textarea'
                       rows='5'
                       placeholder='Description'
+                      required
                     />
                   </div>
                 </div>

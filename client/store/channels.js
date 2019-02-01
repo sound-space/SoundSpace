@@ -31,7 +31,8 @@ export const fetchChannels = () => async dispatch => {
 
 export const postChannels = body => async dispatch => {
   if (body.imageURL === '') {
-    body.imageURL = 'https://static.thenounproject.com/png/80779-200.png'
+    body.imageURL =
+      'https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80'
   }
   try {
     const { data } = await Axios.post('/api/channels', body)
