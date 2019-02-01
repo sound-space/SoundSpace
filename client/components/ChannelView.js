@@ -3,6 +3,7 @@ import axios from 'axios';
 import createClientSocket from 'socket.io-client';
 import { connect } from 'react-redux';
 import '../styles/ChannelViewStyles.css';
+import ChannelSideBar from "./ChannelSideBar"
 import {
   transferPlaybackHere,
   checkForPlayer,
@@ -19,6 +20,7 @@ class ChannelView extends Component {
       voted: false,
       currentSongId: '',
       device_id: '',
+      showChannelsBar: false
     };
     this.socket = createClientSocket(IP)
     this.stopPlayer = stopPlayer.bind(this)
@@ -39,6 +41,10 @@ class ChannelView extends Component {
     this.stopPlayer();
   }
 
+  showChannelsBar = () => {
+    this.setState({showChannelsBar: !this.state.showChannelsBar})
+  };
+
   vote = async userVote => {
     if (this.state.voted) return;
     try {
@@ -56,7 +62,9 @@ class ChannelView extends Component {
   render() {
     return (
       <div className="channel-view-container">
-        <h1>This is the Channel View</h1>
+        {this.state.showChannelsBar && <ChannelSideBar/>}
+        <button className="uk-button uk-button-primary" onClick={this.showChannelsBar}>ShowChannels</button>
+        <h1>This is the Channel {this.props.match.params.id}</h1>
         <h2>Current Song: {this.state.currentSongId || 'None'}</h2>
 
         <div className="vote-button-container">

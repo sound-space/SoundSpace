@@ -28,47 +28,62 @@ class ChannelForm extends Component {
     const { name, imageURL, description } = this.state
 
     return (
-      <div id='channelFormId' uk-modal='true'>
-        <div className='uk-modal-dialog'>
-          <form onSubmit={this.handleSubmit}>
-            <fieldset className='uk-fieldset'>
-              <legend className='uk-legend'>Make Your Channel</legend>
+      <div id='modal-example' uk-modal='true'>
+        <div id='channelFormId' uk-modal='true'>
+          <div className='uk-modal-dialog uk-border-rounded'>
+            <form onSubmit={this.handleSubmit}>
+              <fieldset className='uk-fieldset'>
+                <h2 style={{ margin: '25px' }} class='uk-modal-title'>
+                  New Channel
+                </h2>
+                <div style={{ margin: '0 25px' }}>
+                  <div className='uk-margin'>
+                    <input
+                      onChange={this.handleChange}
+                      name='name'
+                      className='uk-input'
+                      value={name}
+                      type='text'
+                      placeholder='Name'
+                    />
+                  </div>
 
-              <div className='uk-margin'>
-                <input
-                  onChange={this.handleChange}
-                  name='name'
-                  className='uk-input'
-                  value={name}
-                  type='text'
-                  placeholder='Name'
-                />
-              </div>
+                  <div className='uk-margin'>
+                    <input
+                      onChange={this.handleChange}
+                      name='imageURL'
+                      value={imageURL}
+                      className='uk-input'
+                      type='text'
+                      placeholder='imageURL'
+                    />
+                  </div>
 
-              <div className='uk-margin'>
-                <input
-                  onChange={this.handleChange}
-                  name='imageURL'
-                  value={imageURL}
-                  className='uk-input'
-                  type='text'
-                  placeholder='imageURL'
-                />
-              </div>
-
-              <div className='uk-margin'>
-                <textarea
-                  onChange={this.handleChange}
-                  name='description'
-                  value={description}
-                  className='uk-textarea'
-                  rows='5'
-                  placeholder='Description'
-                />
-              </div>
-            </fieldset>
-            <button type='submit'>Submit</button>
-          </form>
+                  <div className='uk-margin'>
+                    <textarea
+                      onChange={this.handleChange}
+                      name='description'
+                      value={description}
+                      className='uk-textarea'
+                      rows='5'
+                      placeholder='Description'
+                    />
+                  </div>
+                </div>
+                <p className='uk-text-right' style={{ margin: '25px' }}>
+                  <button
+                    className='uk-button uk-button-default uk-modal-close'
+                    type='button'
+                  >
+                    Cancel
+                  </button>
+                  <button className='uk-button uk-button-danger' type='submit'>
+                    Submit
+                  </button>
+                </p>
+              </fieldset>
+            </form>
+          </div>
         </div>
       </div>
     )

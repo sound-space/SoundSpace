@@ -34,7 +34,7 @@ async function seed () {
     }),
     Channel.create({
       name: 'Pop',
-      timestamp: Date.now(),
+      timestamp: Date.now()
       // imageURL: './assets/dj.jpg'
     }),
     Channel.create({

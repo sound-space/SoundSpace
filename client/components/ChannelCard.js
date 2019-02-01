@@ -12,7 +12,7 @@ const ChannelCard = props => (
         />
       </Link>
       <div className='uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-default'>
-        <p className='uk-h4 uk-margin-remove'>(Name of Song)</p>
+        <p className='uk-h6 uk-margin-remove'>{props.channel.description}</p>
       </div>
     </div>
     <p className='uk-margin-small-top'>{props.channel.name}</p>

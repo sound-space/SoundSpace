@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import Landing from './components/Landing'
 import Oauth from './components/Oauth'
 import UserInfo from './components/UserInfo'
@@ -26,6 +26,7 @@ class App extends React.Component {
         </nav>
         <main>
         <Switch>
+        <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
           <Route exact path='/channels' component={AllChannels} />
           <Route path='/channels/:id' component={ChannelView} />
           <Route path='/home' component={UserInfo} />
