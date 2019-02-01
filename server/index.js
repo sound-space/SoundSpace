@@ -25,7 +25,7 @@ app
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
   .use(cors())
-  .use(session())
+  .use(session({ secret: 'The sound of space' }))
   .use(passport.initialize())
   .use(passport.session())
 
@@ -40,18 +40,22 @@ passport.use(
       callbackURL: 'http://localhost:8080/callback',
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
-      User.findOrCreate({ spotifyId: profile.id }, function(err, user) {
-        return done(err, user);
-      });
+      // User.findOrCreate({ spotifyId: profile.id }, function(err, user) {
+      //   return done(err, user);
+      // });
+      console.log('PROFILE')
+      done(null, profile)
     }
   )
 );
 
 passport.serializeUser(function(user, done) {
+  console.log('IN SERIALIZE:', user)
   done(null, user);
 });
 
 passport.deserializeUser(function(obj, done) {
+  console.log('IN DESERIALIZE:', obj)
   done(null, obj);
 });
 
@@ -80,51 +84,53 @@ app.get(
   );
     
     app.get('/callback', function(req, res) {
+      console.log('REQ USER:', req.user)
+      res.redirect('/#/channels')
       // application requests refresh and access tokens
       
-      const code = req.query.code || null;
-      const authOptions = {
-        url: 'https://accounts.spotify.com/api/token',
-        form: {
-          code: code,
-          redirect_uri: redirect_uri,
-          grant_type: 'authorization_code',
-        },
-        headers: {
-          Authorization:
-          'Basic ' +
-          new Buffer(client_id + ':' + client_secret).toString('base64'),
-        },
-        json: true,
-      };
+      // const code = req.query.code || null;
+      // const authOptions = {
+      //   url: 'https://accounts.spotify.com/api/token',
+      //   form: {
+      //     code: code,
+      //     redirect_uri: redirect_uri,
+      //     grant_type: 'authorization_code',
+      //   },
+      //   headers: {
+      //     Authorization:
+      //     'Basic ' +
+      //     new Buffer(client_id + ':' + client_secret).toString('base64'),
+      //   },
+      //   json: true,
+      // };
       
-      request.post(authOptions, function(error, response, body) {
-        if (!error && response.statusCode === 200) {
-          let access_token = body.access_token;
-          let refresh_token = body.refresh_token;
-          const options = {
-            url: 'https://api.spotify.com/v1/me',
-            headers: { Authorization: 'Bearer ' + access_token },
-            json: true,
-          };
+      // request.post(authOptions, function(error, response, body) {
+      //   if (!error && response.statusCode === 200) {
+      //     let access_token = body.access_token;
+      //     let refresh_token = body.refresh_token;
+      //     const options = {
+      //       url: 'https://api.spotify.com/v1/me',
+      //       headers: { Authorization: 'Bearer ' + access_token },
+      //       json: true,
+      //     };
           
-          // use the access token to access the Spotify Web API
-          request.get(options, function(error, response, body) {
-            if (error) console.log(error);
-            let myResponse = { ...body, access_token, refresh_token };
-            // res.json(myResponse)
-            res.redirect('/home/' + querystring.stringify(myResponse));
-          });
-        } else {
-          console.log('error in post response');
-          res.redirect(
-            '/#' +
-            querystring.stringify({
-              error: 'invalid_token',
-            })
-            );
-          }
-        });
+      //     // use the access token to access the Spotify Web API
+      //     request.get(options, function(error, response, body) {
+      //       if (error) console.log(error);
+      //       let myResponse = { ...body, access_token, refresh_token };
+      //       // res.json(myResponse)
+      //       res.redirect('/home/' + querystring.stringify(myResponse));
+      //     });
+      //   } else {
+      //     console.log('error in post response');
+      //     res.redirect(
+      //       '/#' +
+      //       querystring.stringify({
+      //         error: 'invalid_token',
+      //       })
+      //       );
+      //     }
+      //   });
       });
       
       app.use('/api', require('./api')); // include our routes!
