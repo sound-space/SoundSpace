@@ -4,7 +4,6 @@ import { Link, withRouter } from 'react-router-dom'
 const ChannelCard = props => (
   <div className='uk-text-center'>
     <div className='uk-inline-clip uk-transition-toggle' tabIndex='0'>
-    {console.log('Channel Id:', props.channel.id)}
       <Link to={`/channels/${props.channel.id}`}>
         <img
           style={{ minWidth: '200px', minHeight: '200px', objectFit: 'cover' }}

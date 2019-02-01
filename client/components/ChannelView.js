@@ -60,17 +60,34 @@ class ChannelView extends Component {
   };
 
   render() {
+    const player = this.props.player
+    // const albumCoverUrl = player ? 
     return (
-      <div className="channel-view-container">
+      <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left">
         {this.state.showChannelsBar && <ChannelSideBar/>}
-        <button className="uk-button uk-button-primary" onClick={this.showChannelsBar}>ShowChannels</button>
-        <h1>This is the Channel {this.props.match.params.id}</h1>
-        <h2>Current Song: {this.state.currentSongId || 'None'}</h2>
-
-        <div className="vote-button-container">
-          <button onClick={() => this.vote(1)}>Upvote!</button>
-          <button onClick={() => this.vote(-1)}>Downvote!</button>
+        <div className="uk-grid-medium uk-flex-middle uk-margin-top" uk-grid="true">
+          <button className="uk-button uk-button-link uk-margin-right" onClick={this.showChannelsBar}>Show Channels</button>
+          <button className="uk-button uk-button-link uk-margin-right" onClick={() => this.props.history.push('/channels')}>Go back to Channels</button>
         </div>
+
+        <article className="uk-comment uk-margin">
+          <header className="uk-comment-header uk-grid-medium uk-flex-middle uk-grid-divider" uk-grid="true">
+              <div className="uk-width-auto">
+                  <img className="uk-comment-avatar" src="/assets/album.jpg" width="80" height="80" alt=""/>
+              </div>
+              <div className="uk-width-expand">
+                  <h4 className="uk-comment-title uk-margin-remove">Currently playing {player ? player.track_window.current_track.name : "none"}</h4>
+                  <ul className="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                      <li><a href="#">123 users</a></li>
+                  </ul>
+                  <button className="uk-margin-right" uk-icon="icon: plus-circle; ratio: 1.2" uk-tooltip="Upvote!" onClick={() => this.vote(1)}></button>
+                  <button className="uk-margin-right" uk-icon="icon: minus-circle; ratio: 1.2" uk-tooltip="Downvote!" onClick={() => this.vote(-1)}></button>
+              </div>
+          </header>
+          <div className="uk-comment-body uk-margin">
+              <p>You are listening to channel {this.props.match.params.id}</p>
+          </div>
+        </article>
       </div>
     );
   }
@@ -79,7 +96,7 @@ class ChannelView extends Component {
 const mapState = state => {
   return {
     user: state.userObj.user,
-    player: state.playerObj
+    player: state.playerObj.player
   };
 };
 
