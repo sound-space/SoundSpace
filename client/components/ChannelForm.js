@@ -26,7 +26,10 @@ class ChannelForm extends Component {
   }
 
   handleSubmit(evt) {
+    evt.preventDefault();
     this.props.createChannels(this.state);
+    // bugfix for channel query **PLEASE KEEP** state must be cleared or else form will not submit properly
+    this.setState({ searchQuery: '' });
   }
 
   async handleSearch(evt) {
@@ -38,15 +41,25 @@ class ChannelForm extends Component {
 
   addToSeed(song) {
     let seed = this.state.songSeeds;
-    //Seed can't be more than 5
+    // Seed can't be more than 5
     if (seed.length >= 5) return;
     for (let i = 0; i < seed.length; i++) {
-      //Only add the track if it is not in the seed already
+      // Only add the track if it is not in the seed already
       if (seed[i].id === song.id) return;
     }
     seed.push(song);
     this.setState({
       songSeeds: seed,
+    });
+  }
+
+  removeFromSeed(song) {
+    let seed = this.state.songSeeds;
+    let updatedSeed = seed.filter(singleSong => {
+      return song !== singleSong;
+    });
+    this.setState({
+      songSeeds: updatedSeed,
     });
   }
 
@@ -92,13 +105,16 @@ class ChannelForm extends Component {
                       className="uk-input"
                       type="text"
                       placeholder="Search Songs"
-                      required
                     />
                   </div>
                   <div>
                     {this.state.songSeeds.map((track, i) => {
                       return (
-                        <div key={i} onClick={() => this.addToSeed(track)}>
+                        <div
+                          className="remove"
+                          key={i}
+                          onClick={() => this.removeFromSeed(track)}
+                        >
                           {track.name} by{' '}
                           {track.artists.map((artist, j) => {
                             return j === track.artists.length - 1
@@ -113,7 +129,11 @@ class ChannelForm extends Component {
                   <div>
                     {this.state.searchResults.map((track, i) => {
                       return (
-                        <div key={i} onClick={() => this.addToSeed(track)}>
+                        <div
+                          className="add"
+                          key={i}
+                          onClick={() => this.addToSeed(track)}
+                        >
                           {track.name} by{' '}
                           {track.artists.map((artist, j) => {
                             return j === track.artists.length - 1
@@ -124,6 +144,7 @@ class ChannelForm extends Component {
                       );
                     })}
                   </div>
+                  <hr />
 
                   <div className="uk-margin">
                     <textarea
