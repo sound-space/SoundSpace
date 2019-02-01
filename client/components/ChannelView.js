@@ -13,8 +13,8 @@ import {
 const IP = 'http://localhost:8080';
 
 class ChannelView extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       voted: false,
       currentSongId: '',

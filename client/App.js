@@ -26,8 +26,8 @@ class App extends React.Component {
         </nav>
         <main>
           <Switch>
+            <Route exact path='/channels' component={AllChannels} />
             <Route path='/channels/:id' component={ChannelView} />
-            <Route path='/channels' component={AllChannels} />
             <Route path='/home' component={UserInfo} />
             <Route path='/login' component={Oauth} />
             <Route exact path='/' component={Landing} />
