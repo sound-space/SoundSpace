@@ -11,7 +11,7 @@ class AllChannels extends Component {
 
   render () {
     return (
-      <div style={{ margin: '0 50px' }}>
+      <div style={{ padddingTop: '100px', margin: '0 50px' }}>
         <ChannelForm />
         <h1>Channels</h1>
         <div

@@ -8,7 +8,7 @@ import AllChannels from './components/AllChannels'
 import Navbar from './components/Navbar'
 
 const App = () => (
-  <div>
+  <div style={{ height: '1400px' }}>
     <nav>
       <Navbar />
     </nav>

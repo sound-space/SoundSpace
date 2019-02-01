@@ -3,17 +3,13 @@ import { urlList } from './urlList'
 
 const Landing = () => {
   return (
-    <div
-      style={{
-        height: '1500px'
-      }}
-    >
+    <div>
       <div />
       <div
-        style={{
-          width: '100%',
-          height: '100%'
-        }}
+      // style={{
+      //   width: '100%',
+      //   height: '100%'
+      // }}
       >
         <div
           className='uk-height-large uk-background-cover uk-light uk-flex'
@@ -21,42 +17,29 @@ const Landing = () => {
           style={{
             height: '800px',
             backgroundImage: `url(${
-              urlList[Math.floor(Math.random() * Math.floor(10))]
+              urlList[Math.floor(Math.random() * Math.floor(9))]
             })`
           }}
         >
           <h1
             style={{
               color: '#FFF',
-              fontSize: '100px',
-              fontWeight: 'bold'
+              fontSize: '120px',
+              fontWeight: 'bold',
+              fontFamily: 'Tajawal'
             }}
             className='uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical'
           >
             Sound Space
-            <a
+            <h1
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                margin: ' 50px 0',
-                alignItems: 'center'
+                fontSize: '60px',
+                fontWeight: 'black',
+                fontFamily: 'Tajawal'
               }}
-              href='/login'
             >
-              <button
-                style={{
-                  color: '#FFF',
-                  backgroundColor: '#000',
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                  padding: '25px 50px'
-                }}
-                class='uk-button uk-button-primary'
-              >
-                Sign In
-              </button>
-            </a>
+              Your Social Jukebox
+            </h1>
           </h1>
         </div>
 
@@ -73,6 +56,43 @@ const Landing = () => {
           uk-slideshow-item='next'
         />
       </div>
+      <h3
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: '80px',
+          fontFamily: 'Tajawal',
+          fontWeight: 'Bold'
+        }}
+      >
+        Already have a Spotify Premium Account?
+      </h3>
+      <a
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          margin: ' 50px 0',
+          alignItems: 'center'
+        }}
+        href='/login'
+      >
+        <button
+          style={{
+            color: '#FFF',
+            backgroundColor: '#000',
+            fontSize: '25px',
+            fontWeight: 'regular',
+            fontFamily: 'Tajawal',
+            padding: '15px 40px 10px 40px'
+          }}
+          className='uk-button uk-button-primary'
+        >
+          Sign In
+        </button>
+      </a>
     </div>
   )
 }

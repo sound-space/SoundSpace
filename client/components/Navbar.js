@@ -4,7 +4,10 @@ import { connect } from 'react-redux'
 
 const NavBar = props => {
   return (
-    <nav className='uk-navbar-container' uk-navbar='true'>
+    <nav
+      uk-navbar='true'
+      style={{ zIndex: '50', top: '0', position: 'fixed', width: '100%' }}
+    >
       <div>
         <Link to='/home'>
           {' '}
