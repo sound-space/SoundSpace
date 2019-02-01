@@ -33,7 +33,7 @@ class ChannelForm extends Component {
           <div className='uk-modal-dialog uk-border-rounded'>
             <form onSubmit={this.handleSubmit}>
               <fieldset className='uk-fieldset'>
-                <h2 style={{ margin: '25px' }} class='uk-modal-title'>
+                <h2 style={{ margin: '25px' }} className='uk-modal-title'>
                   New Channel
                 </h2>
                 <div style={{ margin: '0 25px' }}>

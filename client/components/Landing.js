@@ -75,16 +75,17 @@ const Landing = () => {
           flexDirection: 'column',
           justifyContent: 'center',
           margin: ' 50px 0',
-          alignItems: 'center'
+          alignItems: 'center',
+          textDecoration: 'none'
         }}
         href='/login'
       >
         <button
           style={{
             color: '#FFF',
-            backgroundColor: '#000',
+            backgroundColor: 'rgba(66, 244, 137, 0.8)',
             fontSize: '25px',
-            fontWeight: 'regular',
+            fontWeight: 'Black',
             fontFamily: 'Tajawal',
             padding: '15px 40px 10px 40px'
           }}
