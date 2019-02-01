@@ -1,3 +1,6 @@
+import { setPlayer } from './store/player'
+
+
 export function setTrack(songId, timestamp, deviceId) {
   fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
     method: 'PUT',
@@ -25,7 +28,7 @@ export function checkForPlayer() {
     });
     this.createEventHandlers();
     this.player.connect();
-    this.props.exportPlayer(this.player)
+    setPlayer(this.player)
   }
 }
 

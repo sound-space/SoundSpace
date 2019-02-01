@@ -7,16 +7,16 @@ import ChannelView from './components/ChannelView'
 import AllChannels from './components/AllChannels'
 import Navbar from './components/Navbar'
 import { connect } from 'react-redux'
-import { setPlayer } from './store/player'
-import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
+// import { setPlayer } from './store/player'
+// import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
 class App extends React.Component {
-  constructor() {
-    super()
-    this.checkForPlayer = checkForPlayer.bind(this)
-    this.createEventHandlers = createEventHandlers.bind(this)
-    this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 200)
-  }
+  // constructor() {
+    // super()
+    // this.checkForPlayer = checkForPlayer.bind(this)
+    // this.createEventHandlers = createEventHandlers.bind(this)
+    // this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 200)
+  // }
   
   render() {
     return (
@@ -41,16 +41,15 @@ class App extends React.Component {
 function mapState(state) {
   return {
     user: state.userObj,
-    player: state.playerObj
   }
 }
 
-function mapDispatch(dispatch) {
-  return {
-    exportPlayer(player) {
-      dispatch(setPlayer(player))
-    }
-  }
-}
+// function mapDispatch(dispatch) {
+//   return {
+//     exportPlayer(player) {
+//       dispatch(setPlayer(player))
+//     }
+//   }
+// }
 
-export default connect(mapState, mapDispatch)(App)
+export default connect(mapState, null)(App)

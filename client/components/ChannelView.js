@@ -20,12 +20,13 @@ class ChannelView extends Component {
       currentSongId: '',
       device_id: '',
     };
-    this.socket = createClientSocket(IP);
-    this.stopPlayer = stopPlayer.bind(this);
-    this.setTrack = setTrack.bind(this);
-    this.transferPlaybackHere = transferPlaybackHere.bind(this);
+    this.socket = createClientSocket(IP)
+    this.stopPlayer = stopPlayer.bind(this)
+    this.setTrack = setTrack.bind(this)
+    this.transferPlaybackHere = transferPlaybackHere.bind(this)
     this.checkForPlayer = checkForPlayer.bind(this);
-    this.createEventHandlers = createEventHandlers.bind(this);
+    this.createEventHandlers = createEventHandlers.bind(this)
+    this.player = this.props.player
   }
 
   componentDidMount() {
@@ -70,6 +71,7 @@ class ChannelView extends Component {
 const mapState = state => {
   return {
     user: state.userObj.user,
+    player: state.playerObj
   };
 };
 
