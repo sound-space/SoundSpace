@@ -63,4 +63,4 @@ function mapState(state) {
 //   }
 // }
 
-export default withRouter(connect(mapState, null)(App))
+export default connect(mapState, null)(App)

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Route, HashRouter, BrowserRouter, Switch, } from 'react-router-dom'
+import { Route, HashRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import './styles/App.css'
 import App from './App'
@@ -9,7 +9,7 @@ import store from './store'
 ReactDOM.render(
   <Provider store={store}>
     <HashRouter>
-    <App />
+      <Route component={App} />
     </HashRouter>
   </Provider>,
   document.getElementById('root')
