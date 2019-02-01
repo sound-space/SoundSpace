@@ -60,10 +60,9 @@ class ChannelView extends Component {
   };
 
   render() {
-    // Grab meta from the player if we have it
-    const playerState = this.props.playerState
-    const albumCoverUrl = playerState.track_window ? playerState.track_window.current_track.album.images[0] : "/assets/album.jpg"
-    const currentTrackName = playerState.track_window ? playerState.track_window.current_track.name : "none"
+    const {playerState} = this.props
+    const albumCoverUrl = playerState.track_window ? playerState.track_window.current_track.album.images[0] : '/assets/album.jpg'
+    const currentTrackName =  playerState.track_window ? playerState.track_window.current_track.name : 'none'
     
     return (
       <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left">
