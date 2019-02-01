@@ -10,35 +10,23 @@ import { connect } from 'react-redux'
 // import { setPlayer } from './store/player'
 // import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
-class App extends React.Component {
-  // constructor() {
-    // super()
-    // this.checkForPlayer = checkForPlayer.bind(this)
-    // this.createEventHandlers = createEventHandlers.bind(this)
-    // this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 200)
-  // }
-  
-  render() {
-    return (
-      <div>
-        <nav>
-          <Navbar />
-        </nav>
-        <main>
-        <Switch>
-        <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
-          <Route exact path='/channels' component={AllChannels} />
-          <Route path='/channels/:id' component={ChannelView} />
-          <Route path='/home' component={UserInfo} />
-          <Route path='/login' component={Oauth} />
-          <Route exact path='/' component={Landing} />
-        </Switch>
-          {/* <Route component={Routes} /> */}
-        </main>
-      </div>
-    )
-  }
-}
+const App = () => (
+  <div style={{ height: '1400px' }}>
+    <nav>
+      <Navbar />
+    </nav>
+    <main>
+      <Switch>
+        <Redirect from='/channels/redirect/:id' to='/channels/:id' />
+        <Route path='/channels/:id' component={ChannelView} />
+        <Route path='/channels' component={AllChannels} />
+        <Route path='/home' component={UserInfo} />
+        <Route path='/login' component={Oauth} />
+        <Route exact path='/' component={Landing} />
+      </Switch>
+    </main>
+  </div>
+)
 
 // const Routes = props => (
 //   <Switch>
@@ -50,9 +38,9 @@ class App extends React.Component {
 //   </Switch>
 // )
 
-function mapState(state) {
+function mapState (state) {
   return {
-    user: state.userObj,
+    user: state.userObj
   }
 }
 
@@ -64,4 +52,7 @@ function mapState(state) {
 //   }
 // }
 
-export default connect(mapState, null)(App)
+export default connect(
+  mapState,
+  null
+)(App)
