@@ -1,67 +1,100 @@
-import React from 'react';
+import React from 'react'
+import { urlList } from './urlList'
 
 const Landing = () => {
   return (
-    <div
-      style={{
-        height: '1500px',
-      }}
-    >
+    <div>
       <div />
       <div
-        style={{
-          width: '100%',
-          height: '100%',
-        }}
+      // style={{
+      //   width: '100%',
+      //   height: '100%'
+      // }}
       >
         <div
-          className="uk-height-large uk-background-cover uk-light uk-flex"
-          uk-parallax="bgy: -200"
+          className='uk-height-large uk-background-cover uk-light uk-flex'
+          uk-parallax='bgy: -200'
           style={{
-            height: '600px',
-            backgroundImage: 'url(./assets/instruments.jpg)',
+            height: '800px',
+            backgroundImage: `url(${
+              urlList[Math.floor(Math.random() * Math.floor(9))]
+            })`
           }}
         >
           <h1
-            style={{ fontSize: '60px' }}
-            className="uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical"
+            style={{
+              color: '#FFF',
+              fontSize: '120px',
+              fontWeight: 'bold',
+              fontFamily: 'Tajawal'
+            }}
+            className='uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical'
           >
             Sound Space
-            <a
+            <h1
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                margin: ' 50px 0',
-                alignItems: 'center',
+                fontSize: '60px',
+                fontWeight: 'black',
+                fontFamily: 'Tajawal'
               }}
-              href="/login"
             >
-              <button
-                style={{ fontSize: '20px' }}
-                className="uk-button uk-button-primary"
-              >
-                Sign In
-              </button>
-            </a>
+              Your Social Jukebox
+            </h1>
           </h1>
         </div>
 
         <a
-          className="uk-position-center-left uk-position-small uk-hidden-hover"
-          href="#"
-          uk-slidenav-previous="true"
-          uk-slideshow-item="previous"
+          className='uk-position-center-left uk-position-small uk-hidden-hover'
+          href='#'
+          uk-slidenav-previous='true'
+          uk-slideshow-item='previous'
         />
         <a
-          className="uk-position-center-right uk-position-small uk-hidden-hover"
-          href="#"
-          uk-slidenav-next="true"
-          uk-slideshow-item="next"
+          className='uk-position-center-right uk-position-small uk-hidden-hover'
+          href='#'
+          uk-slidenav-next='true'
+          uk-slideshow-item='next'
         />
       </div>
+      <h3
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: '80px',
+          fontFamily: 'Tajawal',
+          fontWeight: 'Bold'
+        }}
+      >
+        Already have a Spotify Premium Account?
+      </h3>
+      <a
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          margin: ' 50px 0',
+          alignItems: 'center'
+        }}
+        href='/login'
+      >
+        <button
+          style={{
+            color: '#FFF',
+            backgroundColor: '#000',
+            fontSize: '25px',
+            fontWeight: 'regular',
+            fontFamily: 'Tajawal',
+            padding: '15px 40px 10px 40px'
+          }}
+          className='uk-button uk-button-primary'
+        >
+          Sign In
+        </button>
+      </a>
     </div>
-  );
-};
+  )
+}
 
-export default Landing;
+export default Landing

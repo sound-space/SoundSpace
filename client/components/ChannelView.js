@@ -3,6 +3,7 @@ import axios from 'axios';
 import createClientSocket from 'socket.io-client';
 import { connect } from 'react-redux';
 import '../styles/ChannelViewStyles.css';
+import ChannelSideBar from "./ChannelSideBar"
 import {
   transferPlaybackHere,
   checkForPlayer,
@@ -13,19 +14,21 @@ import {
 const IP = 'http://localhost:8080';
 
 class ChannelView extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       voted: false,
       currentSongId: '',
       device_id: '',
+      showChannelsBar: false
     };
-    this.socket = createClientSocket(IP);
-    this.stopPlayer = stopPlayer.bind(this);
-    this.setTrack = setTrack.bind(this);
-    this.transferPlaybackHere = transferPlaybackHere.bind(this);
+    this.socket = createClientSocket(IP)
+    this.stopPlayer = stopPlayer.bind(this)
+    this.setTrack = setTrack.bind(this)
+    this.transferPlaybackHere = transferPlaybackHere.bind(this)
     this.checkForPlayer = checkForPlayer.bind(this);
-    this.createEventHandlers = createEventHandlers.bind(this);
+    this.createEventHandlers = createEventHandlers.bind(this)
+    this.player = this.props.player
   }
 
   componentDidMount() {
@@ -37,6 +40,10 @@ class ChannelView extends Component {
     this.socket.emit('leave', this.props.match.params.id);
     this.stopPlayer();
   }
+
+  showChannelsBar = () => {
+    this.setState({showChannelsBar: !this.state.showChannelsBar})
+  };
 
   vote = async userVote => {
     if (this.state.voted) return;
@@ -55,7 +62,9 @@ class ChannelView extends Component {
   render() {
     return (
       <div className="channel-view-container">
-        <h1>This is the Channel View</h1>
+        {this.state.showChannelsBar && <ChannelSideBar/>}
+        <button className="uk-button uk-button-primary" onClick={this.showChannelsBar}>ShowChannels</button>
+        <h1>This is the Channel {this.props.match.params.id}</h1>
         <h2>Current Song: {this.state.currentSongId || 'None'}</h2>
 
         <div className="vote-button-container">
@@ -70,6 +79,7 @@ class ChannelView extends Component {
 const mapState = state => {
   return {
     user: state.userObj.user,
+    player: state.playerObj
   };
 };
 
