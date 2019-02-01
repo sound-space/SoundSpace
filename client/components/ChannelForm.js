@@ -55,6 +55,12 @@ class ChannelForm extends Component {
 
   removeFromSeed (song) {
     let seed = this.state.songSeeds
+    let updatedSeed = seed.filter(singleSong => {
+      return song !== singleSong
+    })
+    this.setState({
+      songSeeds: updatedSeed
+    })
   }
 
   render () {
@@ -107,7 +113,7 @@ class ChannelForm extends Component {
                         <div
                           className='remove'
                           key={i}
-                          onClick={() => this.addToSeed(track)}
+                          onClick={() => this.removeFromSeed(track)}
                         >
                           {track.name} by{' '}
                           {track.artists.map((artist, j) => {
