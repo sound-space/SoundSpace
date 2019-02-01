@@ -1,72 +1,72 @@
-import Axios from 'axios';
+import Axios from 'axios'
 
 const channelsObj = {
-  channels: [],
-};
+  channels: []
+}
 
 // Action Types
-const GET_CHANNELS = 'GET_CHANNELS';
-const MAKE_CHANNELS = 'MAKE_CHANNELS';
+const GET_CHANNELS = 'GET_CHANNELS'
+const MAKE_CHANNELS = 'MAKE_CHANNELS'
 
 // action creator
 export const getChannels = channels => ({
   type: GET_CHANNELS,
-  payload: channels,
-});
+  payload: channels
+})
 
 export const makeChannels = channels => ({
   type: MAKE_CHANNELS,
-  payload: channels,
-});
+  payload: channels
+})
 
 // Thunks
 export const fetchChannels = () => async dispatch => {
   try {
-    const { data } = await Axios.get('/api/channels');
-    dispatch(getChannels(data));
+    const { data } = await Axios.get('/api/channels')
+    dispatch(getChannels(data))
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
+}
 
 export const postChannels = body => async dispatch => {
   if (body.imageURL === '') {
     body.imageURL =
-      'https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80';
+      'https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80'
   }
   try {
-    const { data } = await Axios.post('/api/channels', body);
+    const { data } = await Axios.post('/api/channels', body)
     if (data.error) {
-      alert('Channel already exist, Channel name required');
+      alert('Channel already exist, Channel name required')
     } else {
-      //After channel succesfully created, post seed songs
+      // After channel succesfully created, post seed songs
       const songRes = await Axios.post('/api/songs', {
         songIds: body.songSeeds.map(song => {
-          return song.id;
+          return song.id
         }),
-        channelId: data.id,
-      });
-      //Start the music!
+        channelId: data.id
+      })
+      dispatch(makeChannels(data))
+      // Start the music!
       await Axios.put('/startChannel', {
-        channelId: data.id,
-      });
+        channelId: data.id
+      })
       if (songRes.error) {
-        alert('Channel seed error');
+        alert('Channel seed error')
       }
-      dispatch(makeChannels(data));
     }
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
+}
 
-export default function(state = channelsObj, action) {
+export default function (state = channelsObj, action) {
   switch (action.type) {
     case GET_CHANNELS:
-      return { ...state, channels: action.payload };
+      return { ...state, channels: action.payload }
     case MAKE_CHANNELS:
-      return { ...state, channels: [...state.channels, action.payload] };
+      return { ...state, channels: [...state.channels, action.payload] }
     default:
-      return state;
+      return state
   }
 }
