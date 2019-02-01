@@ -57,7 +57,19 @@ class ChannelForm extends Component {
                       value={imageURL}
                       className='uk-input'
                       type='text'
-                      placeholder='imageURL'
+                      placeholder='Image URL'
+                    />
+                  </div>
+
+                  <div className='uk-margin'>
+                    <input
+                      onChange={this.handleChange}
+                      // search='search'
+                      className='uk-input'
+                      // value={search}
+                      type='text'
+                      placeholder='Search Songs'
+                      required
                     />
                   </div>
 
