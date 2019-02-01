@@ -1,9 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 const ChannelCard = props => (
   <div className='uk-text-center'>
     <div className='uk-inline-clip uk-transition-toggle' tabIndex='0'>
+    {console.log('Channel Id:', props.channel.id)}
       <Link to={`/channels/${props.channel.id}`}>
         <img
           style={{ minWidth: '200px', minHeight: '200px', objectFit: 'cover' }}
@@ -18,4 +19,4 @@ const ChannelCard = props => (
   </div>
 )
 
-export default ChannelCard
+export default withRouter(ChannelCard)
