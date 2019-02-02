@@ -4,7 +4,7 @@ module.exports = router;
 
 //Post multiple songs
 router.post('/', async (req, res, next) => {
-  const songIds = JSON.parse(req.body.songIds);
+  const songIds = req.body.songIds;
   const channelId = Number(req.body.channelId);
   const songObjs = songIds.map((songId, i) => {
     return {

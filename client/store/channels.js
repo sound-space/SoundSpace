@@ -39,7 +39,21 @@ export const postChannels = body => async dispatch => {
     if (data.error) {
       alert('Channel already exist, Channel name required')
     } else {
+      // After channel succesfully created, post seed songs
+      const songRes = await Axios.post('/api/songs', {
+        songIds: body.songSeeds.map(song => {
+          return song.id
+        }),
+        channelId: data.id
+      })
       dispatch(makeChannels(data))
+      // Start the music!
+      await Axios.put('/startChannel', {
+        channelId: data.id
+      })
+      if (songRes.error) {
+        alert('Channel seed error')
+      }
     }
   } catch (error) {
     console.error(error)
