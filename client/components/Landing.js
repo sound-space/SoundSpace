@@ -31,7 +31,7 @@ const Landing = () => {
             className='uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical'
           >
             Sound Space
-            <h1
+            <h2
               style={{
                 fontSize: '60px',
                 fontWeight: 'black',
@@ -39,7 +39,7 @@ const Landing = () => {
               }}
             >
               Your Social Jukebox
-            </h1>
+            </h2>
           </h1>
         </div>
 

@@ -15,7 +15,7 @@ const App = () => (
     <nav>
       <Navbar />
     </nav>
-    <main>
+    <main style={{ position:"relative", top: '100px' }}>
       <Switch>
         <Redirect from='/channels/redirect/:id' to='/channels/:id' />
         <Route path='/channels/:id' component={ChannelView} />
