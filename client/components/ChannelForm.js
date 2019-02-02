@@ -38,6 +38,12 @@ class ChannelForm extends Component {
   }
 
   async handleSearch(evt) {
+    if (evt.target.value === '') {
+      this.setState({
+        searchResults: [],
+      });
+      return;
+    }
     const { tracks } = await this.search(evt.target.value);
     this.setState({
       searchResults: tracks.items,
