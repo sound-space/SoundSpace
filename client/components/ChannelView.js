@@ -66,7 +66,6 @@ class ChannelView extends Component {
 
   render() {
     const playerState = this.props.playerState
-    console.log("PLAYER STATE IN RENDER", playerState)
     const albumCoverUrl = playerState.track_window ? playerState.track_window.current_track.album.images[0].url : '/assets/album.jpg'
     const currentTrackName =  playerState.track_window ? playerState.track_window.current_track.name : 'none'
     
@@ -88,6 +87,9 @@ class ChannelView extends Component {
                   <ul className="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
                       <li>123 users</li>
                   </ul>
+                  <button className="uk-margin-right" uk-tooltip="Upvote!" onClick={() => this.vote(1)}>
+                    <i className="uk-icon-thumbs-up"></i>
+                  </button>
                   <button className="uk-margin-right" uk-icon="icon: plus-circle; ratio: 1.2" uk-tooltip="Upvote!" onClick={() => this.vote(1)}></button>
                   <button className="uk-margin-right" uk-icon="icon: minus-circle; ratio: 1.2" uk-tooltip="Downvote!" onClick={() => this.vote(-1)}></button>
               </div>
@@ -103,7 +105,6 @@ class ChannelView extends Component {
 }
 
 const mapState = state => {
-  console.log("STATE IN MAPTOPROPS", state)
   return {
     user: state.userObj.user,
     player: state.playerObj,

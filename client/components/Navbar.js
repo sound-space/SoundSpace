@@ -9,7 +9,7 @@ const NavBar = props => {
       style={{ zIndex: '50', top: '0', position: 'fixed', width: '100%' }}
     >
       <div>
-        <Link to='/home'>
+        <Link to='/channels'>
           {' '}
           <img style={{ width: '100px' }} src='./assets/ss_logo.png' />
         </Link>

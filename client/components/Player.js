@@ -114,8 +114,7 @@ class Player extends React.Component {
   };
 
   render() {
-    console.log("PROPS IN PLAYER", this.props)
-    return <div>Player Loading</div>;
+    return <div></div>;
   }
 }
 
