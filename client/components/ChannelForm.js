@@ -27,6 +27,11 @@ class ChannelForm extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
+    //Prevent submission when no songs are selected
+    if (this.state.songSeeds.length < 1) {
+      alert('Please select some tracks to start your channel!');
+      return;
+    }
     this.props.createChannels(this.state);
     // bugfix for channel query **PLEASE KEEP** state must be cleared or else form will not submit properly
     this.setState({ searchQuery: '' });
@@ -108,6 +113,10 @@ class ChannelForm extends Component {
                     />
                   </div>
                   <div>
+                    {this.state.songSeeds.length > 0 && (
+                      <h5>Selected Tracks (up to 5)</h5>
+                    )}
+
                     {this.state.songSeeds.map((track, i) => {
                       return (
                         <div

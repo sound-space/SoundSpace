@@ -38,9 +38,9 @@ const App = () => (
 //   </Switch>
 // )
 
-function mapState(state) {
+function mapState (state) {
   return {
-    user: state.userObj,
+    user: state.userObj
   }
 }
 
@@ -52,4 +52,7 @@ function mapState(state) {
 //   }
 // }
 
-export default connect(mapState, null)(App)
+export default connect(
+  mapState,
+  null
+)(App)
