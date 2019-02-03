@@ -41,21 +41,23 @@ passport.use(
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
       // User.findOrCreate({ spotifyId: profile.id }, function(err, user) {
-      //   return done(err, user);
+      //   // return done(err, user);
       // });
-      console.log('PROFILE')
-      done(null, profile)
+      profile.access_token = accessToken
+      profile.refresh_token = refreshToken
+      // console.log('PROFILE: ', profile)
+      return done(null, profile)
     }
   )
 );
 
 passport.serializeUser(function(user, done) {
-  console.log('IN SERIALIZE:', user)
+  console.log('IN SERIALIZE:')
   done(null, user);
 });
 
 passport.deserializeUser(function(obj, done) {
-  console.log('IN DESERIALIZE:', obj)
+  console.log('IN DESERIALIZE:')
   done(null, obj);
 });
 
@@ -69,6 +71,7 @@ app.get(
   passport.authenticate('spotify', {
     scope,
   })
+  
   // function(req, res) {
   //   // application requests authorization
   //   res.redirect(
@@ -83,9 +86,14 @@ app.get(
   //   }
   );
     
-    app.get('/callback', function(req, res) {
+    app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/login' }),
+    function(req, res) {
+      // Successful authentication, redirect home.
       console.log('REQ USER:', req.user)
       res.redirect('/#/channels')
+      // res.redirect('/');
+    // }, function(req, res) {
+    //   res.redirect('/#/channels')
       // application requests refresh and access tokens
       
       // const code = req.query.code || null;
