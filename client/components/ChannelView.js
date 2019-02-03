@@ -5,13 +5,6 @@ import { connect } from 'react-redux'
 import '../styles/ChannelViewStyles.css'
 import ChannelSideBar from './ChannelSideBar'
 import Player from './Player'
-import {
-  transferPlaybackHere,
-  checkForPlayer,
-  createEventHandlers,
-  setTrack,
-  stopPlayer
-} from '../EmbedPlayer'
 const IP = 'http://localhost:8080'
 
 class ChannelView extends Component {
@@ -25,23 +18,15 @@ class ChannelView extends Component {
       playerState: {}
     }
     this.socket = createClientSocket(IP)
-    this.stopPlayer = stopPlayer.bind(this)
-    this.setTrack = setTrack.bind(this)
-    this.transferPlaybackHere = transferPlaybackHere.bind(this)
-    this.checkForPlayer = checkForPlayer.bind(this)
-    this.createEventHandlers = createEventHandlers.bind(this)
-    this.player = this.props.player
   }
 
   componentDidMount () {
-    // this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
     this.socket.emit('room', this.props.match.params.id)
   }
 
   componentWillUnmount () {
-    // If navigating away from ChannelView, disconnect from socket and stop player
+    // If navigating away from ChannelView, disconnect from socket
     this.socket.emit('leave', this.props.match.params.id)
-    this.stopPlayer()
   }
 
   showChannelsBar = () => {
@@ -64,10 +49,10 @@ class ChannelView extends Component {
 
   render () {
     const playerState = this.props.playerState
-    const albumCoverUrl = playerState.track_window
+    const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
       : '/assets/album.jpg'
-    const currentTrackName = playerState.track_window
+    const currentTrackName = playerState
       ? playerState.track_window.current_track.name
       : 'none'
 
