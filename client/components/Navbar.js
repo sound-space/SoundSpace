@@ -15,8 +15,9 @@ const NavBar = props => {
         </Link>
       </div>
       {props.user.id && (
-        <div className='uk-navbar-right' style={{ marginRight: '40px' }}>
-          <Link to='/logout'>Log Out</Link>
+        <div className="uk-navbar-right uk-grid-medium uk-flex-middle uk-margin-top" uk-grid="true">
+          <p className="uk-margin-right">Welcome, {props.user.id}</p>
+          <button className="uk-button uk-button-link uk-margin-right" onClick={() => this.props.history.push('/logout')}>Log out</button>
         </div>
       )}
     </nav>
