@@ -55,10 +55,9 @@ class AllChannels extends Component {
         <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
           Active Rooms: {this.props.channels.length}
         </h3>
-        <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
-          Active Users: {Math.ceil(Math.random() * Math.floor(1000))}
-        </h3>
-
+        {/* <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
+          Active Users: 0
+        </h3> */}
         <div
           className='uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-match uk-grid-small'
           uk-grid='true'
