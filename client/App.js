@@ -10,26 +10,26 @@ import { connect } from 'react-redux'
 // import { setPlayer } from './store/player'
 // import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
-const App = (props) => {
+const App = props => {
   return (
     <div style={{ height: '1400px' }}>
       <nav>
         <Navbar />
       </nav>
-      <main style={{ position:"relative", top: '100px' }}>
+      <main style={{ position: 'relative', top: '100px' }}>
         <Switch>
-          {props.user.id && 
+          {props.user.id && (
             <Switch>
               <Redirect from='/channels/redirect/:id' to='/channels/:id' />
               <Route path='/channels/:id' component={ChannelView} />
               <Route path='/channels' component={AllChannels} />
-              <Redirect from='*' to="/channels"/>
+              <Redirect from='*' to='/channels' />
               {/* <Route path='/login' component={Oauth} /> */}
             </Switch>
-          }
+          )}
           <Route path='/home' component={UserInfo} />
           <Route exact path='/' component={Landing} />
-          <Redirect from='*' to="/"/>
+          <Redirect from='*' to='/' />
         </Switch>
       </main>
     </div>
