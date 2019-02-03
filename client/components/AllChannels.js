@@ -25,7 +25,7 @@ class AllChannels extends Component {
 
   render () {
     return (
-      <div style={{ paddingTop: '150px', margin: '0 50px' }}>
+      <div style={{ paddingTop: '160px', margin: '0 50px' }}>
         <nav className='uk-navbar-container' uk-navbar='true'>
           <div className='uk-navbar-left'>
             <div className='uk-navbar-item'>
@@ -43,9 +43,22 @@ class AllChannels extends Component {
           </div>
         </nav>
         <ChannelForm />
-        <h1 style={{ fontFamily: 'Tajawal', fontWeight: 'bold' }}>
-          Music Channels
+        <h1
+          style={{
+            fontFamily: 'Tajawal',
+            fontWeight: 'bold',
+            marginTop: '30px'
+          }}
+        >
+          Sound Space Music Channels
         </h1>
+        <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
+          Active Rooms: {this.props.channels.length}
+        </h3>
+        <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
+          Active Users: {Math.ceil(Math.random() * Math.floor(1000))}
+        </h3>
+
         <div
           className='uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-match uk-grid-small'
           uk-grid='true'
