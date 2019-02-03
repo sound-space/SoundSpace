@@ -12,11 +12,13 @@ class ChannelForm extends Component {
       description: '',
       searchQuery: '',
       searchResults: [],
-      songSeeds: []
+      songSeeds: [],
+      buttonText: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
+    this.handleClick = this.handleClick.bind(this)
     this.search = search.bind(this)
   }
   handleChange (evt) {
@@ -33,8 +35,19 @@ class ChannelForm extends Component {
       return
     }
     this.props.createChannels(this.state)
-    // bugfix for channel query **PLEASE KEEP** state must be cleared or else form will not submit properly
-    this.setState({ searchQuery: '' })
+    this.setState({
+      name: '',
+      imageURL: '',
+      description: '',
+      searchQuery: '',
+      searchResults: [],
+      songSeeds: [],
+      buttonText: !this.state.buttonText
+    })
+  }
+
+  handleClick () {
+    this.setState({ buttonText: false })
   }
 
   async handleSearch (evt) {
@@ -81,114 +94,146 @@ class ChannelForm extends Component {
       <div id='modal-example' uk-modal='true'>
         <div id='channelFormId' uk-modal='true'>
           <div className='uk-modal-dialog uk-border-rounded'>
+            {this.state.buttonText ? (
+              ''
+            ) : (
+              <button
+                className='uk-modal-close-default'
+                type='button'
+                uk-close='true'
+              />
+            )}
+
             <form onSubmit={this.handleSubmit}>
               <fieldset className='uk-fieldset'>
                 <h2 style={{ margin: '25px' }} className='uk-modal-title'>
-                  New Channel
+                  {this.state.buttonText ? 'Success' : 'New Channel'}
                 </h2>
-                <div style={{ margin: '0 25px' }}>
-                  <div className='uk-margin'>
-                    <input
-                      onChange={this.handleChange}
-                      name='name'
-                      className='uk-input'
-                      value={name}
-                      type='text'
-                      placeholder='Name'
-                      required
-                    />
+                {this.state.buttonText ? (
+                  <div style={{ marginLeft: '25px' }}>
+                    New channel has been created successfully and your songs are
+                    now playing live!
                   </div>
+                ) : (
+                  <div style={{ margin: '0 25px' }}>
+                    <div className='uk-margin'>
+                      <input
+                        onChange={this.handleChange}
+                        name='name'
+                        className='uk-input'
+                        value={name}
+                        type='text'
+                        placeholder='Name'
+                        required
+                      />
+                    </div>
 
-                  <div className='uk-margin'>
-                    <input
-                      onChange={this.handleChange}
-                      name='imageURL'
-                      value={imageURL}
-                      className='uk-input'
-                      type='text'
-                      placeholder='Image URL'
-                    />
-                  </div>
+                    <div className='uk-margin'>
+                      <input
+                        onChange={this.handleChange}
+                        name='imageURL'
+                        value={imageURL}
+                        className='uk-input'
+                        type='text'
+                        placeholder='Image URL'
+                      />
+                    </div>
+                    <div className='uk-margin'>
+                      <textarea
+                        onChange={this.handleChange}
+                        name='description'
+                        value={description}
+                        className='uk-textarea'
+                        rows='5'
+                        placeholder='Description'
+                        required
+                      />
+                    </div>
+                    <div className='uk-margin'>
+                      <input
+                        onChange={this.handleSearch}
+                        className='uk-input'
+                        type='text'
+                        placeholder='Search Songs...'
+                      />
+                    </div>
 
-                  <div className='uk-margin'>
-                    <input
-                      onChange={this.handleSearch}
-                      className='uk-input'
-                      type='text'
-                      placeholder='Search Songs...'
-                    />
-                  </div>
-                  <div>
-                    {songSeeds.length > 0 && <h5>Selected Tracks (up to 5)</h5>}
+                    <div>
+                      {songSeeds.length > 0 && (
+                        <h5>
+                          {songSeeds.length} Selected Tracks Currently Added{' '}
+                        </h5>
+                      )}
 
-                    {songSeeds.map((track, i) => {
-                      return (
-                        <div
-                          className='remove'
-                          key={i}
-                          onClick={() => this.removeFromSeed(track)}
-                        >
-                          <span
-                            className='uk-margin-small-right'
-                            uk-icon='minus-circle'
-                          />
-                          {track.name} by{' '}
-                          {track.artists.map((artist, j) => {
-                            return j === track.artists.length - 1
-                              ? artist.name
-                              : artist.name + ', '
-                          })}
-                        </div>
-                      )
-                    })}
+                      {songSeeds.map((track, i) => {
+                        return (
+                          <div
+                            className='remove'
+                            key={i}
+                            onClick={() => this.removeFromSeed(track)}
+                          >
+                            <span
+                              className='uk-margin-small-right'
+                              uk-icon='minus-circle'
+                            />
+                            {track.name} by{' '}
+                            {track.artists.map((artist, j) => {
+                              return j === track.artists.length - 1
+                                ? artist.name
+                                : artist.name + ', '
+                            })}
+                          </div>
+                        )
+                      })}
+                    </div>
+                    <hr />
+                    <div>
+                      {searchResults.length ? (
+                        <h5>Add Up to {5 - songSeeds.length} Tracks</h5>
+                      ) : null}
+                      {searchResults.map((track, i) => {
+                        return (
+                          <div
+                            className='add'
+                            key={i}
+                            onClick={() => this.addToSeed(track)}
+                          >
+                            {' '}
+                            <span
+                              className='uk-margin-small-right'
+                              uk-icon='plus-circle'
+                            />
+                            {track.name} by{' '}
+                            {track.artists.map((artist, j) => {
+                              return j === track.artists.length - 1
+                                ? artist.name
+                                : artist.name + ', '
+                            })}
+                          </div>
+                        )
+                      })}
+                    </div>
+                    <hr />
                   </div>
-                  <hr />
-                  <div>
-                    {searchResults.map((track, i) => {
-                      return (
-                        <div
-                          className='add'
-                          key={i}
-                          onClick={() => this.addToSeed(track)}
-                        >
-                          {' '}
-                          <span
-                            className='uk-margin-small-right'
-                            uk-icon='plus-circle'
-                          />
-                          {track.name} by{' '}
-                          {track.artists.map((artist, j) => {
-                            return j === track.artists.length - 1
-                              ? artist.name
-                              : artist.name + ', '
-                          })}
-                        </div>
-                      )
-                    })}
-                  </div>
-                  <hr />
-
-                  <div className='uk-margin'>
-                    <textarea
-                      onChange={this.handleChange}
-                      name='description'
-                      value={description}
-                      className='uk-textarea'
-                      rows='5'
-                      placeholder='Description'
-                      required
-                    />
-                  </div>
-                </div>
+                )}
                 <p className='uk-text-right' style={{ margin: '25px' }}>
+                  {this.state.buttonText ? (
+                    ''
+                  ) : (
+                    <button
+                      className='uk-button uk-button-default uk-modal-close'
+                      type='button'
+                    >
+                      Cancel
+                    </button>
+                  )}
                   <button
-                    className='uk-button uk-button-default uk-modal-close'
-                    type='button'
+                    onClick={this.handleClick}
+                    className={`${this.state.buttonText &&
+                      'uk-modal-close'} uk-button uk-button-danger`}
+                    type='submit'
                   >
-                    Close / Cancel
-                  </button>
-                  <button className='uk-button uk-button-danger' type='submit'>
-                    Submit
+                    {this.state.buttonText ? 'Close' : 'Submit'}
                   </button>
                 </p>
               </fieldset>

@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 // import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
 const App = () => (
-  <div style={{ height: '1400px' }}>
+  <div style={{ height: 'auto' }}>
     <nav>
       <Navbar />
     </nav>

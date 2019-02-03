@@ -80,7 +80,7 @@ class AllChannels extends Component {
               <div className='uk-position-center'>
                 <span
                   className='uk-transition-fade'
-                  uk-icon='icon: plus; ratio: 2'
+                  uk-icon='icon: plus; ratio: 4'
                 />
               </div>
             </div>
