@@ -1,4 +1,4 @@
-const playerStateObj = {}
+const playerStateObj = null
 
 // Action constant
 const SET_PLAYER_STATE = 'SET_PLAYER_STATE'

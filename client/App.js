@@ -11,7 +11,6 @@ import { connect } from 'react-redux'
 // import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
 const App = (props) => {
-  console.log(props.user)
   return (
     <div style={{ height: '1400px' }}>
       <nav>

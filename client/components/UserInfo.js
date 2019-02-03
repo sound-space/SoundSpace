@@ -17,7 +17,6 @@ class UserInfo extends React.Component {
   }
 
   componentDidMount() {
-    console.log("setting user info on store", this.state.body)
     this.props.setUser(this.state.body);
   }
 
