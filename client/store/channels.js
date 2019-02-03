@@ -1,12 +1,15 @@
 import Axios from 'axios'
 
 const channelsObj = {
-  channels: []
+  channels: [],
+  value: '',
+  works: []
 }
 
 // Action Types
 const GET_CHANNELS = 'GET_CHANNELS'
 const MAKE_CHANNELS = 'MAKE_CHANNELS'
+const SEARCH = 'SEARCH'
 
 // action creator
 export const getChannels = channels => ({
@@ -19,11 +22,25 @@ export const makeChannels = channels => ({
   payload: channels
 })
 
+export const search = channel => ({
+  type: SEARCH,
+  payload: channel
+})
+
 // Thunks
 export const fetchChannels = () => async dispatch => {
   try {
     const { data } = await Axios.get('/api/channels')
     dispatch(getChannels(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const findChannel = body => async dispatch => {
+  try {
+    const { data } = await Axios.get('/api/channels', body)
+    dispatch(search(data))
   } catch (error) {
     console.error(error)
   }
@@ -66,6 +83,8 @@ export default function (state = channelsObj, action) {
       return { ...state, channels: action.payload }
     case MAKE_CHANNELS:
       return { ...state, channels: [...state.channels, action.payload] }
+    case SEARCH:
+      return state.channels.filter(channel => channel === action.payload)
     default:
       return state
   }

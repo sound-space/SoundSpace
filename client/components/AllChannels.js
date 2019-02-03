@@ -1,17 +1,66 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchChannels } from '../store'
+import { fetchChannels, findChannel } from '../store'
 import ChannelCard from './ChannelCard'
 import ChannelForm from './ChannelForm'
 
 class AllChannels extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      query: '',
+      results: []
+    }
+    this.handleSearch = this.handleSearch.bind(this)
+  }
+
   componentDidMount () {
     this.props.fetchChannels()
   }
 
+  handleSearch (evt) {
+    // console.log(this.state.query)
+    // const contains = (item, inputQuery) => {
+    //   return item.includes(inputQuery)
+    // }
+    // const data = this.props.channels.filter(channel => {
+    //   return contains(channel, evt.target.value)
+    // })
+    this.setState({
+      query: evt.target.value
+      // results: [data]
+    })
+  }
+
+  // handleSubmit (evt) {
+  //   evt.preventDefault()
+  //   this.props.findChannel(this.state)
+  // }
+
   render () {
+    // console.log('query', this.state.query)
+    // console.log('results', this.state.results)
     return (
       <div style={{ paddingTop: '100px', margin: '0 50px' }}>
+        <nav className='uk-navbar-container' uk-navbar='true'>
+          <div className='uk-navbar-left'>
+            <div className='uk-navbar-item'>
+              <form
+                // onSubmit={this.handleSubmit}
+                className='uk-search uk-search-navbar'
+              >
+                <span uk-search-icon='true' />
+                <input
+                  name='search'
+                  onChange={this.handleSearch}
+                  className='uk-search-input'
+                  type='search'
+                  placeholder='Find Channels...'
+                />
+              </form>
+            </div>
+          </div>
+        </nav>
         <ChannelForm />
         <h1>Channels</h1>
         <div
@@ -43,9 +92,19 @@ class AllChannels extends Component {
             </div>
             <p className='uk-margin-small-top'>New Channel</p>
           </div>
-          {this.props.channels.map(channel => {
-            return <ChannelCard key={channel.id} channel={channel} />
-          })}{' '}
+          {this.state.query
+            ? this.props.channels.map(channel => {
+              if (
+                channel.name
+                  .toLowerCase()
+                  .includes(this.state.query.toLowerCase())
+              ) {
+                return <ChannelCard key={channel.id} channel={channel} />
+              }
+            })
+            : this.props.channels.map(channel => {
+              return <ChannelCard key={channel.id} channel={channel} />
+            })}
         </div>
       </div>
     )
@@ -58,6 +117,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchChannels: () => dispatch(fetchChannels())
+  // findChannel: () => dispatch(findChannel())
 })
 
 export default connect(
