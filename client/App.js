@@ -10,37 +10,36 @@ import { connect } from 'react-redux'
 // import { setPlayer } from './store/player'
 // import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
-const App = () => (
-  <div style={{ height: '1400px' }}>
-    <nav>
-      <Navbar />
-    </nav>
-    <main style={{ position:"relative", top: '100px' }}>
-      <Switch>
-        <Redirect from='/channels/redirect/:id' to='/channels/:id' />
-        <Route path='/channels/:id' component={ChannelView} />
-        <Route path='/channels' component={AllChannels} />
-        <Route path='/home' component={UserInfo} />
-        <Route path='/login' component={Oauth} />
-        <Route exact path='/' component={Landing} />
-      </Switch>
-    </main>
-  </div>
-)
-
-// const Routes = props => (
-//   <Switch>
-//     <Route exact path='/channels' component={AllChannels} />
-//     <Route path='/channels/:id' component={ChannelView} />
-//     <Route path='/home' component={UserInfo} />
-//     <Route path='/login' component={Oauth} />
-//     <Route exact path='/' component={Landing} />
-//   </Switch>
-// )
+const App = (props) => {
+  console.log(props.user)
+  return (
+    <div style={{ height: '1400px' }}>
+      <nav>
+        <Navbar />
+      </nav>
+      <main style={{ position:"relative", top: '100px' }}>
+        <Switch>
+          {props.user.id && 
+            <Switch>
+              <Redirect from='/channels/redirect/:id' to='/channels/:id' />
+              <Route path='/channels/:id' component={ChannelView} />
+              <Route path='/channels' component={AllChannels} />
+              <Redirect from='*' to="/channels"/>
+              {/* <Route path='/login' component={Oauth} /> */}
+            </Switch>
+          }
+          <Route path='/home' component={UserInfo} />
+          <Route exact path='/' component={Landing} />
+          <Redirect from='*' to="/"/>
+        </Switch>
+      </main>
+    </div>
+  )
+}
 
 function mapState (state) {
   return {
-    user: state.userObj
+    user: state.userObj.user
   }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import createClientSocket from 'socket.io-client';
-import { setUser } from '../store';
+import store, { setUser } from '../store';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ class UserInfo extends React.Component {
   }
 
   componentDidMount() {
+    console.log("setting user info on store", this.state.body)
     this.props.setUser(this.state.body);
   }
 
