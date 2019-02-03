@@ -1,8 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import createClientSocket from 'socket.io-client';
 import { connect } from 'react-redux';
-import { setDevice, setPlayer, fetchPlayerState, setPlayerState } from '../store';
+import { setDevice, setPlayer, setPlayerState } from '../store';
 
 const IP = 'http://localhost:8080';
 
@@ -14,6 +13,10 @@ class Player extends React.Component {
 
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
+  }
+
+  componentWillUnmount() {
+    this.player.disconnect()
   }
 
   checkForPlayer () {
@@ -29,7 +32,6 @@ class Player extends React.Component {
       this.createEventHandlers();
       this.player.connect();
       this.props.setPlayer(this.player)
-      // this.props.history.push('/channels');
     }
   };
 
@@ -120,7 +122,8 @@ class Player extends React.Component {
 
 const mapStateToProps = state => ({
   channels: state.channels,
-  user: state.userObj.user
+  user: state.userObj.user,
+  player: state.playerObj
 });
 
 const mapDispatchToProps = dispatch => ({
