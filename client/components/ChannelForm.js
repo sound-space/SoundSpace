@@ -111,7 +111,6 @@ class ChannelForm extends Component {
                   </div>
 
                   <div className='uk-margin'>
-                    <span uk-search-icon='true' />
                     <input
                       onChange={this.handleSearch}
                       className='uk-input'

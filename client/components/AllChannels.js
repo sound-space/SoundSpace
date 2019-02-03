@@ -8,8 +8,7 @@ class AllChannels extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      query: '',
-      results: []
+      query: ''
     }
     this.handleSearch = this.handleSearch.bind(this)
   }
@@ -19,36 +18,18 @@ class AllChannels extends Component {
   }
 
   handleSearch (evt) {
-    // console.log(this.state.query)
-    // const contains = (item, inputQuery) => {
-    //   return item.includes(inputQuery)
-    // }
-    // const data = this.props.channels.filter(channel => {
-    //   return contains(channel, evt.target.value)
-    // })
     this.setState({
       query: evt.target.value
-      // results: [data]
     })
   }
 
-  // handleSubmit (evt) {
-  //   evt.preventDefault()
-  //   this.props.findChannel(this.state)
-  // }
-
   render () {
-    // console.log('query', this.state.query)
-    // console.log('results', this.state.results)
     return (
-      <div style={{ paddingTop: '100px', margin: '0 50px' }}>
+      <div style={{ paddingTop: '150px', margin: '0 50px' }}>
         <nav className='uk-navbar-container' uk-navbar='true'>
           <div className='uk-navbar-left'>
             <div className='uk-navbar-item'>
-              <form
-                // onSubmit={this.handleSubmit}
-                className='uk-search uk-search-navbar'
-              >
+              <form className='uk-search uk-search-navbar'>
                 <span uk-search-icon='true' />
                 <input
                   name='search'
@@ -62,14 +43,15 @@ class AllChannels extends Component {
           </div>
         </nav>
         <ChannelForm />
-        <h1>Channels</h1>
+        <h1 style={{ fontFamily: 'Tajawal', fontWeight: 'bold' }}>
+          Music Channels
+        </h1>
         <div
           className='uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-match uk-grid-small'
           uk-grid='true'
         >
           <div className='uk-text-center'>
             <div
-              // onClick={this.newChannel.bind(this)}
               className='uk-inline-clip uk-transition-toggle uk-light'
               tabIndex='0'
               uk-toggle='target: #channelFormId'
@@ -90,7 +72,9 @@ class AllChannels extends Component {
                 />
               </div>
             </div>
-            <p className='uk-margin-small-top'>New Channel</p>
+            <p style={{ fontSize: '22px' }} className='uk-margin-small-top'>
+              New Channel
+            </p>
           </div>
           {this.state.query
             ? this.props.channels.map(channel => {
@@ -117,7 +101,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchChannels: () => dispatch(fetchChannels())
-  // findChannel: () => dispatch(findChannel())
 })
 
 export default connect(

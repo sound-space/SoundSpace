@@ -21,16 +21,17 @@ const Landing = () => {
             })`
           }}
         >
-          <h1
-            style={{
-              color: '#FFF',
-              fontSize: '120px',
-              fontWeight: 'bold',
-              fontFamily: 'Tajawal'
-            }}
-            className='uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical'
-          >
-            Sound Space
+          <div className='uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical'>
+            <h1
+              style={{
+                color: '#FFF',
+                fontSize: '120px',
+                fontWeight: 'bold',
+                fontFamily: 'Tajawal'
+              }}
+            >
+              Sound Space
+            </h1>
             <h2
               style={{
                 fontSize: '60px',
@@ -40,7 +41,7 @@ const Landing = () => {
             >
               Your Social Jukebox
             </h2>
-          </h1>
+          </div>
         </div>
 
         <a
