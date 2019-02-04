@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 
 const App = props => {
   return (
-    <div style={{ height: '1400px' }}>
+    <div>
       <nav>
         <Navbar />
       </nav>

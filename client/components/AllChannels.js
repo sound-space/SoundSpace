@@ -62,7 +62,7 @@ class AllChannels extends Component {
           </h3>
         )}
         <div
-          className='uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-match uk-grid-small'
+          className='uk-child-width-1-1 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-match uk-grid-small'
           uk-grid='true'
         >
           <div className='uk-text-center'>

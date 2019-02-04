@@ -5,27 +5,22 @@ const Landing = () => {
   return (
     <div>
       <div />
-      <div
-      // style={{
-      //   width: '100%',
-      //   height: '100%'
-      // }}
-      >
+      <div>
         <div
           className='uk-height-large uk-background-cover uk-light uk-flex'
           uk-parallax='bgy: -200'
           style={{
             height: '800px',
             backgroundImage: `url(${
-              urlList[Math.floor(Math.random() * Math.floor(9))]
+              urlList[Math.floor(Math.random() * Math.floor(8))]
             })`
           }}
         >
           <div className='uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical'>
             <h1
+              className='headline'
               style={{
                 color: '#FFF',
-                fontSize: '120px',
                 fontWeight: 'bold',
                 fontFamily: 'Tajawal',
                 marginTop: '80px',
@@ -35,9 +30,9 @@ const Landing = () => {
               SoundSpace
             </h1>
             <h2
+              className='subheadline'
               style={{
                 marginTop: '-20px',
-                fontSize: '40px',
                 fontWeight: 'black',
                 fontFamily: 'Tajawal'
               }}
@@ -45,6 +40,7 @@ const Landing = () => {
               Your Social Jukebox
             </h2>
             <h3
+              className='haveSpotify'
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -52,8 +48,7 @@ const Landing = () => {
                 alignItems: 'center',
                 marginTop: '50px',
                 fontFamily: 'Tajawal',
-                fontWeight: 'Bold',
-                fontSize: '25px'
+                fontWeight: 'Bold'
               }}
             >
               Have a Spotify Premium Account?
