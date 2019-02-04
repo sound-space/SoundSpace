@@ -50,7 +50,7 @@ class App extends React.Component {
 function mapState (state) {
   return {
     user: state.userObj,
-    channels: state.channelsObj.channels
+    channels: state.channels
   }
 }
 
