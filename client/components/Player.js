@@ -6,20 +6,15 @@ import { setDevice, setPlayer, setPlayerState } from '../store';
 const IP = 'http://localhost:8080';
 
 class Player extends React.Component {
-  constructor() {
-    super();
-    this.socket = createClientSocket(IP);
-  }
-
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
   }
 
   componentWillUnmount() {
-    this.player.disconnect()
+    this.player.disconnect();
   }
 
-  checkForPlayer () {
+  checkForPlayer() {
     const token = this.props.user.access_token;
     if (window.Spotify) {
       clearInterval(this.playerCheckInterval);
@@ -31,9 +26,9 @@ class Player extends React.Component {
       });
       this.createEventHandlers();
       this.player.connect();
-      this.props.setPlayer(this.player)
+      this.props.setPlayer(this.player);
     }
-  };
+  }
 
   async transferPlaybackHere() {
     await fetch('https://api.spotify.com/v1/me/player', {
@@ -48,7 +43,7 @@ class Player extends React.Component {
       }),
     });
   }
-  
+
   setTrack(songId, timestamp, deviceId) {
     fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
       method: 'PUT',
@@ -101,35 +96,38 @@ class Player extends React.Component {
     // Ready
     this.player.on('ready', data => {
       let { device_id } = data;
-      this.socket.on('song-info', songInfo => {
+      this.props.socket.on('song-info', songInfo => {
         this.setTrack(songInfo.songId, songInfo.timestamp, device_id);
         this.setState({
           currentSongId: songInfo.songId,
         });
       });
-      this.socket.emit('room', this.props.channelId);
+      this.props.socket.emit('room', this.props.channelId);
       this.deviceId = device_id;
       console.log('SoundSpace Player ready');
       this.props.setDevice(this.deviceId);
-      this.transferPlaybackHere()
+      this.transferPlaybackHere();
     });
-  };
+  }
 
   render() {
-    return <div></div>;
+    return <div />;
   }
 }
 
 const mapStateToProps = state => ({
   channels: state.channels,
   user: state.userObj.user,
-  player: state.playerObj
+  player: state.playerObj,
 });
 
 const mapDispatchToProps = dispatch => ({
   setDevice: id => dispatch(setDevice(id)),
-  setPlayer: (player) => dispatch(setPlayer(player)),
-  setPlayerState: (state) => dispatch(setPlayerState(state))
+  setPlayer: player => dispatch(setPlayer(player)),
+  setPlayerState: state => dispatch(setPlayerState(state)),
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(Player);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Player);

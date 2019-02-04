@@ -16,10 +16,18 @@ const socketComm = async io => {
     socket.on('leave', function(channelId) {
       console.log('Client leaving room', channelId);
       socket.leave(channelId);
+
+      const users = io.sockets.adapter.rooms[channelId];
+      let numUsers = !users ? 0 : users.length;
+      io.in(channelId).emit('num-users', numUsers);
     });
     socket.on('room', async function(channelId) {
       console.log('Client joining room', channelId);
+      //Join the client to the room and inform all users about number of users in channel
+      const users = io.sockets.adapter.rooms[channelId];
+      let numUsers = !users ? 0 : users.length;
       socket.join(channelId);
+      io.in(channelId).emit('num-users', numUsers);
       const songInfo = await Song.findOne({
         where: {
           channelId,
