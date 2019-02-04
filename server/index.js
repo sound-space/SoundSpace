@@ -87,6 +87,7 @@ app.get('/me', function(req,res) {
 
 app.get('/logout', (req,res) => {
   req.logout()
+  // res.redirect('/')
   res.json({})
 })
 
