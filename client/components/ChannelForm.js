@@ -18,7 +18,8 @@ class ChannelForm extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
     this.search = search.bind(this)
   }
   handleChange (evt) {
@@ -29,25 +30,34 @@ class ChannelForm extends Component {
 
   handleSubmit (evt) {
     evt.preventDefault()
-    // Prevent submission when no songs are selected
-    if (this.state.songSeeds.length < 1) {
-      alert('Please select some tracks to start your channel!')
-      return
+    // Prevent form submission unless there is at least one song picked
+    if (this.state.songSeeds.length) {
+      this.props.createChannels(this.state)
+      this.setState({
+        name: '',
+        imageURL: '',
+        description: '',
+        searchQuery: '',
+        searchResults: [],
+        songSeeds: [],
+        buttonText: !this.state.buttonText
+      })
     }
-    this.props.createChannels(this.state)
+  }
+
+  handleClose () {
+    this.setState({ buttonText: false })
+  }
+
+  handleCancel () {
     this.setState({
       name: '',
       imageURL: '',
       description: '',
       searchQuery: '',
       searchResults: [],
-      songSeeds: [],
-      buttonText: !this.state.buttonText
+      songSeeds: []
     })
-  }
-
-  handleClick () {
-    this.setState({ buttonText: false })
   }
 
   async handleSearch (evt) {
@@ -111,8 +121,8 @@ class ChannelForm extends Component {
                 </h2>
                 {this.state.buttonText ? (
                   <div style={{ marginLeft: '25px' }}>
-                    New channel has been created successfully and your songs are
-                    now playing live!
+                    The channel has been created successfully and your tracks
+                    are now playing live!
                   </div>
                 ) : (
                   <div style={{ margin: '0 25px' }}>
@@ -123,7 +133,7 @@ class ChannelForm extends Component {
                         className='uk-input'
                         value={name}
                         type='text'
-                        placeholder='Name'
+                        placeholder='Name (required)'
                         required
                       />
                     </div>
@@ -145,7 +155,7 @@ class ChannelForm extends Component {
                         value={description}
                         className='uk-textarea'
                         rows='5'
-                        placeholder='Description'
+                        placeholder='Description (required)'
                         required
                       />
                     </div>
@@ -154,17 +164,19 @@ class ChannelForm extends Component {
                         onChange={this.handleSearch}
                         className='uk-input'
                         type='text'
-                        placeholder='Search Songs...'
+                        placeholder='Search Songs...(required)'
                       />
                     </div>
-
+                    {!this.state.songSeeds.length ? (
+                      <div class='uk-alert-warning' uk-alert>
+                        <a class='uk-alert-close' uk-close />
+                        <p>Add at least one track to your list.</p>
+                      </div>
+                    ) : null}
                     <div>
                       {songSeeds.length > 0 && (
-                        <h5>
-                          {songSeeds.length} Selected Tracks Currently Added{' '}
-                        </h5>
+                        <h5>{songSeeds.length} tracks are added:</h5>
                       )}
-
                       {songSeeds.map((track, i) => {
                         return (
                           <div
@@ -213,7 +225,6 @@ class ChannelForm extends Component {
                         )
                       })}
                     </div>
-                    <hr />
                   </div>
                 )}
                 <p className='uk-text-right' style={{ margin: '25px' }}>
@@ -221,6 +232,7 @@ class ChannelForm extends Component {
                     ''
                   ) : (
                     <button
+                      onClick={this.handleCancel}
                       className='uk-button uk-button-default uk-modal-close'
                       type='button'
                     >
@@ -228,7 +240,7 @@ class ChannelForm extends Component {
                     </button>
                   )}
                   <button
-                    onClick={this.handleClick}
+                    onClick={this.handleClose}
                     className={`${this.state.buttonText &&
                       'uk-modal-close'} uk-button uk-button-danger`}
                     type='submit'

@@ -25,7 +25,7 @@ class AllChannels extends Component {
 
   render () {
     return (
-      <div style={{ paddingTop: '160px', margin: '0 50px' }}>
+      <div style={{ paddingTop: '40px', margin: '0 50px' }}>
         <nav className='uk-navbar-container' uk-navbar='true'>
           <div className='uk-navbar-left'>
             <div className='uk-navbar-item'>
