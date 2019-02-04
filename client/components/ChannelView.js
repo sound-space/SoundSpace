@@ -103,13 +103,6 @@ class ChannelView extends Component {
               </ul>
               <button
                 className='uk-margin-right'
-                uk-tooltip='Upvote!'
-                onClick={() => this.vote(1)}
-              >
-                <i className='uk-icon-thumbs-up' />
-              </button>
-              <button
-                className='uk-margin-right'
                 uk-icon='icon: plus-circle; ratio: 1.2'
                 uk-tooltip='Upvote!'
                 onClick={() => this.vote(1)}

@@ -52,12 +52,15 @@ class AllChannels extends Component {
         >
           Sound Space Music Channels
         </h1>
-        <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
-          Active Rooms: {this.props.channels.length}
-        </h3>
-        {/* <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
-          Active Users: 0
-        </h3> */}
+        {this.state.query ? (
+          <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
+            Search Results
+          </h3>
+        ) : (
+          <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
+            Active Sound Channels: {this.props.channels.length}
+          </h3>
+        )}
         <div
           className='uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-match uk-grid-small'
           uk-grid='true'

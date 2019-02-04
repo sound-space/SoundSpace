@@ -13,7 +13,8 @@ class ChannelForm extends Component {
       searchQuery: '',
       searchResults: [],
       songSeeds: [],
-      buttonText: false
+      buttonText: false,
+      validation: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -30,8 +31,12 @@ class ChannelForm extends Component {
 
   handleSubmit (evt) {
     evt.preventDefault()
-    // Prevent form submission unless there is at least one song picked
-    if (this.state.songSeeds.length) {
+    // Form validates for all requirements
+    if (
+      this.state.songSeeds.length &&
+      this.state.name.length &&
+      this.state.description.length
+    ) {
       this.props.createChannels(this.state)
       this.setState({
         name: '',
@@ -40,7 +45,12 @@ class ChannelForm extends Component {
         searchQuery: '',
         searchResults: [],
         songSeeds: [],
-        buttonText: !this.state.buttonText
+        buttonText: !this.state.buttonText,
+        validation: false
+      })
+    } else if (!this.state.name.length && !this.state.description.length) {
+      this.setState({
+        validation: true
       })
     }
   }
@@ -133,15 +143,14 @@ class ChannelForm extends Component {
                         className='uk-input'
                         value={name}
                         type='text'
-                        placeholder='Name'
-                        required
+                        placeholder='Name (required)'
                       />
                     </div>
-                    {!this.state.name.length && (
+                    {!this.state.name.length && this.state.validation ? (
                       <div className='uk-alert-warning' uk-alert='true'>
                         <p>Name field is required.</p>
                       </div>
-                    )}
+                    ) : null}
                     <div className='uk-margin'>
                       <input
                         onChange={this.handleChange}
@@ -159,15 +168,14 @@ class ChannelForm extends Component {
                         value={description}
                         className='uk-textarea'
                         rows='5'
-                        placeholder='Description'
-                        required
+                        placeholder='Description (required)'
                       />
                     </div>
-                    {!this.state.description.length && (
+                    {!this.state.description.length && this.state.validation ? (
                       <div className='uk-alert-warning' uk-alert='true'>
                         <p>Description field is required.</p>
                       </div>
-                    )}
+                    ) : null}
 
                     <div className='uk-margin'>
                       <input
@@ -210,7 +218,7 @@ class ChannelForm extends Component {
                     <hr />
                     <div>
                       {searchResults.length ? (
-                        <h5>Add Up to {5 - songSeeds.length} Tracks</h5>
+                        <h5>Add up to {5 - songSeeds.length} tracks:</h5>
                       ) : null}
                       {searchResults.map((track, i) => {
                         return (

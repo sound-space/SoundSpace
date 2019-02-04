@@ -32,7 +32,7 @@ const Landing = () => {
                 lineHeight: '100px'
               }}
             >
-              Sound Space
+              SoundSpace
             </h1>
             <h2
               style={{
