@@ -20,7 +20,7 @@ class ChannelSideBar extends Component {
 }
 
 const mapStateToProps = state => ({
-  channels: state.channelsObj.channels
+  channels: state.channels
 })
 
 export default connect(

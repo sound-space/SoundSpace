@@ -1,13 +1,9 @@
 import Axios from 'axios'
 
-const userObj = {
-  user: {},
-  deviceId: ''
-}
+const userObj = {}
 
 // Action Types
 export const SET_USER = 'SET_USER'
-const SET_DEVICE = 'SET_DEVICE'
 
 // action creators
 
@@ -16,22 +12,25 @@ export const setUser = userInfo => ({
   payload: userInfo
 })
 
-export const setDevice = deviceId => ({
-  type: SET_DEVICE,
-  payload: deviceId
-})
-
 // Thunks
 export const fetchUser = () => async dispatch => {
   await Axios.get('/login')
 }
 
+export const getMe = () => async dispatch => {
+  const userResponse = await Axios.get('/me')
+  dispatch(setUser(userResponse.data))
+}
+
+export const logUserOut = () => async dispatch => {
+  const clearedUser = await Axios.get('/logout')
+  dispatch(setUser(clearedUser.data))
+}
+
 export default function(state = userObj, action) {
   switch (action.type) {
     case SET_USER:
-      return { ...state, user: action.payload }
-    case SET_DEVICE:
-      return { ...state, deviceId: action.payload }
+      return action.payload
     default:
       return state
   }

@@ -1,6 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logUserOut } from '../store/user'
 
 const NavBar = props => {
   return (
@@ -15,9 +16,8 @@ const NavBar = props => {
         </Link>
       </div>
       {props.user.id && (
-        <div className="uk-navbar-right uk-grid-medium uk-flex-middle uk-margin-top" uk-grid="true">
-          <p className="uk-margin-right">Welcome, {props.user.id}</p>
-          <button className="uk-button uk-button-link uk-margin-right" onClick={() => this.props.history.push('/logout')}>Log out</button>
+        <div className="uk-navbar-right" style={{ marginRight: '40px' }}>
+          <button onClick={props.logout}>Log Out</button>
         </div>
       )}
     </nav>
@@ -25,7 +25,15 @@ const NavBar = props => {
 }
 
 const mapStateToProps = state => {
-  return { user: state.userObj.user }
+  return { user: state.userObj };
 }
 
-export default connect(mapStateToProps)(NavBar)
+const mapDispatch = dispatch => {
+  return {
+    logout() {
+      dispatch(logUserOut())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatch)(NavBar);

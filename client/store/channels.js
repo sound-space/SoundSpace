@@ -1,8 +1,6 @@
 import Axios from 'axios'
 
-const channelsObj = {
-  channels: []
-}
+const channels = []
 
 // Action Types
 const GET_CHANNELS = 'GET_CHANNELS'
@@ -60,12 +58,12 @@ export const postChannels = body => async dispatch => {
   }
 }
 
-export default function (state = channelsObj, action) {
+export default function (state = channels, action) {
   switch (action.type) {
     case GET_CHANNELS:
-      return { ...state, channels: action.payload }
+      return action.payload
     case MAKE_CHANNELS:
-      return { ...state, channels: [...state.channels, action.payload] }
+      return [...state, action.payload]
     default:
       return state
   }
