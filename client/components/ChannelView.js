@@ -76,20 +76,6 @@ class ChannelView extends Component {
 
         className='uk-width-1-1 uk-container uk-container-expand uk-align-left'
       >
-        <div
-          className='uk-grid-medium uk-flex-middle uk-margin-top'
-          uk-grid='true'
-        >
-          <button
-            className='uk-button uk-button-link uk-margin-right'
-
-            onClick={() => this.props.history.push('/channels')}
-          >
-            Go back to Channels
-          </button>
-        </div>
-
-
         <div >
           <div uk-grid="true">
             <img
