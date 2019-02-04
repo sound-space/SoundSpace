@@ -1,13 +1,12 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Landing from './components/Landing'
-import Oauth from './components/Oauth'
-import UserInfo from './components/UserInfo'
 import ChannelView from './components/ChannelView'
 import AllChannels from './components/AllChannels'
 import Navbar from './components/Navbar'
 import { connect } from 'react-redux'
 import { getMe } from './store/user'
+import { fetchChannels } from './store/channels'
 // import { setPlayer } from './store/player'
 // import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
@@ -15,6 +14,7 @@ class App extends React.Component {
   
   componentDidMount() {
     this.props.getUser()
+    this.props.getChannels()
   }
   
   render() {
@@ -50,6 +50,9 @@ function mapDispatch(dispatch) {
   return {
    getUser() {
      dispatch(getMe())
+   },
+   getChannels() {
+     dispatch(fetchChannels())
    }
   }
 }
