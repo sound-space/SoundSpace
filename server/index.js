@@ -1,7 +1,6 @@
 const express = require('express');
 const request = require('request');
 const { client_id, client_secret } = require('../credentials');
-// const { User } = require('./db/models');
 const querystring = require('querystring');
 // const cookieParser = require('cookie-parser');
 const session = require('express-session')
@@ -11,6 +10,7 @@ const IP = 'http://localhost:8080';
 const redirect_uri = `${IP}/callback`;
 const volleyball = require('volleyball');
 const bodyParser = require('body-parser');
+const { User, Song } = require('./db/models');
 const PORT = 8080;
 const url = require('url');
 const scope =
@@ -106,55 +106,17 @@ const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 // start listening to socket connections
 const io = socketio.listen(server);
-const { socketComm, singularity } = require('./socket');
+const { socketComm, singularity, playNewSong } = require('./socket');
 socketComm(io);
 singularity(io);
-        
-        // res.redirect('/');
-        // }, function(req, res) {
-          //   res.redirect('/#/channels')
-          // application requests refresh and access tokens
-          
-          // const code = req.query.code || null;
-          // const authOptions = {
-            //   url: 'https://accounts.spotify.com/api/token',
-            //   form: {
-              //     code: code,
-              //     redirect_uri: redirect_uri,
-              //     grant_type: 'authorization_code',
-              //   },
-              //   headers: {
-                //     Authorization:
-                //     'Basic ' +
-                //     new Buffer(client_id + ':' + client_secret).toString('base64'),
-                //   },
-                //   json: true,
-                // };
-                
-                // request.post(authOptions, function(error, response, body) {
-                  //   if (!error && response.statusCode === 200) {
-                    //     let access_token = body.access_token;
-                    //     let refresh_token = body.refresh_token;
-                    //     const options = {
-                      //       url: 'https://api.spotify.com/v1/me',
-                      //       headers: { Authorization: 'Bearer ' + access_token },
-                      //       json: true,
-                      //     };
-                      
-                      //     // use the access token to access the Spotify Web API
-                      //     request.get(options, function(error, response, body) {
-                        //       if (error) console.log(error);
-                        //       let myResponse = { ...body, access_token, refresh_token };
-                        //       // res.json(myResponse)
-                        //       res.redirect('/home/' + querystring.stringify(myResponse));
-                        //     });
-                        //   } else {
-                          //     console.log('error in post response');
-                          //     res.redirect(
-                            //       '/#' +
-                            //       querystring.stringify({
-                              //         error: 'invalid_token',
-                              //       })
-                              //       );
-                              //     }
-                              //   });
+app.put('/startChannel', async (req, res, next) => {
+  //Check if no song already playing for the requested channel
+  const songIfExists = await Song.findOne({
+    where: {
+      channelId: req.body.channelId,
+      isPlaying: true,
+    },
+  });
+  //Only play if no song is already playing, this prevents network attacks from forcing channels to skip tracks
+  if (!songIfExists) playNewSong(io, req.body.channelId);
+});

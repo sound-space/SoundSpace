@@ -1,22 +1,20 @@
 import React from 'react';
-import axios from 'axios';
 import createClientSocket from 'socket.io-client';
 import { connect } from 'react-redux';
-import { setDevice } from '../store';
+import { setDevice, setPlayer, setPlayerState } from '../store';
 
 const IP = 'http://localhost:8080';
 
 class Player extends React.Component {
-  constructor() {
-    super();
-    this.socket = createClientSocket(IP);
-  }
-
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
   }
 
-  checkForPlayer = () => {
+  componentWillUnmount() {
+    this.player.disconnect();
+  }
+
+  checkForPlayer() {
     const token = this.props.user.access_token;
     if (window.Spotify) {
       clearInterval(this.playerCheckInterval);
@@ -28,11 +26,53 @@ class Player extends React.Component {
       });
       this.createEventHandlers();
       this.player.connect();
-      this.props.history.push('/channels');
+      this.props.setPlayer(this.player);
     }
-  };
+  }
 
-  createEventHandlers = () => {
+  async transferPlaybackHere() {
+    await fetch('https://api.spotify.com/v1/me/player', {
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${this.props.user.access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        device_ids: [this.props.deviceId],
+        play: true,
+      }),
+    });
+  }
+
+  setTrack(songId, timestamp, deviceId) {
+    fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${this.props.user.access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        uris: [`spotify:track:${songId}`],
+        position_ms: Date.now() - new Date(timestamp),
+      }),
+    });
+
+    //Play a track on the SoundSpace player
+    fetch(
+      `https://api.spotify.com/v1/me/player/play?device_id=${
+        this.props.deviceId
+      }`,
+      {
+        method: 'PUT',
+        headers: {
+          authorization: `Bearer ${this.props.user.access_token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+  }
+
+  createEventHandlers() {
     this.player.on('initialization_error', e => {
       console.error('init error:', e);
     });
@@ -50,30 +90,44 @@ class Player extends React.Component {
     // Playback status updates
     this.player.on('player_state_changed', state => {
       console.log('player state changes:', state);
+      this.props.setPlayerState(state);
     });
 
     // Ready
     this.player.on('ready', data => {
       let { device_id } = data;
+      this.props.socket.on('song-info', songInfo => {
+        this.setTrack(songInfo.songId, songInfo.timestamp, device_id);
+        this.setState({
+          currentSongId: songInfo.songId,
+        });
+      });
+      this.props.socket.emit('room', this.props.channelId);
       this.deviceId = device_id;
       console.log('SoundSpace Player ready');
       this.props.setDevice(this.deviceId);
+      this.transferPlaybackHere();
     });
-  };
+  }
 
   render() {
-    return <div>Player Loading</div>;
+    return <div />;
   }
 }
 
 const mapStateToProps = state => ({
   channels: state.channels,
-  loggedIn: state.loggedIn,
-  body: state.body,
+  user: state.userObj.user,
+  player: state.playerObj,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setDevice: id => dispatch(setDevice()),
+  setDevice: id => dispatch(setDevice(id)),
+  setPlayer: player => dispatch(setPlayer(player)),
+  setPlayerState: state => dispatch(setPlayerState(state)),
 });
 
-export default connect(mapStateToProps)(Player);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Player);

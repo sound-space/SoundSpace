@@ -1,16 +1,14 @@
-/* body {
+nav {
   background-image: linear-gradient(
-    to right top,
-    #051937,
-    #004d7a,
-    #008793,
-    #00bf72,
-    #a8eb12
+    336deg,
+    rgba(66, 244, 137, 0.8),
+    rgba(102, 186, 255, 0.8) 75%
   );
-} */
+}
 
 body {
   font-family: 'Tajawal', sans-serif;
+  background: repeat url(assets/binding-light.png);
 }
 
 ion-icon {
@@ -29,4 +27,24 @@ ion-icon {
 .down:hover {
   color: #e604c0;
   cursor: pointer;
+}
+
+.add:hover {
+  background-color: #0fce7e;
+  color: '#FFF';
+  cursor: cell;
+  transition: 0.2s;
+  border-radius: 2px;
+}
+
+.remove:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: '#FFF';
+  cursor: pointer;
+  transition: 0.2s;
+  border-radius: 2px;
+}
+
+.signIn:hover {
+  background-color: rgb(102, 186, 255);
 }

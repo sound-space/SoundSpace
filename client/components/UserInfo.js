@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import createClientSocket from 'socket.io-client';
-import { setUser } from '../store';
+import store, { setUser } from '../store';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
