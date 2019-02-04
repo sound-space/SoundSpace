@@ -66,3 +66,13 @@ ion-icon {
   cursor: pointer;
   color: red;
 }
+
+nav, button {
+  background-color:grey;
+  color: black
+}
+
+nav,button:hover {
+  background-color:red;
+  color: white
+}

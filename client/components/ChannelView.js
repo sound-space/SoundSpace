@@ -65,7 +65,6 @@ class ChannelView extends Component {
     const currentTrackArtist = playerState
     ? playerState.track_window.current_track.artists[0].name
     : ''
-
     return (
       <div
         // style={{ position: 'relative', top: '100px' }}
@@ -84,7 +83,7 @@ class ChannelView extends Component {
           </button>
         </div>
 
-        <div class="uk-placeholder">
+        <div className="uk-placeholder">
           <div uk-grid="true">
             <img
                   className='uk-align-center'
@@ -97,9 +96,9 @@ class ChannelView extends Component {
           </div>
               <div className="uk-text-center">
                 <div uk-grid="true" className='uk-align-center'>
-                <i class="fas fa-thumbs-up uk-margin-right" uk-tooltip='Upvote!'
+                <i className="fas fa-thumbs-up uk-margin-right" uk-tooltip='Upvote!'
                     onClick={() => this.vote(1)}></i>
-                <i class="fas fa-thumbs-down uk-margin-right" uk-tooltip='Upvote!'
+                <i className="fas fa-thumbs-down uk-margin-right" uk-tooltip='Upvote!'
                     onClick={() => this.vote(1)}></i>
                 </div>
                 <div className="uk-text-large">
@@ -109,7 +108,7 @@ class ChannelView extends Component {
                 Album: {currentTrackAlbum}
               </div>
           </div>
-        <Player channelId={this.props.match.params.id} />
+        <Player socket={this.socket} channelId={this.props.match.params.id} />
       </div>
     );
   }
