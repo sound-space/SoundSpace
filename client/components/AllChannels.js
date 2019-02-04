@@ -14,7 +14,7 @@ class AllChannels extends Component {
   }
 
   componentDidMount () {
-    this.props.fetchChannels()
+    // this.props.fetchChannels()
   }
 
   handleSearch (evt) {
@@ -108,7 +108,7 @@ class AllChannels extends Component {
 }
 
 const mapStateToProps = state => ({
-  channels: state.channelsObj.channels,
+  channels: state.channels,
   user: state.userObj,
   player: state.playerObj
 })
