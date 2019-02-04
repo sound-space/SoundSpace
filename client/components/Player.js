@@ -117,7 +117,7 @@ class Player extends React.Component {
 
 const mapStateToProps = state => ({
   channels: state.channels,
-  user: state.userObj.user,
+  user: state.userObj,
   player: state.playerObj,
 });
 

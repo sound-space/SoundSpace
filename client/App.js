@@ -42,7 +42,7 @@ class App extends React.Component {
 
 function mapState (state) {
   return {
-    user: state.userObj.user
+    user: state.userObj
   }
 }
 

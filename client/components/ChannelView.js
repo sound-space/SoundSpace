@@ -56,10 +56,14 @@ class ChannelView extends Component {
 
   render() {
     if(!this.props.user.id) return <Redirect to='/' />
-    const {playerState} = this.props
-    const albumCoverUrl = playerState.track_window ? playerState.track_window.current_track.album.images[0] : '/assets/album.jpg'
-    const currentTrackName =  playerState.track_window ? playerState.track_window.current_track.name : 'none'
-    
+    const playerState = this.props.playerState;
+    const albumCoverUrl = playerState
+      ? playerState.track_window.current_track.album.images[0].url
+      : '/assets/album.jpg';
+    const currentTrackName = playerState
+      ? playerState.track_window.current_track.name
+      : 'none';
+
     return (
       <div
         style={{ position: 'relative', top: '100px' }}
