@@ -109,6 +109,7 @@ class AllChannels extends Component {
 
 const mapStateToProps = state => ({
   channels: state.channelsObj.channels,
+  user: state.userObj,
   player: state.playerObj
 })
 

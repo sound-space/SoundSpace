@@ -1,8 +1,8 @@
 import Axios from 'axios'
 
 const userObj = {
-  user: {},
-  deviceId: ''
+  // user: {},
+  // deviceId: ''
 }
 
 // Action Types
@@ -26,12 +26,23 @@ export const fetchUser = () => async dispatch => {
   await Axios.get('/login')
 }
 
+export const getMe = () => async dispatch => {
+  const userResponse = await Axios.get('/me')
+  dispatch(setUser(userResponse.data))
+}
+
+export const logUserOut = () => async dispatch => {
+  const clearedUser = await Axios.get('/logout')
+  dispatch(setUser(clearedUser.data))
+}
+
 export default function(state = userObj, action) {
   switch (action.type) {
     case SET_USER:
-      return { ...state, user: action.payload }
-    case SET_DEVICE:
-      return { ...state, deviceId: action.payload }
+      // return { ...state, user: action.payload }
+      return action.payload
+    // case SET_DEVICE:
+    //   return { ...state, deviceId: action.payload }
     default:
       return state
   }

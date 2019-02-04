@@ -7,50 +7,51 @@ import ChannelView from './components/ChannelView'
 import AllChannels from './components/AllChannels'
 import Navbar from './components/Navbar'
 import { connect } from 'react-redux'
+import { getMe } from './store/user'
 // import { setPlayer } from './store/player'
 // import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
-const App = props => {
-  return (
-    <div style={{ height: '1400px' }}>
-      <nav>
-        <Navbar />
-      </nav>
-      <main style={{ position: 'relative', top: '100px' }}>
-        <Switch>
-          {props.user.id && (
-            <Switch>
-              <Redirect from='/channels/redirect/:id' to='/channels/:id' />
-              <Route path='/channels/:id' component={ChannelView} />
-              <Route path='/channels' component={AllChannels} />
-              <Redirect from='*' to='/channels' />
-              {/* <Route path='/login' component={Oauth} /> */}
-            </Switch>
-          )}
-          <Route path='/home' component={UserInfo} />
-          <Route exact path='/' component={Landing} />
-          <Redirect from='*' to='/' />
-        </Switch>
-      </main>
-    </div>
-  )
+class App extends React.Component {
+  
+  componentDidMount() {
+    this.props.getUser()
+  }
+  
+  render() {
+    if(!this.props.user.id) return <Landing />
+    return (
+      <div>
+        <nav>
+          <Navbar />
+        </nav>
+        <main>
+          <Switch>
+            <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
+            <Route exact path='/channels' component={AllChannels} />
+            <Route path='/channels/:id' component={ChannelView} />
+            {/* <Route path='/home' component={UserInfo} /> */}
+            {/* <Route path='/login' component={Oauth} /> */}
+            <Route exact path='/' component={Landing} />
+            <Redirect from='*' to='/' />
+          </Switch>
+        </main>
+      </div>
+    )
+  }
 }
 
 function mapState (state) {
   return {
-    user: state.userObj.user
+    user: state.userObj
   }
 }
 
-// function mapDispatch(dispatch) {
-//   return {
-//     exportPlayer(player) {
-//       dispatch(setPlayer(player))
-//     }
-//   }
-// }
+function mapDispatch(dispatch) {
+  return {
+   getUser() {
+     dispatch(getMe())
+   }
+  }
+}
 
-export default connect(
-  mapState,
-  null
-)(App)
+export default connect(mapState, mapDispatch)(App)
