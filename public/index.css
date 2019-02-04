@@ -48,3 +48,21 @@ ion-icon {
 .signIn:hover {
   background-color: rgb(102, 186, 255);
 }
+
+.fas {
+  font-size: 2em;
+}
+
+.fa-thumbs-up:hover {
+  cursor: pointer;
+  color: green;
+}
+
+.fa-thumbs-down {
+  vertical-align:middle
+}
+
+.fa-thumbs-down:hover {
+  cursor: pointer;
+  color: red;
+}

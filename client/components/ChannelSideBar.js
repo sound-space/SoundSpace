@@ -8,6 +8,7 @@ class ChannelSideBar extends Component {
     return (
       <div className='uk-background-blend-darken uk-animation-fade uk-width-medium uk-background-secondary uk-height-1-1 uk-position-top-right'>
         <div className='side-bar-overlay'>
+          <p className="uk-text-large uk-text-left uk-margin-left uk-margin-top">Channel list</p>
           <ul className='uk-list uk-list-divider'>
             {this.props.channels.map(channel => (
               <li key={channel.id}>
