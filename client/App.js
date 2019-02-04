@@ -15,9 +15,8 @@ class App extends React.Component {
     this.props.getUser()
     this.props.getChannels()
   }
-
-  render () {
-    if (!this.props.user.id) return <Landing />
+  
+  render() {
     return (
       <div>
         <nav>
@@ -25,14 +24,17 @@ class App extends React.Component {
         </nav>
         <main style={{ position: 'relative', top: '100px' }}>
           <Switch>
-            <Redirect from='/channels/redirect/:id' to='/channels/:id' />
-            <Route exact path='/channels' component={AllChannels} />
-            <Route path='/channels/:id' component={ChannelView} />
-            {/* <Route path='/home' component={UserInfo} /> */}
-            {/* <Route path='/login' component={Oauth} /> */}
+            {this.props.user.id &&
+              <Switch>
+                <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
+                <Route path='/channels/:id' component={ChannelView} />
+                <Route exact path='/channels' component={AllChannels} />
+                <Redirect from='*' to='/channels' />
+              </Switch>
+            }
             <Route exact path='/' component={Landing} />
             <Redirect from='*' to='/' />
-          </Switch>
+            </Switch>
         </main>
       </div>
     )
