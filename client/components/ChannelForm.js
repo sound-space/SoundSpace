@@ -133,11 +133,15 @@ class ChannelForm extends Component {
                         className='uk-input'
                         value={name}
                         type='text'
-                        placeholder='Name (required)'
+                        placeholder='Name'
                         required
                       />
                     </div>
-
+                    {!this.state.name.length && (
+                      <div className='uk-alert-warning' uk-alert='true'>
+                        <p>Name field is required.</p>
+                      </div>
+                    )}
                     <div className='uk-margin'>
                       <input
                         onChange={this.handleChange}
@@ -155,21 +159,26 @@ class ChannelForm extends Component {
                         value={description}
                         className='uk-textarea'
                         rows='5'
-                        placeholder='Description (required)'
+                        placeholder='Description'
                         required
                       />
                     </div>
+                    {!this.state.description.length && (
+                      <div className='uk-alert-warning' uk-alert='true'>
+                        <p>Description field is required.</p>
+                      </div>
+                    )}
+
                     <div className='uk-margin'>
                       <input
                         onChange={this.handleSearch}
                         className='uk-input'
                         type='text'
-                        placeholder='Search Songs...(required)'
+                        placeholder='Search Songs...'
                       />
                     </div>
                     {!this.state.songSeeds.length ? (
-                      <div class='uk-alert-warning' uk-alert>
-                        <a class='uk-alert-close' uk-close />
+                      <div className='uk-alert-danger' uk-alert='true'>
                         <p>Add at least one track to your list.</p>
                       </div>
                     ) : null}
@@ -242,7 +251,7 @@ class ChannelForm extends Component {
                   <button
                     onClick={this.handleClose}
                     className={`${this.state.buttonText &&
-                      'uk-modal-close'} uk-button uk-button-danger`}
+                      'uk-modal-close'} uk-button uk-button-primary`}
                     type='submit'
                   >
                     {this.state.buttonText ? 'Close' : 'Submit'}
