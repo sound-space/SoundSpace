@@ -34,7 +34,7 @@ class App extends React.Component {
           <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
           <Route exact path='/channels' component={AllChannels} />
           <Route path='/channels/:id' component={ChannelView} />
-          <Route path='/home' component={UserInfo} />
+          {/* <Route path='/home' component={UserInfo} /> */}
           {/* <Route path='/login' component={Oauth} /> */}
           <Route exact path='/' component={Landing} />
         </Switch>

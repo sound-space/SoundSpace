@@ -6,7 +6,7 @@ const NavBar = props => {
   return (
     <nav className="uk-navbar-container" uk-navbar="true">
       <div>
-        <Link to="/home">
+        <Link to="/channels">
           {' '}
           <img style={{ width: '100px' }} src="./assets/ss_logo.png" />
         </Link>
