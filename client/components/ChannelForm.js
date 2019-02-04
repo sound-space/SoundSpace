@@ -107,6 +107,7 @@ class ChannelForm extends Component {
             <form onSubmit={this.handleSubmit}>
               <fieldset className='uk-fieldset'>
                 <h2 style={{ margin: '25px' }} className='uk-modal-title'>
+                  New Channel
                   {this.state.buttonText ? 'Success' : 'New Channel'}
                 </h2>
                 {this.state.buttonText ? (
