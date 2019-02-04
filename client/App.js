@@ -20,10 +20,15 @@ class App extends React.Component {
     return (
       <div>
         <nav>
-          <Navbar />
+          <Navbar props={this.props} channels={this.props.channels}/>
         </nav>
         <main style={{ position: 'relative', top: '100px' }}>
           <Switch>
+
+            <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
+            <Route exact path='/channels' component={AllChannels} />
+            <Route path='/channels/:id' component={ChannelView} />
+
             {this.props.user.id &&
               <Switch>
                 <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
@@ -32,6 +37,7 @@ class App extends React.Component {
                 <Redirect from='*' to='/channels' />
               </Switch>
             }
+
             <Route exact path='/' component={Landing} />
             <Redirect from='*' to='/' />
             </Switch>
@@ -43,7 +49,8 @@ class App extends React.Component {
 
 function mapState (state) {
   return {
-    user: state.userObj
+    user: state.userObj,
+    channels: state.channels
   }
 }
 
