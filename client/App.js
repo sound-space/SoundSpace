@@ -11,8 +11,7 @@ import { fetchChannels } from './store/channels'
 // import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
 class App extends React.Component {
-  
-  componentDidMount() {
+  componentDidMount () {
     this.props.getUser()
     this.props.getChannels()
   }
@@ -23,7 +22,7 @@ class App extends React.Component {
         <nav>
           <Navbar />
         </nav>
-        <main>
+        <main style={{ position: 'relative', top: '100px' }}>
           <Switch>
             {this.props.user.id &&
               <Switch>
@@ -48,15 +47,18 @@ function mapState (state) {
   }
 }
 
-function mapDispatch(dispatch) {
+function mapDispatch (dispatch) {
   return {
-   getUser() {
-     dispatch(getMe())
-   },
-   getChannels() {
-     dispatch(fetchChannels())
-   }
+    getUser () {
+      dispatch(getMe())
+    },
+    getChannels () {
+      dispatch(fetchChannels())
+    }
   }
 }
 
-export default connect(mapState, mapDispatch)(App)
+export default connect(
+  mapState,
+  mapDispatch
+)(App)
