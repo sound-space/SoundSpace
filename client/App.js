@@ -24,6 +24,7 @@ class App extends React.Component {
   }
   
   render() {
+    if(!this.props.user.id) return <Landing />
     return (
       <div>
         <nav>

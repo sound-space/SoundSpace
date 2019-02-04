@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchChannels } from '../store'
+import { Redirect } from 'react-router-dom'
 import ChannelCard from './ChannelCard'
 import ChannelForm from './ChannelForm'
 
@@ -10,6 +11,7 @@ class AllChannels extends Component {
   }
 
   render () {
+    // if(!this.props.user.id) return <Redirect to='/' />
     return (
       <div style={{ margin: '0 50px' }}>
         <ChannelForm />
@@ -53,7 +55,8 @@ class AllChannels extends Component {
 }
 
 const mapStateToProps = state => ({
-  channels: state.channelsObj.channels
+  channels: state.channelsObj.channels,
+  user: state.userObj
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import createClientSocket from 'socket.io-client';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import '../styles/ChannelViewStyles.css';
 import ChannelSideBar from "./ChannelSideBar"
 import {
@@ -63,6 +64,8 @@ class ChannelView extends Component {
     const {playerState} = this.props
     const albumCoverUrl = playerState.track_window ? playerState.track_window.current_track.album.images[0] : '/assets/album.jpg'
     const currentTrackName =  playerState.track_window ? playerState.track_window.current_track.name : 'none'
+    console.log('USER ID:', this.props.user.id)
+    if(!this.props.user.id) return <Redirect to='/' />
     
     return (
       <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left">
@@ -97,7 +100,7 @@ class ChannelView extends Component {
 
 const mapState = state => {
   return {
-    user: state.userObj.user,
+    user: state.userObj,
     player: state.playerObj,
     playerState: state.playerStateObj
   };

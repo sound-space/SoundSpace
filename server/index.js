@@ -80,15 +80,21 @@ function(req, res) {
 });
 
 app.get('/me', function(req,res) {
-  console.log('HIT /ME ROUTE')
-  res.json(req.user)
+  // console.log('HIT /ME ROUTE')
+  if(req.user) res.json(req.user)
+  else res.json({})
+})
+
+app.get('/logout', (req,res) => {
+  req.logout()
+  res.json({})
 })
 
 app.use('/api', require('./api')); // include our routes!
 
-app.get('/home/:id', (req, res, next) => {
-  res.redirect('/#/home/' + req.params.id);
-});
+// app.get('/home/:id', (req, res, next) => {
+//   res.redirect('/#/home/' + req.params.id);
+// });
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
