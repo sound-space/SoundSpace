@@ -52,12 +52,12 @@ passport.use(
 );
 
 passport.serializeUser(function(user, done) {
-  console.log('IN SERIALIZE:')
+  // console.log('IN SERIALIZE:')
   done(null, user);
 });
 
 passport.deserializeUser(function(obj, done) {
-  console.log('IN DESERIALIZE:')
+  // console.log('IN DESERIALIZE:')
   done(null, obj);
 });
 
@@ -69,54 +69,40 @@ app.get('/', (req, res, next) => {
 app.get(
   '/login',
   passport.authenticate('spotify', {
-    scope,
-  })
-  
-  // function(req, res) {
-    //   // application requests authorization
-    //   res.redirect(
-      //     'https://accounts.spotify.com/authorize?' +
-      //     querystring.stringify({
-        //       response_type: 'code',
-        //       client_id: client_id,
-        //       scope: scope,
-        //       redirect_uri: redirect_uri,
-        //     })
-        //     );
-        //   }
-        );
+    scope, failureRedirect: '/login'
+  }));
         
-        app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/login' }),
-        function(req, res) {
-          // Successful authentication, redirect home.
-          console.log('REQ USER:', req.user)
-          res.redirect('/#/channels')
-        });
-        
-        app.get('/me', /*passport.authenticate('spotify', {failureRedirect: '/login'})*/ function(req,res) {
-          console.log('HIT /ME ROUTE')
-          res.json(req.user)
-        })
-        
-        app.use('/api', require('./api')); // include our routes!
-        
-        app.get('/home/:id', (req, res, next) => {
-          res.redirect('/#/home/' + req.params.id);
-        });
-        
-        app.use((err, req, res, next) => {
-          console.error(err.stack);
-          res.status(err.status || 500).send(err.message || 'Internal server error');
-        });
-        
-        // start server
-        const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
-        
-        // start listening to socket connections
-        const io = socketio.listen(server);
-        const { socketComm, singularity } = require('./socket');
-        socketComm(io);
-        singularity(io);
+app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/login' }),
+function(req, res) {
+  // Successful authentication, redirect home.
+  // console.log('REQ USER:', req.user)
+  res.redirect('/#/channels')
+});
+
+app.get('/me', function(req,res) {
+  console.log('HIT /ME ROUTE')
+  res.json(req.user)
+})
+
+app.use('/api', require('./api')); // include our routes!
+
+app.get('/home/:id', (req, res, next) => {
+  res.redirect('/#/home/' + req.params.id);
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).send(err.message || 'Internal server error');
+});
+
+// start server
+const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+// start listening to socket connections
+const io = socketio.listen(server);
+const { socketComm, singularity } = require('./socket');
+socketComm(io);
+singularity(io);
         
         // res.redirect('/');
         // }, function(req, res) {
