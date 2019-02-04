@@ -70,7 +70,6 @@ class ChannelView extends Component {
         // style={{ position: 'relative', top: '100px' }}
         className='uk-width-1-1 uk-container uk-container-expand uk-align-left'
       >
-        <ChannelSideBar />
         <div
           className="uk-grid-medium uk-flex-middle uk-margin-top"
           uk-grid="true"
@@ -83,7 +82,7 @@ class ChannelView extends Component {
           </button>
         </div>
 
-        <div className="uk-placeholder">
+        <div >
           <div uk-grid="true">
             <img
                   className='uk-align-center'
