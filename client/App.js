@@ -7,6 +7,7 @@ import ChannelView from './components/ChannelView'
 import AllChannels from './components/AllChannels'
 import Navbar from './components/Navbar'
 import { connect } from 'react-redux'
+import { getMe } from './store/user'
 // import { setPlayer } from './store/player'
 // import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
@@ -17,6 +18,10 @@ class App extends React.Component {
     // this.createEventHandlers = createEventHandlers.bind(this)
     // this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 200)
   // }
+  
+  componentDidMount() {
+    this.props.getUser()
+  }
   
   render() {
     return (
@@ -56,12 +61,12 @@ function mapState(state) {
   }
 }
 
-// function mapDispatch(dispatch) {
-//   return {
-//     exportPlayer(player) {
-//       dispatch(setPlayer(player))
-//     }
-//   }
-// }
+function mapDispatch(dispatch) {
+  return {
+   getUser() {
+     dispatch(getMe())
+   }
+  }
+}
 
-export default connect(mapState, null)(App)
+export default connect(mapState, mapDispatch)(App)

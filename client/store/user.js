@@ -26,6 +26,11 @@ export const fetchUser = () => async dispatch => {
   await Axios.get('/login')
 }
 
+export const getMe = () => async dispatch => {
+  const userResponse = await Axios.get('/me')
+  dispatch(setUser(userResponse.data))
+}
+
 export default function(state = userObj, action) {
   switch (action.type) {
     case SET_USER:
