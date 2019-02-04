@@ -6,11 +6,6 @@ import { setDevice, setPlayer, setPlayerState } from '../store';
 const IP = 'http://localhost:8080';
 
 class Player extends React.Component {
-  constructor() {
-    super();
-    // this.socket = createClientSocket(IP);
-  }
-
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
   }
