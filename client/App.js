@@ -11,22 +11,21 @@ import { fetchChannels } from './store/channels'
 // import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
 class App extends React.Component {
-  
-  componentDidMount() {
+  componentDidMount () {
     this.props.getUser()
     this.props.getChannels()
   }
-  
-  render() {
-    if(!this.props.user.id) return <Landing />
+
+  render () {
+    if (!this.props.user.id) return <Landing />
     return (
       <div>
         <nav>
           <Navbar />
         </nav>
-        <main>
+        <main style={{ position: 'relative', top: '100px' }}>
           <Switch>
-            <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
+            <Redirect from='/channels/redirect/:id' to='/channels/:id' />
             <Route exact path='/channels' component={AllChannels} />
             <Route path='/channels/:id' component={ChannelView} />
             {/* <Route path='/home' component={UserInfo} /> */}
@@ -46,15 +45,18 @@ function mapState (state) {
   }
 }
 
-function mapDispatch(dispatch) {
+function mapDispatch (dispatch) {
   return {
-   getUser() {
-     dispatch(getMe())
-   },
-   getChannels() {
-     dispatch(fetchChannels())
-   }
+    getUser () {
+      dispatch(getMe())
+    },
+    getChannels () {
+      dispatch(fetchChannels())
+    }
   }
 }
 
-export default connect(mapState, mapDispatch)(App)
+export default connect(
+  mapState,
+  mapDispatch
+)(App)
