@@ -14,7 +14,7 @@ class AllChannels extends Component {
   }
 
   componentDidMount () {
-    this.props.fetchChannels()
+    // this.props.fetchChannels()
   }
 
   handleSearch (evt) {
@@ -25,7 +25,7 @@ class AllChannels extends Component {
 
   render () {
     return (
-      <div style={{ paddingTop: '160px', margin: '0 50px' }}>
+      <div style={{ paddingTop: '40px', margin: '0 50px' }}>
         <nav className='uk-navbar-container' uk-navbar='true'>
           <div className='uk-navbar-left'>
             <div className='uk-navbar-item'>
@@ -52,14 +52,17 @@ class AllChannels extends Component {
         >
           Sound Space Music Channels
         </h1>
-        <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
-          Active Rooms: {this.props.channels.length}
-        </h3>
-        {/* <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
-          Active Users: 0
-        </h3> */}
+        {this.state.query ? (
+          <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
+            Search Results
+          </h3>
+        ) : (
+          <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
+            Active Sound Channels: {this.props.channels.length}
+          </h3>
+        )}
         <div
-          className='uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-match uk-grid-small'
+          className='uk-child-width-1-1 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-match uk-grid-small'
           uk-grid='true'
         >
           <div className='uk-text-center'>
@@ -108,7 +111,7 @@ class AllChannels extends Component {
 }
 
 const mapStateToProps = state => ({
-  channels: state.channelsObj.channels,
+  channels: state.channels,
   user: state.userObj,
   player: state.playerObj
 })

@@ -119,6 +119,7 @@ const mapStateToProps = state => ({
   channels: state.channels,
   user: state.userObj,
   player: state.playerObj,
+  deviceId: state.deviceId
 });
 
 const mapDispatchToProps = dispatch => ({

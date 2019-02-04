@@ -1,24 +1,22 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Landing from './components/Landing'
-import Oauth from './components/Oauth'
-import UserInfo from './components/UserInfo'
 import ChannelView from './components/ChannelView'
 import AllChannels from './components/AllChannels'
 import Navbar from './components/Navbar'
 import { connect } from 'react-redux'
 import { getMe } from './store/user'
+import { fetchChannels } from './store/channels'
 // import { setPlayer } from './store/player'
 // import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
 class App extends React.Component {
-  
-  componentDidMount() {
+  componentDidMount () {
     this.props.getUser()
+    this.props.getChannels()
   }
   
   render() {
-    if(!this.props.user.id) return <Landing />
     return (
       <div>
         <nav>
@@ -26,12 +24,23 @@ class App extends React.Component {
         </nav>
         <main style={{ position: 'relative', top: '100px' }}>
           <Switch>
+
             <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
             <Route exact path='/channels' component={AllChannels} />
             <Route path='/channels/:id' component={ChannelView} />
+
+            {this.props.user.id &&
+              <Switch>
+                <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
+                <Route path='/channels/:id' component={ChannelView} />
+                <Route exact path='/channels' component={AllChannels} />
+                <Redirect from='*' to='/channels' />
+              </Switch>
+            }
+
             <Route exact path='/' component={Landing} />
             <Redirect from='*' to='/' />
-          </Switch>
+            </Switch>
         </main>
       </div>
     )
@@ -45,12 +54,18 @@ function mapState (state) {
   }
 }
 
-function mapDispatch(dispatch) {
+function mapDispatch (dispatch) {
   return {
-   getUser() {
-     dispatch(getMe())
-   }
+    getUser () {
+      dispatch(getMe())
+    },
+    getChannels () {
+      dispatch(fetchChannels())
+    }
   }
 }
 
-export default connect(mapState, mapDispatch)(App)
+export default connect(
+  mapState,
+  mapDispatch
+)(App)
