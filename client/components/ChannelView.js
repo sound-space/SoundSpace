@@ -126,7 +126,7 @@ class ChannelView extends Component {
             </div>
             <div className="uk-text-large">{currentTrackName}</div>
             <div>By {currentTrackArtist}</div>
-            <div>Album: {currentTrackAlbum}</div>
+            <div>{currentTrackAlbum}</div>
             <br></br>
             
             <br />
