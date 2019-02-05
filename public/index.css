@@ -3,13 +3,14 @@
   background: repeat url(assets/binding-light.png);
 } */
 
-/* main {
+.landing,
+.channelView {
   background: url(
     data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHUlEQVQYV2O8cuVKmo6OziwGKGCEMTAEYCoxVAAAXA0IBSg0edEAAAAASUVORK5CYII=
   )
     repeat;
   height: 'auto';
-} */
+}
 
 .headline {
   font-size: 70px;
@@ -26,7 +27,7 @@
 nav {
   background-image: linear-gradient(
     270deg,
-    rgba(66, 244, 137, 1),
+    rgb(66, 244, 137),
     rgb(0, 140, 255) 100%
   );
 }

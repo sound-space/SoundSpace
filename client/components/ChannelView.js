@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import createClientSocket from 'socket.io-client';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import '../styles/ChannelViewStyles.css';
-import ChannelSideBar from './ChannelSideBar';
-import Player from './Player';
-const IP = 'http://localhost:8080';
+import React, { Component } from 'react'
+import axios from 'axios'
+import createClientSocket from 'socket.io-client'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import '../styles/ChannelViewStyles.css'
+import ChannelSideBar from './ChannelSideBar'
+import Player from './Player'
+const IP = 'http://localhost:8080'
 
 class ChannelView extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       numUsers: 0,
       voted: false,
@@ -18,87 +18,87 @@ class ChannelView extends Component {
       device_id: '',
       playerState: {},
       messages: [],
-      message: '',
-    };
-    this.socket = createClientSocket(IP);
+      message: ''
+    }
+    this.socket = createClientSocket(IP)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.socket.on('num-users', numUsers => {
       this.setState({
-        numUsers,
-      });
-    });
+        numUsers
+      })
+    })
     this.socket.on('new-message', message => {
-      const messages = [message, ...this.state.messages];
+      const messages = [message, ...this.state.messages]
       this.setState({
-        messages,
-      });
-      document.getElementById('messages-container').scrollTop = 0;
-    });
+        messages
+      })
+      document.getElementById('messages-container').scrollTop = 0
+    })
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     // If navigating away from ChannelView, disconnect from socket
-    this.socket.emit('leave', this.props.match.params.id);
+    this.socket.emit('leave', this.props.match.params.id)
   }
 
   vote = async userVote => {
-    if (this.state.voted) return;
+    if (this.state.voted) return
     try {
       await axios.put(`api/channels/${this.props.match.params.id}/votes`, {
-        vote: userVote,
-      });
+        vote: userVote
+      })
       this.setState({
-        voted: true,
-      });
+        voted: true
+      })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
-  render() {
-    if (!this.props.user.id) return <Redirect to="/" />;
-    const playerState = this.props.playerState;
+  render () {
+    if (!this.props.user.id) return <Redirect to='/' />
+    const playerState = this.props.playerState
     const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
-      : '';
+      : ''
     const currentTrackName = playerState
       ? playerState.track_window.current_track.name
-      : '';
+      : ''
     const currentTrackAlbum = playerState
       ? playerState.track_window.current_track.album.name
-      : '';
+      : ''
 
     const currentTrackArtist = playerState
       ? playerState.track_window.current_track.artists[0].name
-      : '';
+      : ''
     return (
-      <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left">
+      <div className='channelView uk-width-1-1 uk-container uk-container-expand uk-align-left'>
         <div>
-          <div uk-grid="true">
+          <div uk-grid='true'>
             <img
-              className="uk-align-center"
+              className='uk-align-center'
               src={albumCoverUrl}
-              width="400"
-              height="400"
-              alt=""
+              width='400'
+              height='400'
+              alt=''
             />
           </div>
-          <div className="uk-text-center">
-            <div uk-grid="true" className="uk-align-center">
+          <div className='uk-text-center'>
+            <div uk-grid='true' className='uk-align-center'>
               <i
-                className="fas fa-thumbs-up uk-margin-right"
-                uk-tooltip="Upvote!"
+                className='fas fa-thumbs-up uk-margin-right'
+                uk-tooltip='Upvote!'
                 onClick={() => this.vote(1)}
               />
               <i
-                className="fas fa-thumbs-down uk-margin-right"
-                uk-tooltip="Upvote!"
+                className='fas fa-thumbs-down uk-margin-right'
+                uk-tooltip='Upvote!'
                 onClick={() => this.vote(1)}
               />
             </div>
-            <div className="uk-text-large">{currentTrackName}</div>
+            <div className='uk-text-large'>{currentTrackName}</div>
             <div>{currentTrackArtist}</div>
             <div>{currentTrackAlbum}</div>
             <br />
@@ -110,31 +110,31 @@ class ChannelView extends Component {
                 value={this.state.message}
                 onChange={evt => {
                   this.setState({
-                    message: evt.target.value,
-                  });
+                    message: evt.target.value
+                  })
                 }}
-                placeholder="Enter message..."
+                placeholder='Enter message...'
               />
               <button
                 onClick={() => {
                   this.socket.emit('message', this.props.match.params.id, {
                     text: this.state.message,
-                    user: this.props.user.displayName,
-                  });
+                    user: this.props.user.displayName
+                  })
                   this.setState({
-                    message: '',
-                  });
+                    message: ''
+                  })
                 }}
               >
                 Send
               </button>
-              <div id="messages-container">
+              <div id='messages-container'>
                 {this.state.messages.map((message, i) => {
                   return (
-                    <div className="message">
+                    <div className='message'>
                       {message.user}: {message.text}
                     </div>
-                  );
+                  )
                 })}
               </div>
             </div>
@@ -142,7 +142,7 @@ class ChannelView extends Component {
         </div>
         <Player socket={this.socket} channelId={this.props.match.params.id} />
       </div>
-    );
+    )
   }
 }
 
@@ -150,11 +150,11 @@ const mapState = state => {
   return {
     user: state.userObj,
     player: state.playerObj,
-    playerState: state.playerStateObj,
-  };
-};
+    playerState: state.playerStateObj
+  }
+}
 
 export default connect(
   mapState,
   null
-)(ChannelView);
+)(ChannelView)
