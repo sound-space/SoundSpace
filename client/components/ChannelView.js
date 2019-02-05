@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import '../styles/ChannelViewStyles.css';
 import ChannelSideBar from './ChannelSideBar';
+import { search } from '../SpotifySearch';
 import Player from './Player';
 const IP = 'http://localhost:8080';
 
@@ -19,11 +20,19 @@ class ChannelView extends Component {
       playerState: {},
       messages: [],
       message: '',
+      channelDetails: {},
+      searchResults: [],
     };
+    this.handleSearch = this.handleSearch.bind(this);
+    this.search = search.bind(this);
     this.socket = createClientSocket(IP);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    let { data } = await axios.get(
+      `/api/channels/${this.props.match.params.id}`
+    );
+    this.setState({ channelDetails: data });
     this.socket.on('num-users', numUsers => {
       this.setState({
         numUsers,
@@ -41,6 +50,19 @@ class ChannelView extends Component {
   componentWillUnmount() {
     // If navigating away from ChannelView, disconnect from socket
     this.socket.emit('leave', this.props.match.params.id);
+  }
+
+  async handleSearch(evt) {
+    if (evt.target.value === '') {
+      this.setState({
+        searchResults: [],
+      });
+      return;
+    }
+    const { tracks } = await this.search(evt.target.value);
+    this.setState({
+      searchResults: tracks.items,
+    });
   }
 
   vote = async (userVote, voteState) => {
@@ -135,6 +157,57 @@ class ChannelView extends Component {
             <div>By {currentTrackArtist}</div>
             <div>{currentTrackAlbum}</div>
             <br />
+
+            {this.state.channelDetails.isSuggestable ? (
+              <div>
+                <div className="uk-margin">
+                  Add a suggestion
+                  <input
+                    onChange={this.handleSearch}
+                    className="uk-input"
+                    type="text"
+                    placeholder="Search Songs..."
+                  />
+                </div>
+                <div>
+                  {this.state.searchResults.map((track, i) => {
+                    return (
+                      <div
+                        className="add"
+                        key={i}
+                        onClick={async () => {
+                          this.setState({
+                            searchResults: [],
+                          });
+                          await axios.post('/api/songs', {
+                            songIds: [track.id],
+                            channelId: this.props.match.params.id,
+                          });
+                          window.UIkit.notification(
+                            `<span uk-icon='icon: check'></span> Queued ${
+                              track.name
+                            }!`
+                          );
+                        }}
+                      >
+                        <span
+                          className="uk-margin-small-right"
+                          uk-icon="plus-circle"
+                        />
+                        {track.name} by{' '}
+                        {track.artists.map((artist, j) => {
+                          return j === track.artists.length - 1
+                            ? artist.name
+                            : artist.name + ', ';
+                        })}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              undefined
+            )}
 
             <br />
             <hr />
