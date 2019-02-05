@@ -1,5 +1,5 @@
 'use strict'
-process.env.BABEL_ENV = 'development'
+process.env.BABEL_ENV = process.env.SPOTIFY_CLIENT_ID ? 'production' : 'development'
 
 const { resolve } = require('path')
 
