@@ -24,7 +24,6 @@ class ChannelView extends Component {
   }
 
   componentDidMount() {
-    this.socket.emit('room', this.props.match.params.id);
     this.socket.on('num-users', numUsers => {
       this.setState({
         numUsers,
@@ -106,6 +105,7 @@ class ChannelView extends Component {
             <hr />
             <div>
               <h3>Chat</h3>
+              <p>Listeners: {this.state.numUsers}</p>
               <input
                 value={this.state.message}
                 onChange={evt => {
