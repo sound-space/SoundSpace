@@ -106,28 +106,34 @@ class ChannelView extends Component {
             <div>
               <h3>Chat</h3>
               <p>Listeners: {this.state.numUsers}</p>
-              <input
-                value={this.state.message}
-                onChange={evt => {
-                  this.setState({
-                    message: evt.target.value,
-                  });
-                }}
-                placeholder="Enter message..."
-              />
-              <button
-                onClick={() => {
-                  this.socket.emit('message', this.props.match.params.id, {
-                    text: this.state.message,
-                    user: this.props.user.displayName,
-                  });
-                  this.setState({
-                    message: '',
-                  });
+              <form
+                onSubmit={evt => {
+                  evt.preventDefault();
+                  if (this.state.message.length > 0) {
+                    this.socket.emit('message', this.props.match.params.id, {
+                      text: this.state.message,
+                      user: this.props.user.displayName,
+                    });
+                    this.setState({
+                      message: '',
+                    });
+                  }
                 }}
               >
-                Send
-              </button>
+                <input
+                  className="uk-input uk-form-width-medium"
+                  value={this.state.message}
+                  onChange={evt => {
+                    this.setState({
+                      message: evt.target.value,
+                    });
+                  }}
+                  placeholder="Enter message..."
+                />
+                <button className="uk-button uk-button-default" type="submit">
+                  Send
+                </button>
+              </form>
               <div id="messages-container">
                 {this.state.messages.map((message, i) => {
                   return (
