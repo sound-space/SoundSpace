@@ -187,8 +187,8 @@ async function authenticate() {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     auth: {
-      username: client_id,
-      password: client_secret,
+      username: process.env.SPOTIFY_CLIENT_ID || client_id,
+      password: process.env.SPOTIFY_CLIENT_SECRET || client_secret,
     },
   });
   return data.access_token;

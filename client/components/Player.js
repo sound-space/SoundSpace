@@ -3,7 +3,7 @@ import createClientSocket from 'socket.io-client';
 import { connect } from 'react-redux';
 import { setDevice, setPlayer, setPlayerState } from '../store';
 
-const IP = 'http://localhost:8080';
+const IP = process.env.SPOTIFY_CLIENT_ID ? 'http://soundspace-fsa.herokuapp.com' : 'http://localhost:8080'
 
 class Player extends React.Component {
   componentDidMount() {
