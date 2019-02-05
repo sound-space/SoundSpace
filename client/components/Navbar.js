@@ -17,7 +17,7 @@ const NavBar = props => {
       {props.user.id && (
         <div className="uk-navbar-right" width="500">
           <button onClick={() => props.props.history.push('/channels')} className="nav-button uk-button uk-margin-right" >LEAVE</button>
-            <button className="nav-button uk-button uk-margin-right">CHANNELS</button>
+            {/* <button className="nav-button uk-button uk-margin-right">CHANNELS</button>
             <div uk-dropdown="mode: hover">
               <ul className="uk-nav uk-dropdown-nav">
                 {props.channels && props.channels.map(channel => (
@@ -25,7 +25,7 @@ const NavBar = props => {
                   <a href={`/#/channels/${channel.id}`}>{channel.name}</a>
                   </li>))}
               </ul>
-            </div>
+            </div> */}
           <button className="nav-button uk-button uk-margin-right" onClick={props.logout}>LOGOUT</button>
         </div>
       )}
