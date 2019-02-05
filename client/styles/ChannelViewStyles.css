@@ -13,3 +13,11 @@
   align-items: center;
   width: 50%;
 }
+
+.active-up {
+  color: green;
+}
+
+.active-down {
+  color: red;
+}

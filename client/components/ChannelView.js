@@ -37,7 +37,7 @@ class ChannelView extends Component {
   }
 
 
-  vote = async (userVote, voteState) => {if (this.state) return
+  vote = async (userVote, voteState) => {
     let changeInDB, newVoteState
     if(userVote === 'up') {
       switch(voteState) {
@@ -120,9 +120,9 @@ class ChannelView extends Component {
           </div>
               <div className="uk-text-center">
                 <div uk-grid="true" className='uk-align-center'>
-                <i className="fas fa-thumbs-up uk-margin-right" uk-tooltip='Upvote!'
+                <i className={`fas fa-thumbs-up uk-margin-right ${this.state.vote === 'up' ? 'active-up' : ''}`} uk-tooltip='Upvote!'
                     onClick={() => this.vote('up', this.state.vote)}></i>
-                <i className="fas fa-thumbs-down uk-margin-right" uk-tooltip='Upvote!'
+                <i className={`fas fa-thumbs-down uk-margin-right ${this.state.vote === 'down' ? 'active-down' : ''}`} uk-tooltip='Downvote!'
                     onClick={() => this.vote('down', this.state.vote)}></i>
                 </div>
                 <div className="uk-text-large">
