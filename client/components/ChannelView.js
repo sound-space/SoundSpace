@@ -129,6 +129,52 @@ class ChannelView extends Component {
             </div>
             <br></br>
             Album: {currentTrackAlbum}
+            
+            <br />
+            <hr />
+            
+            <div>
+              <h3>Chat</h3>
+              <p>Listeners: {this.state.numUsers}</p>
+              <form
+                onSubmit={evt => {
+                  evt.preventDefault();
+                  if (this.state.message.length > 0) {
+                    this.socket.emit('message', this.props.match.params.id, {
+                      text: this.state.message,
+                      user: this.props.user.displayName,
+                    });
+                    this.setState({
+                      message: '',
+                    });
+                  }
+                }}
+              >
+                <input
+                  className="uk-input uk-form-width-medium"
+                  value={this.state.message}
+                  onChange={evt => {
+                    this.setState({
+                      message: evt.target.value,
+                    });
+                  }}
+                  placeholder="Enter message..."
+                />
+                <button className="uk-button uk-button-default" type="submit">
+                  Send
+                </button>
+              </form>
+              <div id="messages-container">
+                {this.state.messages.map((message, i) => {
+                  return (
+                    <div className="message">
+                      {message.user}: {message.text}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            
           </div>
         </div>
         <Player socket={this.socket} channelId={this.props.match.params.id} />
