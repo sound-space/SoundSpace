@@ -4,7 +4,7 @@
 } */
 
 .landing,
-.channelView {
+.channels {
   background: url(
     data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHUlEQVQYV2O8cuVKmo6OziwGKGCEMTAEYCoxVAAAXA0IBSg0edEAAAAASUVORK5CYII=
   )
@@ -100,6 +100,14 @@ button:hover {
   color: white;
 }
 
+.arrow:hover {
+  color: ' rgb(0, 140, 255)';
+}
+
+/* .whatIsSS {
+  font-size: 40px;
+} */
+
 @media only screen and (min-width: 768px) {
   .headline {
     font-size: 120px;
@@ -109,5 +117,11 @@ button:hover {
   }
   .haveSpotify {
     font-size: 28px;
+  }
+  .slideLeft {
+    margin: 40px 30px 0 0;
+  }
+  .slideRight {
+    margin: 40px 30px 0 0;
   }
 }

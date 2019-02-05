@@ -74,7 +74,7 @@ class ChannelView extends Component {
       ? playerState.track_window.current_track.artists[0].name
       : ''
     return (
-      <div className='channelView uk-width-1-1 uk-container uk-container-expand uk-align-left'>
+      <div className='uk-width-1-1 uk-container uk-container-expand uk-align-left'>
         <div>
           <div uk-grid='true'>
             <img
@@ -82,7 +82,6 @@ class ChannelView extends Component {
               src={albumCoverUrl}
               width='400'
               height='400'
-              alt=''
             />
           </div>
           <div className='uk-text-center'>
