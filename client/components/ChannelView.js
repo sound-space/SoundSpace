@@ -43,55 +43,52 @@ class ChannelView extends Component {
     this.socket.emit('leave', this.props.match.params.id);
   }
 
-
   vote = async (userVote, voteState) => {
-    let changeInDB, newVoteState
-    if(userVote === 'up') {
-      switch(voteState) {
+    let changeInDB, newVoteState;
+    if (userVote === 'up') {
+      switch (voteState) {
         case 'up':
-          changeInDB = -1
-          newVoteState = ''
-          break
+          changeInDB = -1;
+          newVoteState = '';
+          break;
         case 'down':
-          changeInDB = +2
-          newVoteState = 'up'
-          break
+          changeInDB = +2;
+          newVoteState = 'up';
+          break;
         default:
-          changeInDB = +1
-          newVoteState = 'up'
+          changeInDB = +1;
+          newVoteState = 'up';
+      }
+    } else if (userVote === 'down') {
+      switch (voteState) {
+        case 'up':
+          changeInDB = -2;
+          newVoteState = 'down';
+          break;
+        case 'down':
+          changeInDB = +1;
+          newVoteState = '';
+          break;
+        default:
+          changeInDB = -1;
+          newVoteState = 'down';
       }
     }
-    else if(userVote === 'down') {
-      switch(voteState) {
-        case 'up':
-          changeInDB = -2
-          newVoteState = 'down'
-          break
-        case 'down':
-          changeInDB = +1
-          newVoteState = ''
-          break
-        default:
-          changeInDB = -1
-          newVoteState = 'down'
-      }
-    }
-    
+
     try {
       await axios.put(`api/channels/${this.props.match.params.id}/votes`, {
-        vote: changeInDB
-      })
+        vote: changeInDB,
+      });
       this.setState({
-        vote: newVoteState
-      })
+        vote: newVoteState,
+      });
     } catch (err) {
       console.log(err);
     }
   };
 
-  render () {
-    // if (!this.props.user.id) return <Redirect to='/' />
-    const playerState = this.props.playerState
+  render() {
+    const playerState = this.props.playerState;
     const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
       : '';
@@ -118,20 +115,30 @@ class ChannelView extends Component {
             />
           </div>
           <div className="uk-text-center">
-            <div uk-grid="true" className='uk-align-center'>
-              <i className={`fas fa-thumbs-up uk-margin-right ${this.state.vote === 'up' ? 'active-up' : ''}`} uk-tooltip='Upvote!'
-                  onClick={() => this.vote('up', this.state.vote)}></i>
-              <i className={`fas fa-thumbs-down uk-margin-right ${this.state.vote === 'down' ? 'active-down' : ''}`} uk-tooltip='Downvote!'
-                  onClick={() => this.vote('down', this.state.vote)}></i>
+            <div uk-grid="true" className="uk-align-center">
+              <i
+                className={`fas fa-thumbs-up uk-margin-right ${
+                  this.state.vote === 'up' ? 'active-up' : ''
+                }`}
+                uk-tooltip="Upvote!"
+                onClick={() => this.vote('up', this.state.vote)}
+              />
+              <i
+                className={`fas fa-thumbs-down uk-margin-right ${
+                  this.state.vote === 'down' ? 'active-down' : ''
+                }`}
+                uk-tooltip="Downvote!"
+                onClick={() => this.vote('down', this.state.vote)}
+              />
             </div>
             <div className="uk-text-large">{currentTrackName}</div>
             <div>By {currentTrackArtist}</div>
             <div>{currentTrackAlbum}</div>
-            <br></br>
-            
+            <br />
+
             <br />
             <hr />
-            
+
             <div>
               <h3>Chat</h3>
               <p>Listeners: {this.state.numUsers}</p>
@@ -173,7 +180,6 @@ class ChannelView extends Component {
                 })}
               </div>
             </div>
-            
           </div>
         </div>
         <Player socket={this.socket} channelId={this.props.match.params.id} />

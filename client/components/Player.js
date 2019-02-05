@@ -7,7 +7,7 @@ const IP = 'http://localhost:8080';
 
 class Player extends React.Component {
   componentDidMount() {
-      this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
+    this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
   }
 
   componentWillUnmount() {
@@ -16,7 +16,7 @@ class Player extends React.Component {
 
   checkForPlayer() {
     const token = this.props.user.access_token;
-      if (window.Spotify) {
+    if (window.Spotify) {
       clearInterval(this.playerCheckInterval);
       this.player = new window.Spotify.Player({
         name: 'SoundSpace Spotify Player',
@@ -30,20 +30,6 @@ class Player extends React.Component {
     }
   }
 
-  // async transferPlaybackHere() {
-  //   await fetch('https://api.spotify.com/v1/me/player', {
-  //     method: 'PUT',
-  //     headers: {
-  //       authorization: `Bearer ${this.props.user.access_token}`,
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       device_ids: [this.props.deviceId],
-  //       play: true,
-  //     }),
-  //   });
-  // }
-
   setTrack(songId, timestamp, deviceId) {
     fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
       method: 'PUT',
@@ -56,20 +42,6 @@ class Player extends React.Component {
         position_ms: Date.now() - new Date(timestamp),
       }),
     });
-
-    //Play a track on the SoundSpace player
-    // fetch(
-    //   `https://api.spotify.com/v1/me/player/play?device_id=${
-    //     this.props.deviceId
-    //   }`,
-    //   {
-    //     method: 'PUT',
-    //     headers: {
-    //       authorization: `Bearer ${this.props.user.access_token}`,
-    //       'Content-Type': 'application/json',
-    //     },
-    //   }
-    // );
   }
 
   createEventHandlers() {
