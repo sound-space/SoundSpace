@@ -44,7 +44,10 @@ const socketComm = async io => {
 
     //Take the channelId and message and send to all clients in room
     socket.on('message', function(channelId, message) {
-      io.in(channelId).emit('new-message', message);
+      io.in(channelId).emit('new-message', {
+        user: message.user,
+        text: message.text,
+      });
     });
 
     socket.on('disconnect', () => {

@@ -117,11 +117,10 @@ class ChannelView extends Component {
               />
               <button
                 onClick={() => {
-                  this.socket.emit(
-                    'message',
-                    this.props.match.params.id,
-                    this.state.message
-                  );
+                  this.socket.emit('message', this.props.match.params.id, {
+                    text: this.state.message,
+                    user: this.props.user.displayName,
+                  });
                   this.setState({
                     message: '',
                   });
@@ -131,7 +130,11 @@ class ChannelView extends Component {
               </button>
               <div id="messages-container">
                 {this.state.messages.map((message, i) => {
-                  return <div className="message">{message}</div>;
+                  return (
+                    <div className="message">
+                      {message.user}: {message.text}
+                    </div>
+                  );
                 })}
               </div>
             </div>
