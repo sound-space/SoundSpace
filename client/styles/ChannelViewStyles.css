@@ -7,6 +7,19 @@
   width: 100vw;
 } */
 
+#messages-container {
+  margin-top: 2em;
+  background-color: rgb(250, 250, 250);
+  height: 20vh;
+  overflow: scroll;
+}
+.message {
+  padding: 0.5em;
+  border-width: 2px 0 2px 0;
+  border-style: groove;
+  border-color: #eeeeee30;
+}
+
 .vote-button-container {
   display: flex;
   justify-content: space-evenly;

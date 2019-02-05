@@ -24,9 +24,9 @@ const socketComm = async io => {
     socket.on('room', async function(channelId) {
       console.log('Client joining room', channelId);
       //Join the client to the room and inform all users about number of users in channel
+      socket.join(channelId);
       const users = io.sockets.adapter.rooms[channelId];
       let numUsers = !users ? 0 : users.length;
-      socket.join(channelId);
       io.in(channelId).emit('num-users', numUsers);
       const songInfo = await Song.findOne({
         where: {
@@ -39,6 +39,14 @@ const socketComm = async io => {
       socket.emit('song-info', {
         songId: songInfo.songId,
         timestamp: songInfo.channel.dataValues.timestamp,
+      });
+    });
+
+    //Take the channelId and message and send to all clients in room
+    socket.on('message', function(channelId, message) {
+      io.in(channelId).emit('new-message', {
+        user: message.user,
+        text: message.text,
       });
     });
 
