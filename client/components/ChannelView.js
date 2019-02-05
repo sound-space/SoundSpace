@@ -124,11 +124,10 @@ class ChannelView extends Component {
               <i className={`fas fa-thumbs-down uk-margin-right ${this.state.vote === 'down' ? 'active-down' : ''}`} uk-tooltip='Downvote!'
                   onClick={() => this.vote('down', this.state.vote)}></i>
             </div>
-            <div className="uk-text-large">
-              {currentTrackName} by {currentTrackArtist}
-            </div>
+            <div className="uk-text-large">{currentTrackName}</div>
+            <div>By {currentTrackArtist}</div>
+            <div>Album: {currentTrackAlbum}</div>
             <br></br>
-            Album: {currentTrackAlbum}
             
             <br />
             <hr />
