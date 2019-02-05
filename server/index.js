@@ -6,7 +6,7 @@ const querystring = require('querystring');
 const session = require('express-session')
 const cors = require('cors');
 const path = require('path');
-const IP = 'http://localhost:8080';
+const IP = process.env.SPOTIFY_CLIENT_ID ? 'http://soundspace-fsa.herokuapp.com' : 'http://localhost:8080'
 const redirect_uri = `${IP}/callback`;
 const volleyball = require('volleyball');
 const bodyParser = require('body-parser');
@@ -35,9 +35,9 @@ const SpotifyStrategy = require('passport-spotify').Strategy;
 passport.use(
   new SpotifyStrategy(
     {
-      clientID: client_id,
-      clientSecret: client_secret,
-      callbackURL: 'http://localhost:8080/callback',
+      clientID: process.env.SPOTIFY_CLIENT_ID || client_id,
+      clientSecret: process.env.SPOTIFY_CLIENT_SECRET || client_secret,
+      callbackURL: process.env.SPOTIFY_CLIENT_ID ? 'http://soundspace-fsa.herokuapp.com/callback' : 'http://localhost:8080/callback',
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
       // User.findOrCreate({ spotifyId: profile.id }, function(err, user) {
