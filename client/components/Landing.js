@@ -81,7 +81,7 @@ const Landing = () => {
           >
             Learn More
           </h6>
-          <div class='uk-animation-toggle' tabindex='0'>
+          <div className='uk-animation-toggle' tabIndex='0'>
             <a
               className='arrow uk-animation-shake'
               href='#learn'

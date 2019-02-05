@@ -96,17 +96,17 @@ button {
 
 nav,
 button:hover {
-  background-color: red;
   color: white;
 }
 
-.arrow:hover {
-  color: ' rgb(0, 140, 255)';
+.navBtn {
+  color: '#FFF';
 }
 
-/* .whatIsSS {
-  font-size: 40px;
-} */
+.arrow:hover,
+.navBtn:hover {
+  color: ' rgb(0, 140, 255)';
+}
 
 @media only screen and (min-width: 768px) {
   .headline {
