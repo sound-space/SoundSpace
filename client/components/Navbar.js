@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logUserOut } from '../store/user'
 
@@ -15,49 +14,9 @@ const NavBar = props => {
       </div>
 
       {props.user.id && (
-        <div className='uk-navbar-right' width='500'>
-          <a
-            style={{
-              fontSize: '24px',
-              fontFamily: 'Tajawal',
-              fontWeight: 'bold'
-            }}
-            onClick={() => props.props.history.push('/channels')}
-            className='nav-button uk-button uk-margin-right'
-          >
-            LEAVE
-          </a>
-          <a
-            style={{
-              fontSize: '24px',
-              fontFamily: 'Tajawal',
-              fontWeight: 'bold'
-            }}
-            className='nav-button uk-button uk-margin-right'
-          >
-            CHANNELS
-          </a>
-          <div uk-dropdown='mode: hover'>
-            <ul className='uk-nav uk-dropdown-nav'>
-              {props.channels &&
-                props.channels.map(channel => (
-                  <li key={channel.id}>
-                    <a href={`/#/channels/${channel.id}`}>{channel.name}</a>
-                  </li>
-                ))}
-            </ul>
-          </div>
-          <a
-            style={{
-              fontSize: '24px',
-              fontFamily: 'Tajawal',
-              fontWeight: 'bold'
-            }}
-            className='nav-button uk-button uk-margin-right'
-            onClick={props.logout}
-          >
-            LOGOUT
-          </a>
+        <div className="uk-navbar-right" width="500">
+          <button onClick={() => props.props.history.push('/channels')} className="nav-button uk-button uk-margin-right" >LEAVE</button>
+          <button className="nav-button uk-button uk-margin-right" onClick={props.logout}>LOGOUT</button>
         </div>
       )}
     </nav>

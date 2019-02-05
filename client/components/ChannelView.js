@@ -32,10 +32,10 @@ class ChannelView extends Component {
     this.socket.on('new-message', message => {
       const messages = [message, ...this.state.messages]
       this.setState({
-        messages
-      })
-      document.getElementById('messages-container').scrollTop = 0
-    })
+        messages,
+      });
+      document.getElementsByClassName('chat-messages-container').scrollTop = 0;
+    });
   }
 
   componentWillUnmount () {
@@ -88,7 +88,6 @@ class ChannelView extends Component {
   }
 
   render () {
-    // if (!this.props.user.id) return <Redirect to='/' />
     const playerState = this.props.playerState
     const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
@@ -108,7 +107,7 @@ class ChannelView extends Component {
         <div>
           <div uk-grid='true'>
             <img
-              className='uk-align-center'
+              className="uk-align-center album-img"
               src={albumCoverUrl}
               width='400'
               height='400'
@@ -134,47 +133,45 @@ class ChannelView extends Component {
             <div className='uk-text-large'>{currentTrackName}</div>
             <div>By {currentTrackArtist}</div>
             <div>{currentTrackAlbum}</div>
-            <br />
-
-            <br />
+            <p>Listeners: {this.state.numUsers}</p>
             <hr />
-
-            <div>
-              <h3>Chat</h3>
-              <p>Listeners: {this.state.numUsers}</p>
-              <form
-                onSubmit={evt => {
-                  evt.preventDefault()
-                  if (this.state.message.length > 0) {
-                    this.socket.emit('message', this.props.match.params.id, {
-                      text: this.state.message,
-                      user: this.props.user.displayName
-                    })
-                    this.setState({
-                      message: ''
-                    })
-                  }
-                }}
-              >
-                <input
-                  className='uk-input uk-form-width-medium'
-                  value={this.state.message}
-                  onChange={evt => {
-                    this.setState({
-                      message: evt.target.value
-                    })
+            <div className='chat-container'>
+              <div className='chat-input-container'>
+                <form
+                  onSubmit={evt => {
+                    evt.preventDefault();
+                    if (this.state.message.length > 0) {
+                      this.socket.emit('message', this.props.match.params.id, {
+                        text: this.state.message,
+                        user: this.props.user.displayName,
+                      });
+                      this.setState({
+                        message: '',
+                      });
+                    }
                   }}
-                  placeholder='Enter message...'
-                />
-                <button className='uk-button uk-button-default' type='submit'>
-                  Send
-                </button>
-              </form>
-              <div id='messages-container'>
+                >
+                  <input
+                    className="uk-input uk-form-width-medium chat-input"
+                    value={this.state.message}
+                    onChange={evt => {
+                      this.setState({
+                        message: evt.target.value,
+                      });
+                    }}
+                    placeholder="Enter message..."
+                  />
+                  <button className="uk-button uk-button-default chat-submit" type="submit">
+                    Send
+                  </button>
+                </form>
+              </div>
+              
+              <div className="chat-messages-container">
                 {this.state.messages.map((message, i) => {
                   return (
-                    <div className='message'>
-                      {message.user}: {message.text}
+                    <div className="message">
+                      <em>{message.user}</em>: {message.text}
                     </div>
                   )
                 })}
