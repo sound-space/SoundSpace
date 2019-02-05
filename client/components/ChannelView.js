@@ -13,7 +13,7 @@ class ChannelView extends Component {
     super(props)
     this.state = {
       numUsers: 0,
-      voted: false,
+      vote: '',
       currentSongId: '',
       device_id: '',
 
@@ -37,14 +37,45 @@ class ChannelView extends Component {
   }
 
 
-  vote = async userVote => {
-    if (this.state.voted) return
+  vote = async (userVote, voteState) => {if (this.state) return
+    let changeInDB, newVoteState
+    if(userVote === 'up') {
+      switch(voteState) {
+        case 'up':
+          changeInDB = -1
+          newVoteState = ''
+          break
+        case 'down':
+          changeInDB = +2
+          newVoteState = 'up'
+          break
+        default:
+          changeInDB = +1
+          newVoteState = 'up'
+      }
+    }
+    else if(userVote === 'down') {
+      switch(voteState) {
+        case 'up':
+          changeInDB = -2
+          newVoteState = 'down'
+          break
+        case 'down':
+          changeInDB = +1
+          newVoteState = ''
+          break
+        default:
+          changeInDB = -1
+          newVoteState = 'down'
+      }
+    }
+    
     try {
       await axios.put(`api/channels/${this.props.match.params.id}/votes`, {
-        vote: userVote
+        vote: changeInDB
       })
       this.setState({
-        voted: true
+        vote: newVoteState
       })
     } catch (err) {
       console.log(err)
@@ -52,7 +83,7 @@ class ChannelView extends Component {
   }
 
   render () {
-    if (!this.props.user.id) return <Redirect to='/' />
+    // if (!this.props.user.id) return <Redirect to='/' />
     const playerState = this.props.playerState
     const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
@@ -90,9 +121,9 @@ class ChannelView extends Component {
               <div className="uk-text-center">
                 <div uk-grid="true" className='uk-align-center'>
                 <i className="fas fa-thumbs-up uk-margin-right" uk-tooltip='Upvote!'
-                    onClick={() => this.vote(1)}></i>
+                    onClick={() => this.vote('up', this.state.vote)}></i>
                 <i className="fas fa-thumbs-down uk-margin-right" uk-tooltip='Upvote!'
-                    onClick={() => this.vote(1)}></i>
+                    onClick={() => this.vote('down', this.state.vote)}></i>
                 </div>
                 <div className="uk-text-large">
                   {currentTrackName} by {currentTrackArtist}
