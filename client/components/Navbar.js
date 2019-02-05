@@ -17,6 +17,7 @@ const NavBar = props => {
         <div className='uk-navbar-right' width='500'>
           <a
             style={{
+              marginTop: '5px',
               fontSize: '24px',
               fontFamily: 'Tajawal',
               fontWeight: 'bold'
@@ -28,6 +29,7 @@ const NavBar = props => {
           </a>
           <a
             style={{
+              marginTop: '5px',
               fontSize: '24px',
               fontFamily: 'Tajawal',
               fontWeight: 'bold'

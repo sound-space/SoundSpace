@@ -99,12 +99,7 @@ button:hover {
   color: white;
 }
 
-.navBtn {
-  color: '#FFF';
-}
-
-.arrow:hover,
-.navBtn:hover {
+.arrow:hover {
   color: ' rgb(0, 140, 255)';
 }
 
