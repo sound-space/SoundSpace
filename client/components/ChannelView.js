@@ -182,6 +182,7 @@ class ChannelView extends Component {
                           await axios.post('/api/songs', {
                             songIds: [track.id],
                             channelId: this.props.match.params.id,
+                            isSuggestion: true,
                           });
                           window.UIkit.notification(
                             `<span uk-icon='icon: check'></span> Queued ${
