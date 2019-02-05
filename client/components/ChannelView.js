@@ -31,10 +31,11 @@ class ChannelView extends Component {
       });
     });
     this.socket.on('new-message', message => {
-      const messages = [...this.state.messages, message];
+      const messages = [message, ...this.state.messages];
       this.setState({
         messages,
       });
+      document.getElementById('messages-container').scrollTop = 0;
     });
   }
 
@@ -102,11 +103,9 @@ class ChannelView extends Component {
             <div>{currentTrackArtist}</div>
             <div>{currentTrackAlbum}</div>
             <br />
+            <hr />
             <div>
-              Chat
-              {this.state.messages.map(message => {
-                return <div>{message}</div>;
-              })}
+              <h3>Chat</h3>
               <input
                 value={this.state.message}
                 onChange={evt => {
@@ -130,6 +129,11 @@ class ChannelView extends Component {
               >
                 Send
               </button>
+              <div id="messages-container">
+                {this.state.messages.map((message, i) => {
+                  return <div className="message">{message}</div>;
+                })}
+              </div>
             </div>
           </div>
         </div>
