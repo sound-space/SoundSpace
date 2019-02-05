@@ -15,31 +15,27 @@ const NavBar = props => {
 
       {props.user.id && (
         <div className='uk-navbar-right' width='500'>
-          <div
+          <a
             style={{
+              fontSize: '24px',
               fontFamily: 'Tajawal',
-              fontSize: '23px',
-              fontWeight: '700',
-              marginTop: '5px'
+              fontWeight: 'bold'
             }}
             onClick={() => props.props.history.push('/channels')}
-            className='navBtn nav-button uk-button uk-margin-right'
+            className='nav-button uk-button uk-margin-right'
           >
             CHANNELS
-          </div>
-          <a className='navBtn' style={{ textDecoration: 'none' }}>
-            <div
-              style={{
-                fontFamily: 'Tajawal',
-                fontSize: '23px',
-                fontWeight: '700',
-                marginTop: '5px',
-                textDecoration: 'none'
-              }}
-              onClick={props.logout}
-            >
-              LOG OUT
-            </div>
+          </a>
+          <a
+            style={{
+              fontSize: '24px',
+              fontFamily: 'Tajawal',
+              fontWeight: 'bold'
+            }}
+            onClick={props.logout}
+            className='nav-button uk-button uk-margin-right'
+          >
+            LOG OUT
           </a>
         </div>
       )}
