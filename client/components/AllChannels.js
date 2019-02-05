@@ -25,7 +25,7 @@ class AllChannels extends Component {
 
   render () {
     return (
-      <div style={{ paddingTop: '40px', margin: '0 50px' }}>
+      <div className='channels' style={{ padding: '40px 50px' }}>
         <nav className='uk-navbar-container' uk-navbar='true'>
           <div className='uk-navbar-left'>
             <div className='uk-navbar-item'>
@@ -78,11 +78,11 @@ class AllChannels extends Component {
                   minHeight: '200px',
                   objectFit: 'cover'
                 }}
-                src='https://images.unsplash.com/photo-1513829596324-4bb2800c5efb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80'
+                src='http://www.myseumoftoronto.com/wp-content/uploads/2018/05/plain-black-background.jpg'
               />
               <div className='uk-position-center'>
                 <span
-                  className='uk-transition-fade'
+                  // className='uk-transition-fade'
                   uk-icon='icon: plus; ratio: 4'
                 />
               </div>
