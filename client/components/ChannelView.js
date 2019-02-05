@@ -105,6 +105,7 @@ class ChannelView extends Component {
             <hr />
             <div>
               <h3>Chat</h3>
+              <p>Listeners: {this.state.numUsers}</p>
               <input
                 value={this.state.message}
                 onChange={evt => {
