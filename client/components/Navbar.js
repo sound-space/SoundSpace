@@ -22,7 +22,7 @@ const NavBar = props => {
               <ul className="uk-nav uk-dropdown-nav">
                 {props.channels && props.channels.map(channel => (
                 <li key={channel.id}>
-                  <a href={`/channels/${channel.id}`}>{channel.name}</a>
+                  <a href={`/#/channels/${channel.id}`}>{channel.name}</a>
                   </li>))}
               </ul>
             </div>

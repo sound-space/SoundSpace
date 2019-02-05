@@ -24,11 +24,6 @@ class App extends React.Component {
         </nav>
         <main style={{ position: 'relative', top: '100px' }}>
           <Switch>
-
-            <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
-            <Route exact path='/channels' component={AllChannels} />
-            <Route path='/channels/:id' component={ChannelView} />
-
             {this.props.user.id &&
               <Switch>
                 <Redirect from='/channels/redirect/:id' to='/channels/:id'/>
