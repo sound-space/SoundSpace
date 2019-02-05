@@ -1,6 +1,6 @@
 const express = require('express');
 const request = require('request');
-const { client_id, client_secret } = require('../credentials');
+// const { client_id, client_secret } = require('../credentials');
 const querystring = require('querystring');
 // const cookieParser = require('cookie-parser');
 const session = require('express-session')
@@ -35,8 +35,8 @@ const SpotifyStrategy = require('passport-spotify').Strategy;
 passport.use(
   new SpotifyStrategy(
     {
-      clientID: process.env.SPOTIFY_CLIENT_ID || client_id,
-      clientSecret: process.env.SPOTIFY_CLIENT_SECRET || client_secret,
+      clientID: process.env.SPOTIFY_CLIENT_ID, // || client_id,
+      clientSecret: process.env.SPOTIFY_CLIENT_SECRET, //|| client_secret,
       callbackURL: process.env.SPOTIFY_CLIENT_ID ? 'http://soundspace-fsa.herokuapp.com/callback' : 'http://localhost:8080/callback',
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
