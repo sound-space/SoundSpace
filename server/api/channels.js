@@ -48,7 +48,7 @@ router.get('/:channelId/user', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-  const { name, description, imageURL } = req.body;
+  const { name, description, imageURL, isSuggestable } = req.body;
   try {
     // if (req.user) {
     const [newChannel, isNew] = await Channel.findOrCreate({
@@ -62,6 +62,7 @@ router.post('/', async (req, res, next) => {
         description,
         imageURL,
         timestamp: Date.now(),
+        isSuggestable,
       },
     });
     if (isNew) {
