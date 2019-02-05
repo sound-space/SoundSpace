@@ -3,13 +3,14 @@
   background: repeat url(assets/binding-light.png);
 } */
 
-/* main {
+.landing,
+.channels {
   background: url(
     data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHUlEQVQYV2O8cuVKmo6OziwGKGCEMTAEYCoxVAAAXA0IBSg0edEAAAAASUVORK5CYII=
   )
     repeat;
   height: 'auto';
-} */
+}
 
 .headline {
   font-size: 70px;
@@ -26,7 +27,7 @@
 nav {
   background-image: linear-gradient(
     270deg,
-    rgba(66, 244, 137, 1),
+    rgb(66, 244, 137),
     rgb(0, 140, 255) 100%
   );
 }
@@ -69,7 +70,6 @@ ion-icon {
   background-color: rgb(102, 186, 255);
 }
 
-
 .fas {
   font-size: 2em;
 }
@@ -80,7 +80,7 @@ ion-icon {
 }
 
 .fa-thumbs-down {
-  vertical-align:middle
+  vertical-align: middle;
 }
 
 .fa-thumbs-down:hover {
@@ -88,15 +88,25 @@ ion-icon {
   color: red;
 }
 
-nav-button, button {
-  background-color:grey;
-  color: black
+nav-button,
+button {
+  background-color: grey;
+  color: black;
 }
 
-nav,button:hover {
-  background-color:red;
-  color: white
+nav,
+button:hover {
+  background-color: red;
+  color: white;
 }
+
+.arrow:hover {
+  color: ' rgb(0, 140, 255)';
+}
+
+/* .whatIsSS {
+  font-size: 40px;
+} */
 
 @media only screen and (min-width: 768px) {
   .headline {
@@ -108,5 +118,10 @@ nav,button:hover {
   .haveSpotify {
     font-size: 28px;
   }
-
+  .slideLeft {
+    margin: 40px 30px 0 0;
+  }
+  .slideRight {
+    margin: 40px 30px 0 0;
+  }
 }
