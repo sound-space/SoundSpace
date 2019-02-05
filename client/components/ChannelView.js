@@ -7,7 +7,7 @@ import '../styles/ChannelViewStyles.css';
 import ChannelSideBar from './ChannelSideBar';
 import { search } from '../SpotifySearch';
 import Player from './Player';
-const IP = 'http://localhost:8080';
+const IP = 'http://soundspace-fsa.herokuapp.com';
 
 class ChannelView extends Component {
   constructor(props) {

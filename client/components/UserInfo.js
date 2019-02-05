@@ -5,7 +5,7 @@ import store, { setUser } from '../store';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-const IP = 'http://localhost:8080';
+const IP = 'http://soundspace-fsa.herokuapp.com';
 
 class UserInfo extends React.Component {
   constructor() {
