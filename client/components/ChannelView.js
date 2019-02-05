@@ -24,7 +24,6 @@ class ChannelView extends Component {
   }
 
   componentDidMount() {
-    this.socket.emit('room', this.props.match.params.id);
     this.socket.on('num-users', numUsers => {
       this.setState({
         numUsers,
