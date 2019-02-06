@@ -5,7 +5,7 @@ import store, { setUser } from '../store';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-const IP = process.env.SPOTIFY_CLIENT_ID ? 'http://soundspace-fsa.herokuapp.com' : 'http://localhost:8080'
+const IP ='https://soundspace-fsa.herokuapp.com'
 
 class UserInfo extends React.Component {
   constructor() {
