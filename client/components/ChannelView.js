@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import '../styles/ChannelViewStyles.css';
 import { search } from '../SpotifySearch';
 import Player from './Player';
+// const IP = process.env.SPOTIFY_CLIENT_ID ? 'https://soundspace-fsa.herokuapp.com' : 'http://localhost:8080'
+// const IP = 'http://localhost:8080' 
 const IP = 'https://soundspace-fsa.herokuapp.com' 
 
 class ChannelView extends Component {
@@ -123,7 +125,7 @@ class ChannelView extends Component {
     const currentTrackArtist = playerState
       ? playerState.track_window.current_track.artists[0].name
       : '';
-      
+
     return (
       <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left">
         <div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import createClientSocket from 'socket.io-client';
 import { connect } from 'react-redux';
 import { setDevice, setPlayer, setPlayerState } from '../store';
 import AudioViz from './AudioViz'
