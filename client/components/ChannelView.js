@@ -55,15 +55,15 @@ class ChannelView extends Component {
   }
 
   async handleSearch(evt) {
+    this.setState({
+      searchQuery: evt.target.value,
+    });
     if (evt.target.value === '') {
       this.setState({
         searchResults: [],
       });
       return;
     }
-    this.setState({
-      searchQuery: evt.target.value,
-    });
     const { tracks } = await this.search(this.state.searchQuery);
     this.setState({
       searchResults: tracks.items,
