@@ -8,13 +8,15 @@ export default class AudioViz extends Component {
             return null
         }
         const {vizData, currentSegment} = this.props
-        if (vizData.length <= currentSegment) {
+         if (vizData.length <= currentSegment) {
             return null
         }
         return(
             <div id="audio-viz" >
                 {vizData[currentSegment].pitches.map((pitch, idx) => (
-                    <AudioBar key={idx} pitch={pitch} idx={idx}/>
+                    <div key={idx}>
+                        <AudioBar pitch={pitch} idx={idx}/>
+                    </div>
                 ))}
             </div>
         )

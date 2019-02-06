@@ -5,18 +5,19 @@ export default class AudioViz extends Component {
         super()
         this.state = {
             backgroundColor: "black",
-            height: "30px",
+            height: "20px",
             position: "relative",
-            left: "-5px",
+            
             borderRadius: "5px",
-            smoothing: (props.pitch*100)/10,
         }
+        this.barLength = 0
+        this.updateRate = 10
     }
 
     componentDidMount() {
-        this.updateInterval = setInterval(this.setStyling,15)
+        this.updateInterval = setInterval(this.setStyling,this.updateRate)
     }
-
+    
     componentWillUnmount() {
         clearInterval(this.updateInterval)
     }
@@ -30,15 +31,18 @@ export default class AudioViz extends Component {
     
     setStyling = () => {
         const {pitch,idx} = this.props
-        let barLength = pitch*100+5 - this.state.smoothing
-        // let r = pitch >= 0.5 ? 255 : 200+pitch*100
-        // let g = pitch <= 0 ? 255 : 255 - pitch*60
-        // let b = pitch >= 1 ? 255 : pitch >= 0.5 ? 190 + (pitch-0.5)*120 : 220 - pitch*60
-        let shade = 200 - pitch*30
+        let smoothing = (pitch*100 - this.barLength)/this.updateRate
+        this.barLength += smoothing
+        let r = pitch >= 0.7 ? 255 : 200+pitch*100
+        let g = pitch <= 0 ? 255 : 255 - pitch*60
+        let b = pitch >= 1 ? 255 : pitch >= 0.7 ? 190 + (pitch-0.5)*120 : 220 - pitch*60
+        // let shade = 200 - pitch*30
         this.setState({
-            top: 3*idx + "px",
-            width: barLength + "px",
-            backgroundColor: this.rgb(shade,shade,shade)
+            top: 5*idx + "px",
+            width: this.barLength + "px",
+            // backgroundColor: this.rgb(shade,shade,shade),
+            backgroundColor: this.rgb(r,g,b),
+            left: -this.barLength/2
         })
     }
 

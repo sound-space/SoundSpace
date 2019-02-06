@@ -52,11 +52,11 @@ class Player extends React.Component {
               counter++
               this.setState({currentSegment: counter})
             }
-          timeOffset += 150
+          timeOffset += 100
           if (vizData.length <= counter) {
               clearInterval(this.updateInterval)
           }
-      }, 150)
+      }, 100)
       this.setState({vizData: vizData, timeOffset: timeOffset, currentSegment: counter})
     }
   }
@@ -162,8 +162,13 @@ class Player extends React.Component {
       return null
     }
     return (
-      <div style={{zIndex: '50', top: '150px', left:"0px", position: 'fixed', width: "100px", height:"100px"}}>
-        <AudioViz vizData={this.state.vizData} currentSegment={this.state.currentSegment}/>
+      <div>
+        <div style={{zIndex: '50', top: '120px', left:"0px", position: 'fixed', width: "100px", height:"100px"}}>
+          <AudioViz vizData={this.state.vizData} currentSegment={this.state.currentSegment}/>
+        </div>
+        <div style={{zIndex: '50', top: '120px', right:"-100px", position: 'fixed', width: "100px", height:"100px"}}>
+              <AudioViz vizData={this.state.vizData} currentSegment={this.state.currentSegment}/>
+        </div>
       </div>
     );
   }
