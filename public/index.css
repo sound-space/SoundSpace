@@ -7,7 +7,7 @@
 .channels {
   background: url(
     data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHUlEQVQYV2O8cuVKmo6OziwGKGCEMTAEYCoxVAAAXA0IBSg0edEAAAAASUVORK5CYII=
-  )
+    )
     repeat;
   height: 'auto';
 }
@@ -76,7 +76,7 @@ ion-icon {
 
 .fa-thumbs-up:hover {
   cursor: pointer;
-  color: green;
+  color: rgb(66, 244, 137);
 }
 
 .fa-thumbs-down {
@@ -85,7 +85,7 @@ ion-icon {
 
 .fa-thumbs-down:hover {
   cursor: pointer;
-  color: red;
+  color: rgb(238, 81, 81);
 }
 
 nav-button,
@@ -96,17 +96,12 @@ button {
 
 nav,
 button:hover {
-  background-color: red;
   color: white;
 }
 
 .arrow:hover {
   color: ' rgb(0, 140, 255)';
 }
-
-/* .whatIsSS {
-  font-size: 40px;
-} */
 
 @media only screen and (min-width: 768px) {
   .headline {

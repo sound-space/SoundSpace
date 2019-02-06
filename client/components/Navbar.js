@@ -14,27 +14,29 @@ const NavBar = props => {
       }}
     >
       <div>
-        <img
-          style={{ width: '110px' }}
-          src="./assets/ss_logo_white.png"
-          alt=""
-        />
+        <a href="/#/channels">
+          <img
+            style={{ width: '100px' }}
+            src="./assets/ss_logo_white.png"
+            alt=""
+          />
+        </a>
       </div>
 
       {props.user.id && (
         <div className="uk-navbar-right" width="500">
-          <button
-            onClick={() => props.props.history.push('/channels')}
-            className="nav-button uk-button uk-margin-right"
-          >
-            LEAVE
-          </button>
-          <button
-            className="nav-button uk-button uk-margin-right"
+          <a
+            style={{
+              marginTop: '5px',
+              fontSize: '24px',
+              fontFamily: 'Tajawal',
+              fontWeight: 'bold',
+            }}
             onClick={props.logout}
+            className="nav-button uk-button uk-margin-right"
           >
-            LOGOUT
-          </button>
+            LOG OUT
+          </a>
         </div>
       )}
     </nav>

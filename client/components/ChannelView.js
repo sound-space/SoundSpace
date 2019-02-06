@@ -113,30 +113,29 @@ class ChannelView extends Component {
       console.log(err);
     }
   };
-  
+
   clearVotes = () => {
     this.setState({
-      vote: ''
-    })
-  }
+      vote: '',
+    });
+  };
 
   render() {
     // variables for meta data
     const playerState = this.props.playerState;
     const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
-      : '';
+      : null;
     const currentTrackName = playerState
       ? playerState.track_window.current_track.name
-      : '';
+      : null;
     const currentTrackAlbum = playerState
       ? playerState.track_window.current_track.album.name
-      : '';
+      : null;
 
     const currentTrackArtist = playerState
       ? playerState.track_window.current_track.artists[0].name
-      : '';
-
+      : null;
     return (
       <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left">
         <div>
@@ -155,37 +154,50 @@ class ChannelView extends Component {
           <div className="uk-text-center">
             <div uk-grid="true" className="uk-align-center">
               <i
+                className={`fas fa-thumbs-down uk-margin-right ${
+                  this.state.vote === 'down' ? 'active-down' : ''
+                }`}
+                uk-tooltip="Downvote!"
+                onClick={() => this.vote('down', this.state.vote)}
+              />{' '}
+              <i
                 className={`fas fa-thumbs-up uk-margin-right ${
                   this.state.vote === 'up' ? 'active-up' : ''
                 }`}
                 uk-tooltip="Upvote!"
                 onClick={() => this.vote('up', this.state.vote)}
               />
-              <i
-                className={`fas fa-thumbs-down uk-margin-right ${
-                  this.state.vote === 'down' ? 'active-down' : ''
-                }`}
-                uk-tooltip="Downvote!"
-                onClick={() => this.vote('down', this.state.vote)}
-              />
             </div>
-            <div className="uk-text-large">{currentTrackName}</div>
+            <div
+              style={{ color: 'rgb(0, 140, 255)' }}
+              className="uk-text-large"
+            >
+              {currentTrackName}
+            </div>
             <div>By {currentTrackArtist}</div>
             <div>{currentTrackAlbum}</div>
             <br />
 
             {this.state.channelDetails.isSuggestable ? (
               <div>
-                <div className="uk-margin">
-                  Add a suggestion
-                  <input
-                    value={this.state.searchQuery}
-                    onChange={this.handleSearch}
-                    className="uk-input"
-                    type="text"
-                    placeholder="Search Songs..."
-                  />
+                <div
+                  style={{
+                    fontFamily: 'Tajawal',
+                    fontSize: '22px',
+                    marginTop: '50px',
+                  }}
+                  className="uk-margin"
+                >
+                  Add a suggestion:
                 </div>
+                <input
+                  style={{ width: '50%' }}
+                  value={this.state.searchQuery}
+                  onChange={this.handleSearch}
+                  className="uk-input"
+                  type="text"
+                  placeholder="Search Songs..."
+                />
                 <div>
                   {this.state.searchResults.map((track, i) => {
                     return (
@@ -248,38 +260,54 @@ class ChannelView extends Component {
                     }
                   }}
                 >
-                  <input
-                    className="uk-input uk-form-width-medium chat-input"
-                    value={this.state.message}
-                    onChange={evt => {
-                      this.setState({
-                        message: evt.target.value,
-                      });
+                  <p
+                    style={{
+                      marginTop: '20px',
+                      fontFamily: 'Tajawal',
+                      fontSize: '40px',
+                      fontWeight: '500',
                     }}
-                    placeholder="Enter message..."
-                  />
-                  <button
-                    className="uk-button uk-button-default chat-submit"
-                    type="submit"
                   >
-                    Send
-                  </button>
+                    Chat Room
+                  </p>
+                  <div className="chat-messages-container">
+                    {this.state.messages.map((message, i) => {
+                      return (
+                        <div className="message">
+                          <em>{message.user}</em>: {message.text}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="mainchatinput">
+                    <input
+                      className="uk-input uk-form-width-medium chat-input"
+                      value={this.state.message}
+                      onChange={evt => {
+                        this.setState({
+                          message: evt.target.value,
+                        });
+                      }}
+                      placeholder="Enter message..."
+                    />
+                    <button
+                      className="uk-button uk-button-primary uk-button-large"
+                      type="submit"
+                      style={{ backgroundColor: 'rgb(0, 140, 255)' }}
+                    >
+                      Send
+                    </button>
+                  </div>
                 </form>
-              </div>
-
-              <div className="chat-messages-container">
-                {this.state.messages.map((message, i) => {
-                  return (
-                    <div className="message">
-                      <em>{message.user}</em>: {message.text}
-                    </div>
-                  );
-                })}
               </div>
             </div>
           </div>
         </div>
-        <Player socket={this.socket} channelId={this.props.match.params.id} clearVotes={this.clearVotes} />
+        <Player
+          socket={this.socket}
+          channelId={this.props.match.params.id}
+          clearVotes={this.clearVotes}
+        />
       </div>
     );
   }

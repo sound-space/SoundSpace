@@ -42,64 +42,87 @@ class AllChannels extends Component {
           style={{
             fontFamily: 'Tajawal',
             fontWeight: 'bold',
-            marginTop: '30px',
+            margin: '60px 0 10px 0',
           }}
         >
           SoundSpace Channels
         </h1>
         {this.state.query ? (
-          <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
+          <h3
+            style={{
+              fontFamily: 'Tajawal',
+              fontWeight: '500',
+              fontSize: '30px',
+              marginTop: '-10px',
+            }}
+          >
             Search Results
           </h3>
         ) : (
-          <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
+          <h3
+            style={{
+              fontFamily: 'Tajawal',
+              fontWeight: '500',
+              fontSize: '30px',
+              marginTop: '-10px',
+            }}
+          >
             Active Sound Channels: {this.props.channels.length}
           </h3>
         )}
         <div
           style={{
             display: 'flex',
-            margin: '30px',
-            alignItems: 'flex-end',
             justifyContent: 'center',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
           }}
         >
-          <div className="uk-text-center">
-            <div
-              style={{
-                margin: '2em',
-                width: '300px',
-                height: '300px',
-                cursor: 'pointer',
-                backgroundColor: 'black',
-              }}
-              className="uk-inline-clip uk-transition-toggle uk-light"
-              tabIndex="0"
-              uk-toggle="target: #channelFormId"
-            >
-              <div className="uk-position-center">
-                <span uk-icon="icon: plus; ratio: 4" />
+          <div
+            className="uk-align-center"
+            style={{
+              display: 'flex',
+              margin: '30px',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+            }}
+          >
+            <div className="uk-text-center">
+              <div
+                style={{
+                  margin: '1em',
+                  width: '250px',
+                  height: '250px',
+                  cursor: 'pointer',
+                  background: 'black',
+                }}
+                className="uk-inline-clip uk-transition-toggle uk-light"
+                tabIndex="0"
+                uk-toggle="target: #channelFormId"
+              >
+                <div className="uk-position-center">
+                  <span uk-icon="icon: plus; ratio: 4" />
+                </div>
               </div>
+              <p
+                style={{ fontFamily: 'Tajawal', fontSize: '22px' }}
+                className="uk-margin-small-top"
+              >
+                New Channel
+              </p>
             </div>
-            <p style={{ fontSize: '22px' }} className="uk-margin-small-top">
-              New Channel
-            </p>
-          </div>
-          {this.state.query
-            ? this.props.channels.map(channel => {
-                if (
-                  channel.name
-                    .toLowerCase()
-                    .includes(this.state.query.toLowerCase())
-                ) {
+            {this.state.query
+              ? this.props.channels.map(channel => {
+                  if (
+                    channel.name
+                      .toLowerCase()
+                      .includes(this.state.query.toLowerCase())
+                  ) {
+                    return <ChannelCard key={channel.id} channel={channel} />;
+                  }
+                })
+              : this.props.channels.map(channel => {
                   return <ChannelCard key={channel.id} channel={channel} />;
-                }
-              })
-            : this.props.channels.map(channel => {
-                return <ChannelCard key={channel.id} channel={channel} />;
-              })}
+                })}
+          </div>
         </div>
       </div>
     );
