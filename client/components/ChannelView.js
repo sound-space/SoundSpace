@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import createClientSocket from 'socket.io-client';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import '../styles/ChannelViewStyles.css';
-import ChannelSideBar from './ChannelSideBar';
 import { search } from '../SpotifySearch';
 import Player from './Player';
-const IP = process.env.SPOTIFY_CLIENT_ID
-  ? 'https://soundspace-fsa.herokuapp.com'
-  : 'http://localhost:8080';
+
+//Change based on destination
+const IP = 'http://localhost:8080';
+// const IP = 'https://soundspace-fsa.herokuapp.com';
 
 class ChannelView extends Component {
   constructor(props) {
@@ -112,6 +111,7 @@ class ChannelView extends Component {
   };
 
   render() {
+    // variales for meta data
     const playerState = this.props.playerState;
     const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
@@ -126,6 +126,7 @@ class ChannelView extends Component {
     const currentTrackArtist = playerState
       ? playerState.track_window.current_track.artists[0].name
       : '';
+
     return (
       <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left">
         <div>
