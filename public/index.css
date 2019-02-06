@@ -103,6 +103,11 @@ button:hover {
   color: ' rgb(0, 140, 255)';
 }
 
+#formThumbnail:hover {
+  cursor: pointer;
+  color: 'black';
+}
+
 @media only screen and (min-width: 768px) {
   .headline {
     font-size: 120px;
