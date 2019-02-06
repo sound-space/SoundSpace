@@ -5,10 +5,7 @@ import { connect } from 'react-redux';
 import '../styles/ChannelViewStyles.css';
 import { search } from '../SpotifySearch';
 import Player from './Player';
-
-//Change based on destination
-// const IP = 'http://localhost:8080';
-const IP = 'https://soundspace-fsa.herokuapp.com';
+const IP = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://soundspace-fsa.herokuapp.com'
 
 class ChannelView extends Component {
   constructor(props) {
