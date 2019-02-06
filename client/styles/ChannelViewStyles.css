@@ -2,7 +2,6 @@
   margin-top: 50px;
 }
 
-
 .chat-container {
   display: flex;
   justify-content: center;
@@ -11,7 +10,7 @@
 
 .chat-input-container {
   margin-right: 1em;
-  background-color: #ededed
+  background-color: #ededed;
 }
 
 .chat-input {
@@ -22,7 +21,7 @@
   background-color: #ededed;
   height: 20vh;
   width: 50%;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .message {
