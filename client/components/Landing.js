@@ -14,7 +14,7 @@ const Landing = () => {
           })`
         }}
       >
-        <div className='uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical'>
+        <div className='uk-width-1-1 uk-text-center uk-margin-auto uk-margin-auto-vertical'>
           <h1
             className='headline'
             style={{
@@ -81,7 +81,7 @@ const Landing = () => {
           >
             Learn More
           </h6>
-          <div class='uk-animation-toggle' tabindex='0'>
+          <div className='uk-animation-toggle' tabIndex='0'>
             <a
               className='arrow uk-animation-shake'
               href='#learn'
@@ -106,7 +106,7 @@ const Landing = () => {
 
         <div
           style={{ padding: '50px' }}
-          className='slideRight uk-child-width-1-2@m uk-grid-match'
+          className='slideRight uk-child-width-1-1@s uk-child-width-1-2@s uk-grid-match'
           uk-grid='true'
         >
           <div
@@ -161,7 +161,7 @@ const Landing = () => {
         </div>
         <div
           style={{ padding: '0 50px' }}
-          className='slideLeft uk-child-width-1-2@m uk-grid-match'
+          className='slideLeft uk-child-width-1-1@m uk-child-width-1-2@m uk-grid-match'
           uk-grid='true'
         >
           <div style={{ marginRight: '-5px' }}>
