@@ -8,80 +8,87 @@ const Landing = () => {
         className='uk-height-large uk-background-cover uk-light uk-flex'
         uk-parallax='bgy: -200'
         style={{
-          height: '800px',
+          height: '900px',
           backgroundImage: `url(${
             urlList[Math.floor(Math.random() * Math.floor(9))]
           })`
         }}
       >
         <div className='uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical'>
-          <h1
-            className='headline'
-            style={{
-              color: '#FFF',
-              fontWeight: 'bold',
-              fontFamily: 'Tajawal',
-              marginTop: '80px',
-              lineHeight: '100px'
-            }}
-          >
-            SoundSpace
-          </h1>
-          <h2
-            className='subheadline'
-            style={{
-              marginTop: '-20px',
-              fontWeight: '700',
-              fontFamily: 'Tajawal'
-            }}
-          >
-            Your Social Jukebox
-          </h2>
-          <h3
-            className='haveSpotify'
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: '50px',
-              fontFamily: 'Tajawal',
-              fontWeight: 'Bold'
-            }}
-          >
-            Have a Spotify Premium Account?
-          </h3>
-          <a
-            style={{
-              textDecoration: 'none'
-            }}
-            href='/login'
-          >
-            <div
+        
+          <div className='glass-pane'>
+            <h1
+              className='headline'
               style={{
                 color: '#FFF',
-                backgroundColor: 'rgba(66, 244, 137, 1)',
-                fontSize: '25px',
-                fontWeight: '700',
+                fontWeight: 'bold',
                 fontFamily: 'Tajawal',
-                padding: '18px 40px 8px 40px'
+                marginTop: '80px',
+                lineHeight: '100px'
               }}
-              className='signIn uk-button uk-button-primary'
             >
-              Sign In
-            </div>
-          </a>
+              SoundSpace
+            </h1>
+            <h2
+              className='subheadline'
+              style={{
+                marginTop: '-20px',
+                fontWeight: '700',
+                fontFamily: 'Tajawal'
+              }}
+            >
+              Your Social Jukebox
+            </h2>
+            <h3
+              className='haveSpotify'
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: '50px',
+                fontFamily: 'Tajawal',
+                fontWeight: 'Bold'
+              }}
+            >
+              Have a Spotify Premium Account?
+            </h3>
+            <a
+              style={{
+                textDecoration: 'none'
+              }}
+              href='/login'
+            >
+              <div
+                style={{
+                  color: 'white',
+                  backgroundColor: 'rgba(56, 200, 127, 0.85)',
+                  fontSize: '25px',
+                  fontWeight: '700',
+                  fontFamily: 'Tajawal',
+                  padding: '18px 40px 8px 40px',
+                  borderRadius: '15px',
+                }}
+                className='signIn uk-button uk-button-primary'
+              >
+                Sign In
+              </div>
+            </a>
+          </div>
+          
+          
           <h6
             style={{
               margin: '150px 0 -20px 0',
               fontFamily: 'Tajawal',
               fontSize: '30px',
-              fontWeight: '700'
+              fontWeight: '700',
+              textShadow: '3px 3px 5px rgba(0,0,0,0.5)'
             }}
           >
             Learn More
           </h6>
-          <div class='uk-animation-toggle' tabindex='0'>
+          <div className='uk-animation-toggle' tabIndex='0'>
             <a
               className='arrow uk-animation-shake'
               href='#learn'
