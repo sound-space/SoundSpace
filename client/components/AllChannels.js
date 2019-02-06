@@ -74,7 +74,6 @@ class AllChannels extends Component {
           style={{
             display: 'flex',
             margin: '30px',
-            alignItems: 'flex-end',
             justifyContent: 'flex-start',
             flexDirection: 'row',
             flexWrap: 'wrap',

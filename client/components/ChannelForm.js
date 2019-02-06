@@ -216,11 +216,11 @@ class ChannelForm extends Component {
                     >
                       {urlList.map((imageUrl, idx) => (
                         <img
+                          id='formThumbnail'
                           style={{ objectFit: 'cover' }}
                           className='uk-padding-small uk-margin-remove'
                           key={idx}
                           data-src={imageUrl}
-                          alt=''
                           uk-img='true'
                           onClick={imageUrl => this.handleImageChange(imageUrl)}
                         />
