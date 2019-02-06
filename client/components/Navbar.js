@@ -31,6 +31,9 @@ const NavBar = props => {
               fontSize: '24px',
               fontFamily: 'Tajawal',
               fontWeight: 'bold',
+              textShadow: '0px 0px 3px rgba(0,0,0,0.75)',
+              color: 'white',
+              textDecoration: 'none',
             }}
             onClick={props.logout}
             className="nav-button uk-button uk-margin-right"
