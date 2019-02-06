@@ -2,16 +2,26 @@ import React from 'react';
 import createClientSocket from 'socket.io-client';
 import { connect } from 'react-redux';
 import { setDevice, setPlayer, setPlayerState } from '../store';
+import AudioViz from './AudioViz'
 
 const IP = 'http://localhost:8080';
 
 class Player extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      vizData: [],
+      timeOffset: 0,
+      currentSegment: 0
+    }
+  }
   componentDidMount() {
       this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
   }
 
   componentWillUnmount() {
     this.player.disconnect();
+    clearInterval(this.updateInterval)
   }
 
   checkForPlayer() {
@@ -30,6 +40,27 @@ class Player extends React.Component {
     }
   }
 
+  getVizData (vizData, timeOffset) {
+    if (vizData) {
+      let counter = 0
+      while (vizData[counter] && timeOffset > vizData[counter].end) {
+          counter++
+      }
+      
+      this.updateInterval = setInterval (() => {
+          if (vizData[counter].start < timeOffset && timeOffset > vizData[counter].end) {
+              counter++
+              this.setState({currentSegment: counter})
+            }
+          timeOffset += 150
+          if (vizData.length <= counter) {
+              clearInterval(this.updateInterval)
+          }
+      }, 150)
+      this.setState({vizData: vizData, timeOffset: timeOffset, currentSegment: counter})
+    }
+  }
+
   // async transferPlaybackHere() {
   //   await fetch('https://api.spotify.com/v1/me/player', {
   //     method: 'PUT',
@@ -44,7 +75,7 @@ class Player extends React.Component {
   //   });
   // }
 
-  setTrack(songId, timestamp, deviceId) {
+  async setTrack(songId, timestamp, deviceId) {
     fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
       method: 'PUT',
       headers: {
@@ -57,6 +88,26 @@ class Player extends React.Component {
       }),
     });
 
+    let trackAnalysis = await fetch(`https://api.spotify.com/v1/audio-analysis/${songId}`, {
+      method: 'GET',
+      headers: {
+        authorization: `Bearer ${this.props.user.access_token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    let analysis = await trackAnalysis.json()
+    let timeOffset = (Date.now() - new Date(timestamp))
+    // find the starting bar
+    let vizData = analysis.segments.map(elem => {
+      return {
+        start: elem.start*1000,
+        end: (elem.start + elem.duration)*1000,
+        pitches: elem.pitches,
+        timbre: elem.timbre
+      }
+    })
+    clearInterval(this.updateInterval)
+    this.getVizData(vizData, timeOffset)
     //Play a track on the SoundSpace player
     // fetch(
     //   `https://api.spotify.com/v1/me/player/play?device_id=${
@@ -88,7 +139,7 @@ class Player extends React.Component {
     });
 
     // Playback status updates
-    this.player.on('player_state_changed', state => {
+    this.player.on('player_state_changed', async state => {
       console.log('player state changes:', state);
       this.props.setPlayerState(state);
     });
@@ -98,9 +149,6 @@ class Player extends React.Component {
       let { device_id } = data;
       this.props.socket.on('song-info', songInfo => {
         this.setTrack(songInfo.songId, songInfo.timestamp, device_id);
-        this.setState({
-          currentSongId: songInfo.songId,
-        });
       });
       this.props.socket.emit('room', this.props.channelId);
       console.log('SoundSpace Player ready');
@@ -110,7 +158,14 @@ class Player extends React.Component {
   }
 
   render() {
-    return <div />;
+    if (this.state.vizData.length < 1) {
+      return null
+    }
+    return (
+      <div style={{zIndex: '50', top: '150px', left:"0px", position: 'fixed', width: "100px", height:"100px"}}>
+        <AudioViz vizData={this.state.vizData} currentSegment={this.state.currentSegment}/>
+      </div>
+    );
   }
 }
 
