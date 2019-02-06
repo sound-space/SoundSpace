@@ -1,9 +1,6 @@
 import React from 'react';
-import createClientSocket from 'socket.io-client';
 import { connect } from 'react-redux';
 import { setDevice, setPlayer, setPlayerState } from '../store';
-
-const IP = 'https://soundspace-fsa.herokuapp.com'
 
 class Player extends React.Component {
   componentDidMount() {
