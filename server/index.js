@@ -19,6 +19,10 @@ if(!process.env.SPOTIFY_CLIENT_ID) {
   var { client_id, client_secret } = require('../credentials');
 }
 
+if(!process.env.SPOTIFY_CLIENT_ID) {
+  var { client_id, client_secret } = require('../credentials');
+}
+
 const app = express();
 app
   .use(express.static(path.resolve(__dirname, '..', 'public')))

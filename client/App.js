@@ -7,8 +7,6 @@ import Navbar from './components/Navbar'
 import { connect } from 'react-redux'
 import { getMe } from './store/user'
 import { fetchChannels } from './store/channels'
-// import { setPlayer } from './store/player'
-// import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
 class App extends React.Component {
   componentDidMount () {

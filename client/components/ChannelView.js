@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import createClientSocket from 'socket.io-client';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import '../styles/ChannelViewStyles.css';
-import ChannelSideBar from './ChannelSideBar';
 import { search } from '../SpotifySearch';
 import Player from './Player';
 const IP = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://soundspace-fsa.herokuapp.com'
@@ -110,6 +108,7 @@ class ChannelView extends Component {
   };
 
   render() {
+    // variales for meta data
     const playerState = this.props.playerState;
     const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
@@ -124,15 +123,20 @@ class ChannelView extends Component {
     const currentTrackArtist = playerState
       ? playerState.track_window.current_track.artists[0].name
       : '';
+
     return (
       <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left">
         <div>
+          <div align="center">
+            <br />
+            <h2>{this.state.channelDetails.name}</h2>
+            <p>{this.state.channelDetails.description}</p>
+          </div>
           <div uk-grid="true">
             <img
+              style={{ objectFit: 'cover' }}
               className="uk-align-center album-img"
               src={albumCoverUrl}
-              width="400"
-              height="400"
             />
           </div>
           <div className="uk-text-center">

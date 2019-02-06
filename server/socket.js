@@ -1,6 +1,6 @@
 const { User, Channel, Song } = require('./db/models');
 const axios = require('axios');
-if(!process.env.SPOTIFY_CLIENT_ID) {
+if (!process.env.SPOTIFY_CLIENT_ID) {
   var { client_id, client_secret } = require('../credentials');
 }
 
