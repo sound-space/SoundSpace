@@ -7,7 +7,9 @@ import '../styles/ChannelViewStyles.css';
 import ChannelSideBar from './ChannelSideBar';
 import { search } from '../SpotifySearch';
 import Player from './Player';
-const IP = process.env.SPOTIFY_CLIENT_ID ? 'https://soundspace-fsa.herokuapp.com' : 'http://localhost:8080'
+const IP = process.env.SPOTIFY_CLIENT_ID
+  ? 'https://soundspace-fsa.herokuapp.com'
+  : 'http://localhost:8080';
 
 class ChannelView extends Component {
   constructor(props) {
@@ -127,6 +129,11 @@ class ChannelView extends Component {
     return (
       <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left">
         <div>
+          <div align="center">
+            <br />
+            <h2>{this.state.channelDetails.name}</h2>
+            <p>{this.state.channelDetails.description}</p>
+          </div>
           <div uk-grid="true">
             <img
               className="uk-align-center album-img"
