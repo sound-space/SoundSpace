@@ -136,10 +136,9 @@ class ChannelView extends Component {
           </div>
           <div uk-grid="true">
             <img
+              style={{ objectFit: 'cover' }}
               className="uk-align-center album-img"
               src={albumCoverUrl}
-              width="400"
-              height="400"
             />
           </div>
           <div className="uk-text-center">
