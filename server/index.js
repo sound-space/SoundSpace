@@ -103,7 +103,7 @@ app.use((err, req, res, next) => {
 });
 
 // start server
-const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+const server = app.listen(process.env.PORT || PORT, () => console.log(`Listening on ${PORT}`));
 
 // start listening to socket connections
 const io = socketio.listen(server);
