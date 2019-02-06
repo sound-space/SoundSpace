@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postChannels } from '../store/channels';
 import { search } from '../SpotifySearch';
+import {urlList} from './urlList'
 
 class ChannelForm extends Component {
   constructor() {
@@ -16,7 +17,9 @@ class ChannelForm extends Component {
       buttonText: false,
       validation: false,
     };
+    this.pickedImage = {}
     this.handleChange = this.handleChange.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -27,6 +30,20 @@ class ChannelForm extends Component {
     this.setState({
       [evt.target.name]: evt.target.value,
     });
+  }
+
+
+
+  handleImageChange(evt) {
+    const imageURL = evt.target.src
+    evt.target.style.opacity = ".5"
+    if (this.pickedImage.style) {
+      this.pickedImage.style.opacity = "1"
+    }
+    this.pickedImage = evt.target
+    this.setState({
+      imageURL
+    })
   }
 
   handleSubmit(evt) {
@@ -164,16 +181,6 @@ class ChannelForm extends Component {
                       </div>
                     ) : null}
                     <div className="uk-margin">
-                      <input
-                        onChange={this.handleChange}
-                        name="imageURL"
-                        value={imageURL}
-                        className="uk-input"
-                        type="text"
-                        placeholder="Image URL"
-                      />
-                    </div>
-                    <div className="uk-margin">
                       <textarea
                         onChange={this.handleChange}
                         name="description"
@@ -188,6 +195,29 @@ class ChannelForm extends Component {
                         <p>Description field is required.</p>
                       </div>
                     ) : null}
+
+<div className="uk-margin" >
+                      <input
+                        onChange={this.handleChange}
+                        name="imageURL"
+                        value={imageURL}
+                        className="uk-input"
+                        type="text"
+                        placeholder="Paste image URL or click the image below"
+                      />
+                    </div>
+                    <div uk-grid="true" uk-grid-small="true" uk-height-match="row: false" className="uk-align-center uk-container uk-margin-remove uk-padding-remove uk-child-width-1-3" >
+                      {urlList.map((imageUrl,idx) => (
+                        <img 
+                          style={{objectFit:"cover"}} 
+                          className="uk-padding-small uk-margin-remove" 
+                          key={idx} 
+                          data-src={imageUrl} 
+                          alt="" 
+                          uk-img="true"
+                          onClick={(imageUrl) => this.handleImageChange(imageUrl)}></img> 
+                        ))}
+                    </div>
                     <div className="uk-margin">
                       <input
                         value={this.state.searchQuery}
