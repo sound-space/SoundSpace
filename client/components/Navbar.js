@@ -10,7 +10,9 @@ const NavBar = props => {
       style={{ zIndex: '50', top: '0', position: 'fixed', width: '100%' }}
     >
       <div>
-        <img style={{ width: '100px' }} src='./assets/ss_logo.png' alt='' />
+        <a href='/#/channels'>
+          <img style={{ width: '100px' }} src='./assets/ss_logo.png' alt='' />
+        </a>
       </div>
 
       {props.user.id && (

@@ -127,6 +127,20 @@ class ChannelView extends Component {
       : null
     return (
       <div className='uk-width-1-1 uk-container uk-container-expand uk-align-left'>
+        {/* <a
+          style={{
+            position: 'fixed',
+            fontSize: '20px',
+            top: '100px',
+            fontFamily: 'Tajawal',
+            fontWeight: 'bold'
+          }}
+          onClick={() => props.props.history.push('/channels')}
+          className='nav-button uk-button uk-margin-right'
+          uk-icon='icon: grid; ratio: 1'
+        >
+          Show Channels{' '}
+        </a> */}
         <div>
           <div align='center'>
             <br />
