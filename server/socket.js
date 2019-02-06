@@ -1,6 +1,9 @@
 const { User, Channel, Song } = require('./db/models');
 const axios = require('axios');
-// const { client_id, client_secret } = require('../credentials');
+
+if(!process.env.SPOTIFY_CLIENT_ID) {
+  var { client_id, client_secret } = require('../credentials');
+}
 
 //Gets called when server starts
 const singularity = async io => {
@@ -187,8 +190,8 @@ async function authenticate() {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     auth: {
-      username: process.env.SPOTIFY_CLIENT_ID, //|| client_id,
-      password: process.env.SPOTIFY_CLIENT_SECRET //|| client_secret,
+      username: process.env.SPOTIFY_CLIENT_ID || client_id,
+      password: process.env.SPOTIFY_CLIENT_SECRET || client_secret,
     },
   });
   return data.access_token;
