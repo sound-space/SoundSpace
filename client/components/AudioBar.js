@@ -30,8 +30,9 @@ export default class AudioViz extends Component {
     }
     
     setStyling = () => {
+        let baseBarLength = window.innerWidth / 5
         const {pitch,idx} = this.props
-        let smoothing = (pitch*100 - this.barLength)/this.updateRate
+        let smoothing = (pitch*baseBarLength - this.barLength)/this.updateRate
         this.barLength += smoothing
         let r = pitch >= 0.7 ? 255 : 200+pitch*100
         let g = pitch <= 0 ? 255 : 255 - pitch*60
