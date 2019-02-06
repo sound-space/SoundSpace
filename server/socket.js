@@ -1,6 +1,8 @@
 const { User, Channel, Song } = require('./db/models');
 const axios = require('axios');
-const { client_id, client_secret } = require('../credentials');
+if (!process.env.SPOTIFY_CLIENT_ID) {
+  var { client_id, client_secret } = require('../credentials');
+}
 
 //Gets called when server starts
 const singularity = async io => {

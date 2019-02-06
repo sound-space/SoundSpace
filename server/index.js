@@ -1,12 +1,10 @@
 const express = require('express');
 const request = require('request');
-const { client_id, client_secret } = require('../credentials');
 const querystring = require('querystring');
-// const cookieParser = require('cookie-parser');
 const session = require('express-session')
 const cors = require('cors');
 const path = require('path');
-const IP = process.env.SPOTIFY_CLIENT_ID ? 'http://soundspace-fsa.herokuapp.com' : 'http://localhost:8080'
+const IP = process.env.SPOTIFY_CLIENT_ID ? 'https://soundspace-fsa.herokuapp.com' :'http://localhost:8080'
 const redirect_uri = `${IP}/callback`;
 const volleyball = require('volleyball');
 const bodyParser = require('body-parser');
@@ -17,6 +15,13 @@ const scope =
 'user-read-private user-read-email user-read-playback-state user-modify-playback-state streaming user-read-birthdate';
 const socketio = require('socket.io');
 const passport = require('passport');
+if(!process.env.SPOTIFY_CLIENT_ID) {
+  var { client_id, client_secret } = require('../credentials');
+}
+
+if(!process.env.SPOTIFY_CLIENT_ID) {
+  var { client_id, client_secret } = require('../credentials');
+}
 
 const app = express();
 app
@@ -37,7 +42,7 @@ passport.use(
     {
       clientID: process.env.SPOTIFY_CLIENT_ID || client_id,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET || client_secret,
-      callbackURL: process.env.SPOTIFY_CLIENT_ID ? 'http://soundspace-fsa.herokuapp.com/callback' : 'http://localhost:8080/callback',
+      callbackURL: process.env.SPOTIFY_CLIENT_ID ? 'https://soundspace-fsa.herokuapp.com/callback' : 'http://localhost:8080/callback',
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
       // User.findOrCreate({ spotifyId: profile.id }, function(err, user) {
@@ -103,7 +108,7 @@ app.use((err, req, res, next) => {
 });
 
 // start server
-const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+const server = app.listen(process.env.PORT || PORT, () => console.log(`Listening on ${PORT}`));
 
 // start listening to socket connections
 const io = socketio.listen(server);

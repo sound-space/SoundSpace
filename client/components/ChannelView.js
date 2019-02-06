@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { Component } from 'react'
 import axios from 'axios'
 import createClientSocket from 'socket.io-client'
@@ -10,6 +11,16 @@ import Player from './Player'
 const IP = process.env.SPOTIFY_CLIENT_ID
   ? 'http://soundspace-fsa.herokuapp.com'
   : 'http://localhost:8080'
+=======
+import React, { Component } from 'react';
+import axios from 'axios';
+import createClientSocket from 'socket.io-client';
+import { connect } from 'react-redux';
+import '../styles/ChannelViewStyles.css';
+import { search } from '../SpotifySearch';
+import Player from './Player';
+const IP = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://soundspace-fsa.herokuapp.com'
+>>>>>>> master
 
 class ChannelView extends Component {
   constructor (props) {
@@ -111,8 +122,14 @@ class ChannelView extends Component {
     }
   }
 
+<<<<<<< HEAD
   render () {
     const playerState = this.props.playerState
+=======
+  render() {
+    // variales for meta data
+    const playerState = this.props.playerState;
+>>>>>>> master
     const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
       : null
@@ -125,10 +142,16 @@ class ChannelView extends Component {
 
     const currentTrackArtist = playerState
       ? playerState.track_window.current_track.artists[0].name
+<<<<<<< HEAD
       : null
+=======
+      : '';
+
+>>>>>>> master
     return (
       <div className='uk-width-1-1 uk-container uk-container-expand uk-align-left'>
         <div>
+<<<<<<< HEAD
           <div uk-grid='true'>
             <img
               style={{
@@ -137,6 +160,17 @@ class ChannelView extends Component {
                 objectFit: 'cover'
               }}
               className='uk-align-center album-img'
+=======
+          <div align="center">
+            <br />
+            <h2>{this.state.channelDetails.name}</h2>
+            <p>{this.state.channelDetails.description}</p>
+          </div>
+          <div uk-grid="true">
+            <img
+              style={{ objectFit: 'cover' }}
+              className="uk-align-center album-img"
+>>>>>>> master
               src={albumCoverUrl}
             />
           </div>
