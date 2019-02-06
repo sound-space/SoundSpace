@@ -1,23 +1,36 @@
-/* .channel-view-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  height: 100vh;
-  width: 100vw;
-} */
+.album-img {
+  margin-top: 50px;
+}
 
-#messages-container {
-  margin-top: 2em;
-  background-color: rgb(250, 250, 250);
+
+.chat-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.chat-input-container {
+  margin-right: 1em;
+  background-color: #ededed
+}
+
+.chat-input {
+  background-color: #ededed !important;
+}
+
+.chat-messages-container {
+  background-color: #ededed;
   height: 20vh;
+  width: 50%;
   overflow: scroll;
 }
+
 .message {
   padding: 0.5em;
   border-width: 2px 0 2px 0;
   border-style: groove;
   border-color: #eeeeee30;
+  text-align: left;
 }
 
 .vote-button-container {

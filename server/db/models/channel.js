@@ -1,28 +1,31 @@
-const Sequelize = require('sequelize')
+const Sequelize = require('sequelize');
 
-const db = require('../db')
+const db = require('../db');
 
 const Channel = db.define('channel', {
   name: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
   },
   // Time in MS
   timestamp: {
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
   },
   imageURL: {
     type: Sequelize.STRING,
     defaultValue:
       'https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-    // allowNull: true,
     validate: {
-      isUrl: true
-    }
+      isUrl: true,
+    },
+  },
+  isSuggestable: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
   },
   description: {
-    type: Sequelize.STRING(50)
-  }
-})
+    type: Sequelize.STRING(50),
+  },
+});
 
-module.exports = Channel
+module.exports = Channel;
