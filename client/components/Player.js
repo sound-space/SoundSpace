@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setDevice, setPlayer, setPlayerState } from '../store';
-import AudioViz from './AudioViz'
+import AudioViz from './AudioViz';
 
 class Player extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       vizData: [],
       timeOffset: 0,
-      currentSegment: 0
-    }
+      currentSegment: 0,
+    };
   }
   componentDidMount() {
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
@@ -18,7 +18,7 @@ class Player extends React.Component {
 
   componentWillUnmount() {
     this.player.disconnect();
-    clearInterval(this.updateInterval)
+    clearInterval(this.updateInterval);
   }
 
   checkForPlayer() {
@@ -37,24 +37,31 @@ class Player extends React.Component {
     }
   }
 
-  getVizData (vizData, timeOffset) {
+  getVizData(vizData, timeOffset) {
     if (vizData) {
-      let counter = 0
+      let counter = 0;
       while (vizData[counter] && timeOffset > vizData[counter].end) {
-          counter++
+        counter++;
       }
-      
-      this.updateInterval = setInterval (() => {
-          if (vizData[counter].start < timeOffset && timeOffset > vizData[counter].end) {
-              counter++
-              this.setState({currentSegment: counter})
-            }
-          timeOffset += 100
-          if (vizData.length <= counter) {
-              clearInterval(this.updateInterval)
-          }
-      }, 100)
-      this.setState({vizData: vizData, timeOffset: timeOffset, currentSegment: counter})
+
+      this.updateInterval = setInterval(() => {
+        if (
+          vizData[counter].start < timeOffset &&
+          timeOffset > vizData[counter].end
+        ) {
+          counter++;
+          this.setState({ currentSegment: counter });
+        }
+        timeOffset += 100;
+        if (vizData.length <= counter) {
+          clearInterval(this.updateInterval);
+        }
+      }, 100);
+      this.setState({
+        vizData: vizData,
+        timeOffset: timeOffset,
+        currentSegment: counter,
+      });
     }
   }
 
@@ -71,26 +78,29 @@ class Player extends React.Component {
       }),
     });
 
-    let trackAnalysis = await fetch(`https://api.spotify.com/v1/audio-analysis/${songId}`, {
-      method: 'GET',
-      headers: {
-        authorization: `Bearer ${this.props.user.access_token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    let analysis = await trackAnalysis.json()
-    let timeOffset = (Date.now() - new Date(timestamp))
+    let trackAnalysis = await fetch(
+      `https://api.spotify.com/v1/audio-analysis/${songId}`,
+      {
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${this.props.user.access_token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    let analysis = await trackAnalysis.json();
+    let timeOffset = Date.now() - new Date(timestamp);
     // find the starting bar
     let vizData = analysis.segments.map(elem => {
       return {
-        start: elem.start*1000,
-        end: (elem.start + elem.duration)*1000,
+        start: elem.start * 1000,
+        end: (elem.start + elem.duration) * 1000,
         pitches: elem.pitches,
-        timbre: elem.timbre
-      }
-    })
-    clearInterval(this.updateInterval)
-    this.getVizData(vizData, timeOffset)
+        timbre: elem.timbre,
+      };
+    });
+    clearInterval(this.updateInterval);
+    this.getVizData(vizData, timeOffset);
   }
 
   createEventHandlers() {
@@ -123,21 +133,44 @@ class Player extends React.Component {
       this.props.socket.emit('room', this.props.channelId);
       console.log('SoundSpace Player ready');
       this.props.setDevice(device_id);
-      // this.transferPlaybackHere();
     });
   }
 
   render() {
     if (this.state.vizData.length < 1) {
-      return null
+      return null;
     }
     return (
       <div>
-        <div style={{zIndex: '50', top: '120px', left:"0px", position: 'fixed', width: "100px", height:"100px"}}>
-          <AudioViz vizData={this.state.vizData} currentSegment={this.state.currentSegment}/>
+        <div
+          style={{
+            zIndex: '50',
+            top: '120px',
+            left: '0px',
+            position: 'fixed',
+            width: '100px',
+            height: '100px',
+          }}
+        >
+          <AudioViz
+            vizData={this.state.vizData}
+            currentSegment={this.state.currentSegment}
+          />
         </div>
-        <div style={{zIndex: '50', top: '120px', right:"-100px", position: 'fixed', width: "100px", height:"100px"}}>
-              <AudioViz vizData={this.state.vizData} currentSegment={this.state.currentSegment}/>
+        <div
+          style={{
+            zIndex: '50',
+            top: '120px',
+            right: '-100px',
+            position: 'fixed',
+            width: '100px',
+            height: '100px',
+          }}
+        >
+          <AudioViz
+            vizData={this.state.vizData}
+            currentSegment={this.state.currentSegment}
+          />
         </div>
       </div>
     );

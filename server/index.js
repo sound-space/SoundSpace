@@ -15,6 +15,9 @@ const scope =
 'user-read-private user-read-email user-read-playback-state user-modify-playback-state streaming user-read-birthdate';
 const socketio = require('socket.io');
 const passport = require('passport');
+if(!process.env.SPOTIFY_CLIENT_ID) {
+  var { client_id, client_secret } = require('../credentials');
+}
 
 if(!process.env.SPOTIFY_CLIENT_ID) {
   var { client_id, client_secret } = require('../credentials');
