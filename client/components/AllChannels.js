@@ -80,43 +80,53 @@ class AllChannels extends Component {
             alignContent: ' flex-start'
           }}
         >
-          <div className='uk-text-center'>
-            <div
-              style={{
-                margin: '1em',
-                width: '250px',
-                height: '250px',
-                cursor: 'pointer',
-                background: 'black'
-              }}
-              className='uk-inline-clip uk-transition-toggle uk-light'
-              tabIndex='0'
-              uk-toggle='target: #channelFormId'
-            >
-              <div className='uk-position-center'>
-                <span uk-icon='icon: plus; ratio: 4' />
+          <div
+            className='uk-align-center'
+            style={{
+              display: 'flex',
+              margin: '30px',
+              flexDirection: 'row',
+              flexWrap: 'wrap'
+            }}
+          >
+            <div className='uk-text-center'>
+              <div
+                style={{
+                  margin: '1em',
+                  width: '250px',
+                  height: '250px',
+                  cursor: 'pointer',
+                  background: 'black'
+                }}
+                className='uk-inline-clip uk-transition-toggle uk-light'
+                tabIndex='0'
+                uk-toggle='target: #channelFormId'
+              >
+                <div className='uk-position-center'>
+                  <span uk-icon='icon: plus; ratio: 4' />
+                </div>
               </div>
+              <p
+                style={{ fontFamily: 'Tajawal', fontSize: '22px' }}
+                className='uk-margin-small-top'
+              >
+                New Channel
+              </p>
             </div>
-            <p
-              style={{ fontFamily: 'Tajawal', fontSize: '22px' }}
-              className='uk-margin-small-top'
-            >
-              New Channel
-            </p>
-          </div>
-          {this.state.query
-            ? this.props.channels.map(channel => {
-              if (
-                channel.name
-                  .toLowerCase()
-                  .includes(this.state.query.toLowerCase())
-              ) {
+            {this.state.query
+              ? this.props.channels.map(channel => {
+                if (
+                  channel.name
+                    .toLowerCase()
+                    .includes(this.state.query.toLowerCase())
+                ) {
+                  return <ChannelCard key={channel.id} channel={channel} />
+                }
+              })
+              : this.props.channels.map(channel => {
                 return <ChannelCard key={channel.id} channel={channel} />
-              }
-            })
-            : this.props.channels.map(channel => {
-              return <ChannelCard key={channel.id} channel={channel} />
-            })}
+              })}
+          </div>
         </div>
       </div>
     )

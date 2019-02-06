@@ -7,7 +7,7 @@
 .channels {
   background: url(
     data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHUlEQVQYV2O8cuVKmo6OziwGKGCEMTAEYCoxVAAAXA0IBSg0edEAAAAASUVORK5CYII=
-  )
+    )
     repeat;
   height: 'auto';
 }
@@ -26,9 +26,9 @@
 
 nav {
   background-image: linear-gradient(
-    270deg,
-    rgb(66, 244, 137),
-    rgb(0, 140, 255) 100%
+    350deg,
+    rgb(0, 228, 133),
+    rgb(94, 166, 233) 70%
   );
 }
 

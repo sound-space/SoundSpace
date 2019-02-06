@@ -173,16 +173,6 @@ class ChannelForm extends Component {
                       </div>
                     ) : null}
                     <div className='uk-margin'>
-                      <input
-                        onChange={this.handleChange}
-                        name='imageURL'
-                        value={imageURL}
-                        className='uk-input'
-                        type='text'
-                        placeholder='Image URL'
-                      />
-                    </div>
-                    <div className='uk-margin'>
                       <textarea
                         onChange={this.handleChange}
                         name='description'
