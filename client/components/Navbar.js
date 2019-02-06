@@ -1,23 +1,30 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { logUserOut } from '../store/user'
+import React from 'react';
+import { connect } from 'react-redux';
+import { logUserOut } from '../store/user';
 
 const NavBar = props => {
-  console.log('HISTORY: ', props)
   return (
     <nav
-      uk-navbar='true'
-      style={{ zIndex: '50', top: '0', position: 'fixed', width: '100%' }}
+      uk-navbar="true"
+      style={{
+        zIndex: '50',
+        top: '0',
+        position: 'fixed',
+        width: '100%',
+      }}
     >
       <div>
-        <a href='/#/channels'>
-          <img style={{ width: '100px' }} src='./assets/ss_logo.png' alt='' />
+        <a href="/#/channels">
+          <img
+            style={{ width: '100px' }}
+            src="./assets/ss_logo_white.png"
+            alt=""
+          />
         </a>
       </div>
 
       {props.user.id && (
-        <div className='uk-navbar-right' width='500'>
-
+        <div className="uk-navbar-right" width="500">
           <a
             style={{
               marginTop: '5px',
@@ -29,29 +36,29 @@ const NavBar = props => {
               textDecoration: 'none',
             }}
             onClick={props.logout}
-            className='nav-button uk-button uk-margin-right'
+            className="nav-button uk-button uk-margin-right"
           >
             LOG OUT
           </a>
         </div>
       )}
     </nav>
-  )
-}
+  );
+};
 
 const mapStateToProps = state => {
-  return { user: state.userObj }
-}
+  return { user: state.userObj };
+};
 
 const mapDispatch = dispatch => {
   return {
-    logout () {
-      dispatch(logUserOut())
-    }
-  }
-}
+    logout() {
+      dispatch(logUserOut());
+    },
+  };
+};
 
 export default connect(
   mapStateToProps,
   mapDispatch
-)(NavBar)
+)(NavBar);
