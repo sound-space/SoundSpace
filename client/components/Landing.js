@@ -115,7 +115,7 @@ const Landing = () => {
 
         <div
           style={{ padding: '50px' }}
-          className='slideRight uk-child-width-1-2@m uk-grid-match'
+          className='slideRight uk-child-width-1-1@s uk-child-width-1-2@s uk-grid-match'
           uk-grid='true'
         >
           <div
@@ -170,7 +170,7 @@ const Landing = () => {
         </div>
         <div
           style={{ padding: '0 50px' }}
-          className='slideLeft uk-child-width-1-2@m uk-grid-match'
+          className='slideLeft uk-child-width-1-1@m uk-child-width-1-2@m uk-grid-match'
           uk-grid='true'
         >
           <div style={{ marginRight: '-5px' }}>
