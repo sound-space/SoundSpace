@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { postChannels } from '../store/channels'
 import { search } from '../SpotifySearch'
+import { urlList } from './urlList'
 
 class ChannelForm extends Component {
   constructor () {
@@ -16,7 +17,9 @@ class ChannelForm extends Component {
       buttonText: false,
       validation: false
     }
+    this.pickedImage = {}
     this.handleChange = this.handleChange.bind(this)
+    this.handleImageChange = this.handleImageChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.handleClose = this.handleClose.bind(this)
@@ -26,6 +29,18 @@ class ChannelForm extends Component {
   handleChange (evt) {
     this.setState({
       [evt.target.name]: evt.target.value
+    })
+  }
+
+  handleImageChange (evt) {
+    const imageURL = evt.target.src
+    evt.target.style.opacity = '.5'
+    if (this.pickedImage.style) {
+      this.pickedImage.style.opacity = '1'
+    }
+    this.pickedImage = evt.target
+    this.setState({
+      imageURL
     })
   }
 
@@ -80,14 +95,10 @@ class ChannelForm extends Component {
       })
       return
     }
-<<<<<<< HEAD
-    const { tracks } = await this.search(evt.target.value)
-=======
     this.setState({
-      searchQuery: evt.target.value,
-    });
-    const { tracks } = await this.search(evt.target.value);
->>>>>>> master
+      searchQuery: evt.target.value
+    })
+    const { tracks } = await this.search(evt.target.value)
     this.setState({
       searchResults: tracks.items
     })
@@ -186,6 +197,35 @@ class ChannelForm extends Component {
                         <p>Description field is required.</p>
                       </div>
                     ) : null}
+
+                    <div className='uk-margin'>
+                      <input
+                        onChange={this.handleChange}
+                        name='imageURL'
+                        value={imageURL}
+                        className='uk-input'
+                        type='text'
+                        placeholder='Paste image URL or click the image below'
+                      />
+                    </div>
+                    <div
+                      uk-grid='true'
+                      uk-grid-small='true'
+                      uk-height-match='row: false'
+                      className='uk-align-center uk-container uk-margin-remove uk-padding-remove uk-child-width-1-3'
+                    >
+                      {urlList.map((imageUrl, idx) => (
+                        <img
+                          style={{ objectFit: 'cover' }}
+                          className='uk-padding-small uk-margin-remove'
+                          key={idx}
+                          data-src={imageUrl}
+                          alt=''
+                          uk-img='true'
+                          onClick={imageUrl => this.handleImageChange(imageUrl)}
+                        />
+                      ))}
+                    </div>
                     <div className='uk-margin'>
                       <input
                         value={this.state.searchQuery}
@@ -239,9 +279,9 @@ class ChannelForm extends Component {
                             onClick={() => {
                               this.setState({
                                 searchQuery: '',
-                                searchResults: [],
-                              });
-                              this.addToSeed(track);
+                                searchResults: []
+                              })
+                              this.addToSeed(track)
                             }}
                           >
                             <span

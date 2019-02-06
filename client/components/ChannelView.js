@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { Component } from 'react'
 import axios from 'axios'
 import createClientSocket from 'socket.io-client'
@@ -10,19 +9,6 @@ const IP =
   window.location.hostname === 'localhost'
     ? 'http://localhost:8080'
     : 'https://soundspace-fsa.herokuapp.com'
-=======
-import React, { Component } from 'react';
-import axios from 'axios';
-import createClientSocket from 'socket.io-client';
-import { connect } from 'react-redux';
-import '../styles/ChannelViewStyles.css';
-import { search } from '../SpotifySearch';
-import Player from './Player';
-const IP =
-  window.location.hostname === 'localhost'
-    ? 'http://localhost:8080'
-    : 'https://soundspace-fsa.herokuapp.com';
->>>>>>> master
 
 class ChannelView extends Component {
   constructor (props) {
@@ -36,20 +22,12 @@ class ChannelView extends Component {
       messages: [],
       message: '',
       channelDetails: {},
-<<<<<<< HEAD
+      searchQuery: '',
       searchResults: []
     }
     this.handleSearch = this.handleSearch.bind(this)
     this.search = search.bind(this)
     this.socket = createClientSocket(IP)
-=======
-      searchQuery: '',
-      searchResults: [],
-    };
-    this.handleSearch = this.handleSearch.bind(this);
-    this.search = search.bind(this);
-    this.socket = createClientSocket(IP);
->>>>>>> master
   }
 
   async componentDidMount () {
@@ -83,14 +61,10 @@ class ChannelView extends Component {
       })
       return
     }
-<<<<<<< HEAD
-    const { tracks } = await this.search(evt.target.value)
-=======
     this.setState({
-      searchQuery: evt.target.value,
-    });
-    const { tracks } = await this.search(this.state.searchQuery);
->>>>>>> master
+      searchQuery: evt.target.value
+    })
+    const { tracks } = await this.search(this.state.searchQuery)
     this.setState({
       searchResults: tracks.items
     })
@@ -138,7 +112,7 @@ class ChannelView extends Component {
     } catch (err) {
       console.log(err)
     }
-  };
+  }
 
   clearVotes = () => {
     this.setState({
@@ -146,9 +120,9 @@ class ChannelView extends Component {
     })
   }
 
-  render() {
+  render () {
     // variables for meta data
-    const playerState = this.props.playerState;
+    const playerState = this.props.playerState
     const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
       : null
@@ -247,8 +221,8 @@ class ChannelView extends Component {
                         onClick={async () => {
                           this.setState({
                             searchQuery: '',
-                            searchResults: [],
-                          });
+                            searchResults: []
+                          })
                           await axios.post('/api/songs', {
                             songIds: [track.id],
                             channelId: this.props.match.params.id,
@@ -343,7 +317,11 @@ class ChannelView extends Component {
             </div>
           </div>
         </div>
-        <Player socket={this.socket} channelId={this.props.match.params.id} clearVotes={this.clearVotes} />
+        <Player
+          socket={this.socket}
+          channelId={this.props.match.params.id}
+          clearVotes={this.clearVotes}
+        />
       </div>
     )
   }
