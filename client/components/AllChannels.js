@@ -45,7 +45,7 @@ class AllChannels extends Component {
             marginTop: '30px',
           }}
         >
-          Sound Space Music Channels
+          SoundSpace Channels
         </h1>
         {this.state.query ? (
           <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
@@ -57,29 +57,30 @@ class AllChannels extends Component {
           </h3>
         )}
         <div
-          className="uk-child-width-1-1 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-match uk-grid-small"
-          uk-grid="true"
+          style={{
+            display: 'flex',
+            margin: '30px',
+            alignItems: 'flex-end',
+            justifyContent: 'center',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+          }}
         >
           <div className="uk-text-center">
             <div
+              style={{
+                margin: '2em',
+                width: '300px',
+                height: '300px',
+                cursor: 'pointer',
+                backgroundColor: 'black',
+              }}
               className="uk-inline-clip uk-transition-toggle uk-light"
               tabIndex="0"
               uk-toggle="target: #channelFormId"
             >
-              <img
-                style={{
-                  cursor: 'pointer',
-                  minWidth: '200px',
-                  minHeight: '200px',
-                  objectFit: 'cover',
-                }}
-                src="http://www.myseumoftoronto.com/wp-content/uploads/2018/05/plain-black-background.jpg"
-              />
               <div className="uk-position-center">
-                <span
-                  // className='uk-transition-fade'
-                  uk-icon="icon: plus; ratio: 4"
-                />
+                <span uk-icon="icon: plus; ratio: 4" />
               </div>
             </div>
             <p style={{ fontSize: '22px' }} className="uk-margin-small-top">

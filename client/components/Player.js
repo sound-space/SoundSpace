@@ -129,6 +129,7 @@ class Player extends React.Component {
       let { device_id } = data;
       this.props.socket.on('song-info', songInfo => {
         this.setTrack(songInfo.songId, songInfo.timestamp, device_id);
+        this.props.clearVotes()
       });
       this.props.socket.emit('room', this.props.channelId);
       console.log('SoundSpace Player ready');

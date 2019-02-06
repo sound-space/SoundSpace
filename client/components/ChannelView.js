@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import '../styles/ChannelViewStyles.css';
 import { search } from '../SpotifySearch';
 import Player from './Player';
-
-//Change based on destination
-const IP = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://soundspace-fsa.herokuapp.com'
+const IP =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:8080'
+    : 'https://soundspace-fsa.herokuapp.com';
 
 class ChannelView extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class ChannelView extends Component {
       messages: [],
       message: '',
       channelDetails: {},
+      searchQuery: '',
       searchResults: [],
     };
     this.handleSearch = this.handleSearch.bind(this);
@@ -59,7 +61,10 @@ class ChannelView extends Component {
       });
       return;
     }
-    const { tracks } = await this.search(evt.target.value);
+    this.setState({
+      searchQuery: evt.target.value,
+    });
+    const { tracks } = await this.search(this.state.searchQuery);
     this.setState({
       searchResults: tracks.items,
     });
@@ -108,9 +113,15 @@ class ChannelView extends Component {
       console.log(err);
     }
   };
+  
+  clearVotes = () => {
+    this.setState({
+      vote: ''
+    })
+  }
 
   render() {
-    // variales for meta data
+    // variables for meta data
     const playerState = this.props.playerState;
     const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
@@ -168,6 +179,7 @@ class ChannelView extends Component {
                 <div className="uk-margin">
                   Add a suggestion
                   <input
+                    value={this.state.searchQuery}
                     onChange={this.handleSearch}
                     className="uk-input"
                     type="text"
@@ -182,6 +194,7 @@ class ChannelView extends Component {
                         key={i}
                         onClick={async () => {
                           this.setState({
+                            searchQuery: '',
                             searchResults: [],
                           });
                           await axios.post('/api/songs', {
@@ -266,7 +279,7 @@ class ChannelView extends Component {
             </div>
           </div>
         </div>
-        <Player socket={this.socket} channelId={this.props.match.params.id} />
+        <Player socket={this.socket} channelId={this.props.match.params.id} clearVotes={this.clearVotes} />
       </div>
     );
   }

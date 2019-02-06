@@ -97,6 +97,9 @@ class ChannelForm extends Component {
       });
       return;
     }
+    this.setState({
+      searchQuery: evt.target.value,
+    });
     const { tracks } = await this.search(evt.target.value);
     this.setState({
       searchResults: tracks.items,
@@ -217,6 +220,7 @@ class ChannelForm extends Component {
                     </div>
                     <div className="uk-margin">
                       <input
+                        value={this.state.searchQuery}
                         onChange={this.handleSearch}
                         className="uk-input"
                         type="text"
@@ -264,7 +268,13 @@ class ChannelForm extends Component {
                           <div
                             className="add"
                             key={i}
-                            onClick={() => this.addToSeed(track)}
+                            onClick={() => {
+                              this.setState({
+                                searchQuery: '',
+                                searchResults: [],
+                              });
+                              this.addToSeed(track);
+                            }}
                           >
                             <span
                               className="uk-margin-small-right"
