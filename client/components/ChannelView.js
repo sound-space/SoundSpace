@@ -143,18 +143,18 @@ class ChannelView extends Component {
           <div className='uk-text-center'>
             <div uk-grid='true' className='uk-align-center'>
               <i
-                className={`fas fa-thumbs-up uk-margin-right ${
-                  this.state.vote === 'up' ? 'active-up' : ''
-                }`}
-                uk-tooltip='Upvote!'
-                onClick={() => this.vote('up', this.state.vote)}
-              />
-              <i
                 className={`fas fa-thumbs-down uk-margin-right ${
                   this.state.vote === 'down' ? 'active-down' : ''
                 }`}
                 uk-tooltip='Downvote!'
                 onClick={() => this.vote('down', this.state.vote)}
+              />{' '}
+              <i
+                className={`fas fa-thumbs-up uk-margin-right ${
+                  this.state.vote === 'up' ? 'active-up' : ''
+                }`}
+                uk-tooltip='Upvote!'
+                onClick={() => this.vote('up', this.state.vote)}
               />
             </div>
             <div className='uk-text-large'>{currentTrackName}</div>
@@ -234,33 +234,34 @@ class ChannelView extends Component {
                     }
                   }}
                 >
-                  <input
-                    className='uk-input uk-form-width-medium chat-input'
-                    value={this.state.message}
-                    onChange={evt => {
-                      this.setState({
-                        message: evt.target.value
-                      })
-                    }}
-                    placeholder='Enter message...'
-                  />
-                  <button
-                    className='uk-button uk-button-default chat-submit'
-                    type='submit'
-                  >
-                    Send
-                  </button>
+                  <div className='chat-messages-container'>
+                    {this.state.messages.map((message, i) => {
+                      return (
+                        <div className='message'>
+                          <em>{message.user}</em>: {message.text}
+                        </div>
+                      )
+                    })}
+                  </div>
+                  <div className='mainchatinput'>
+                    <input
+                      className='uk-input uk-form-width-medium chat-input'
+                      value={this.state.message}
+                      onChange={evt => {
+                        this.setState({
+                          message: evt.target.value
+                        })
+                      }}
+                      placeholder='Enter message...'
+                    />
+                    <button
+                      className='uk-button uk-button-default chat-submit'
+                      type='submit'
+                    >
+                      Send
+                    </button>
+                  </div>
                 </form>
-              </div>
-
-              <div className='chat-messages-container'>
-                {this.state.messages.map((message, i) => {
-                  return (
-                    <div className='message'>
-                      <em>{message.user}</em>: {message.text}
-                    </div>
-                  )
-                })}
               </div>
             </div>
           </div>

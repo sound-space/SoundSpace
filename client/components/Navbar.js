@@ -15,7 +15,7 @@ const NavBar = props => {
 
       {props.user.id && (
         <div className='uk-navbar-right' width='500'>
-          <a
+          {/* <a
             style={{
               marginTop: '5px',
               fontSize: '24px',
@@ -26,7 +26,7 @@ const NavBar = props => {
             className='nav-button uk-button uk-margin-right'
           >
             CHANNELS
-          </a>
+          </a> */}
           <a
             style={{
               marginTop: '5px',

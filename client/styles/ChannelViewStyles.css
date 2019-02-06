@@ -9,26 +9,32 @@
 }
 
 .chat-input-container {
-  margin-right: 1em;
-  background-color: #ededed;
+  width: 90%;
+  left: 0;
+  /* background-color: #ededed; */
 }
 
 .chat-input {
-  background-color: #ededed !important;
+  width: 90vw;
+  background-color: #fff !important;
 }
 
 .chat-messages-container {
   background-color: #ededed;
-  height: 20vh;
-  width: 50%;
+  border: '5px solid black';
+  height: 25vh;
+  justify-content: center;
+  width: 100%;
+  overflow-wrap: break-word;
   overflow: auto;
+  border: '1px solid black';
 }
 
 .message {
   padding: 0.5em;
   border-width: 2px 0 2px 0;
-  border-style: groove;
-  border-color: #eeeeee30;
+  border-radius: 40px; /* border-style: groove; */
+  border-color: black;
   text-align: left;
 }
 
