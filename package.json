@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.1.6",
+    "@babel/preset-env": "^7.3.1",
     "@svgr/webpack": "2.4.1",
     "axios": "^0.18.0",
     "babel-core": "7.0.0-bridge.0",
@@ -11,6 +12,7 @@
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.4",
     "babel-plugin-named-asset-import": "^0.3.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-react-app": "^7.0.0",
     "bfj": "6.1.1",
     "body-parser": "^1.18.3",
@@ -41,6 +43,7 @@
     "passport": "^0.4.0",
     "passport-spotify": "^1.0.1",
     "pg": "^7.8.0",
+    "pg-hstore": "^2.3.2",
     "pnp-webpack-plugin": "1.1.0",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
@@ -58,6 +61,7 @@
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "sequelize": "^4.42.0",
+    "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
     "style-loader": "0.23.0",
     "terser-webpack-plugin": "1.1.0",
@@ -89,13 +93,5 @@
       "react-app"
     ]
   },
-  "devDependencies": {
-    "@babel/preset-env": "^7.3.1",
-    "babel-polyfill": "^6.26.0",
-    "cookie-parser": "^1.4.3",
-    "pg": "^7.8.0",
-    "pg-hstore": "^2.3.2",
-    "sequelize": "^4.42.0",
-    "socket.io": "^2.2.0"
-  }
+  "devDependencies": {}
 }
