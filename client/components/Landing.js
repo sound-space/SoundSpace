@@ -130,7 +130,7 @@ const Landing = () => {
                 Social
               </h3>
               <p>
-                A crowd sourced atmosphere for discussing, discovering and
+                A crowd-sourced atmosphere for discussing, discovering, and
                 sharing new music that's played live.
               </p>
             </div>
