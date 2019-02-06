@@ -23,7 +23,7 @@ const Landing = () => {
                 color: '#FFF',
                 fontWeight: 'bold',
                 fontFamily: 'Tajawal',
-                marginTop: '80px',
+                // marginTop: '80px',
                 lineHeight: '100px'
               }}
             >
@@ -68,6 +68,8 @@ const Landing = () => {
                   fontFamily: 'Tajawal',
                   padding: '18px 40px 8px 40px',
                   borderRadius: '15px',
+                  textShadow: '3px 3px 3px rgba(0,0,0,0.4)',
+                  boxShadow: '3px 3px 5px rgba(0,0,0,0.3)'
                 }}
                 className='signIn uk-button uk-button-primary'
               >
@@ -83,7 +85,7 @@ const Landing = () => {
               fontFamily: 'Tajawal',
               fontSize: '30px',
               fontWeight: '700',
-              textShadow: '3px 3px 5px rgba(0,0,0,0.5)'
+              textShadow: '3px 3px 5px rgba(0,0,0,0.7)'
             }}
           >
             Learn More
@@ -241,13 +243,16 @@ const Landing = () => {
         >
           <div
             style={{
-              marginTop: '30px',
-              color: '#FFF',
-              backgroundColor: 'rgba(66, 244, 137, 1)',
+              color: 'white',
+              backgroundColor: 'rgba(56, 185, 127, 1)',
               fontSize: '25px',
-              fontWeight: 'Black',
+              fontWeight: '700',
               fontFamily: 'Tajawal',
-              padding: '18px 40px 8px 40px'
+              padding: '18px 40px 8px 40px',
+              borderRadius: '15px',
+              textShadow: '3px 3px 3px rgba(0,0,0,0.4)',
+              boxShadow: '3px 3px 5px rgba(0,0,0,0.3)',
+              marginTop: '30px',
             }}
             className='signIn uk-button uk-button-primary'
           >
@@ -255,7 +260,7 @@ const Landing = () => {
           </div>
         </a>
       </h3>
-      <footer style={{ marginTop: '100px', textAlign: 'center' }}>
+      <footer style={{ marginTop: '30px', textAlign: 'center' }}>
         <p>
           Made with{' '}
           <i
