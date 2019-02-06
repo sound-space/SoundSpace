@@ -1,26 +1,14 @@
-<<<<<<< HEAD
 import React, { Component } from 'react'
 import axios from 'axios'
 import createClientSocket from 'socket.io-client'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import '../styles/ChannelViewStyles.css'
-import ChannelSideBar from './ChannelSideBar'
 import { search } from '../SpotifySearch'
 import Player from './Player'
-const IP = process.env.SPOTIFY_CLIENT_ID
-  ? 'http://soundspace-fsa.herokuapp.com'
-  : 'http://localhost:8080'
-=======
-import React, { Component } from 'react';
-import axios from 'axios';
-import createClientSocket from 'socket.io-client';
-import { connect } from 'react-redux';
-import '../styles/ChannelViewStyles.css';
-import { search } from '../SpotifySearch';
-import Player from './Player';
-const IP = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://soundspace-fsa.herokuapp.com'
->>>>>>> master
+const IP =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:8080'
+    : 'https://soundspace-fsa.herokuapp.com'
 
 class ChannelView extends Component {
   constructor (props) {
@@ -122,14 +110,8 @@ class ChannelView extends Component {
     }
   }
 
-<<<<<<< HEAD
   render () {
     const playerState = this.props.playerState
-=======
-  render() {
-    // variales for meta data
-    const playerState = this.props.playerState;
->>>>>>> master
     const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
       : null
@@ -142,35 +124,19 @@ class ChannelView extends Component {
 
     const currentTrackArtist = playerState
       ? playerState.track_window.current_track.artists[0].name
-<<<<<<< HEAD
       : null
-=======
-      : '';
-
->>>>>>> master
     return (
       <div className='uk-width-1-1 uk-container uk-container-expand uk-align-left'>
         <div>
-<<<<<<< HEAD
-          <div uk-grid='true'>
-            <img
-              style={{
-                minWidth: '300px',
-                minHeight: '300px',
-                objectFit: 'cover'
-              }}
-              className='uk-align-center album-img'
-=======
-          <div align="center">
+          <div align='center'>
             <br />
             <h2>{this.state.channelDetails.name}</h2>
             <p>{this.state.channelDetails.description}</p>
           </div>
-          <div uk-grid="true">
+          <div uk-grid='true'>
             <img
               style={{ objectFit: 'cover' }}
-              className="uk-align-center album-img"
->>>>>>> master
+              className='uk-align-center album-img'
               src={albumCoverUrl}
             />
           </div>
@@ -191,22 +157,35 @@ class ChannelView extends Component {
                 onClick={() => this.vote('up', this.state.vote)}
               />
             </div>
-            <div className='uk-text-large'>{currentTrackName}</div>
+            <div
+              style={{ color: 'rgb(0, 140, 255)' }}
+              className='uk-text-large'
+            >
+              {currentTrackName}
+            </div>
             <div>By {currentTrackArtist}</div>
             <div>{currentTrackAlbum}</div>
             <br />
 
             {this.state.channelDetails.isSuggestable ? (
               <div>
-                <div className='uk-margin'>
-                  Add a suggestion
-                  <input
-                    onChange={this.handleSearch}
-                    className='uk-input'
-                    type='text'
-                    placeholder='Search Songs...'
-                  />
+                <div
+                  style={{
+                    fontFamily: 'Tajawal',
+                    fontSize: '22px',
+                    marginTop: '50px'
+                  }}
+                  className='uk-margin'
+                >
+                  Add a suggestion:
                 </div>
+                <input
+                  style={{ width: '50%' }}
+                  onChange={this.handleSearch}
+                  className='uk-input'
+                  type='text'
+                  placeholder='Search Songs...'
+                />
                 <div>
                   {this.state.searchResults.map((track, i) => {
                     return (
@@ -268,6 +247,16 @@ class ChannelView extends Component {
                     }
                   }}
                 >
+                  <p
+                    style={{
+                      marginTop: '20px',
+                      fontFamily: 'Tajawal',
+                      fontSize: '40px',
+                      fontWeight: '500'
+                    }}
+                  >
+                    Chat Room
+                  </p>
                   <div className='chat-messages-container'>
                     {this.state.messages.map((message, i) => {
                       return (
@@ -289,8 +278,9 @@ class ChannelView extends Component {
                       placeholder='Enter message...'
                     />
                     <button
-                      className='uk-button uk-button-default chat-submit'
+                      className='uk-button uk-button-primary uk-button-large'
                       type='submit'
+                      style={{ backgroundColor: 'rgb(0, 140, 255)' }}
                     >
                       Send
                     </button>

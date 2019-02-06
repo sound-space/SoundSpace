@@ -46,9 +46,9 @@
 }
 
 .active-up {
-  color: green;
+  color: rgb(66, 244, 137);
 }
 
 .active-down {
-  color: red;
+  color: rgb(238, 81, 81);
 }
