@@ -106,9 +106,15 @@ class ChannelView extends Component {
       console.log(err);
     }
   };
+  
+  clearVotes = () => {
+    this.setState({
+      vote: ''
+    })
+  }
 
   render() {
-    // variales for meta data
+    // variables for meta data
     const playerState = this.props.playerState;
     const albumCoverUrl = playerState
       ? playerState.track_window.current_track.album.images[0].url
@@ -264,7 +270,7 @@ class ChannelView extends Component {
             </div>
           </div>
         </div>
-        <Player socket={this.socket} channelId={this.props.match.params.id} />
+        <Player socket={this.socket} channelId={this.props.match.params.id} clearVotes={this.clearVotes} />
       </div>
     );
   }
