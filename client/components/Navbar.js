@@ -34,7 +34,7 @@ const NavBar = props => {
           <div
             id="logout-button"
             style={{
-              paddingTop: 9,
+              marginTop: 3,
               lineHeight: '60px',
               fontSize: '20px',
               fontFamily: 'Tajawal',

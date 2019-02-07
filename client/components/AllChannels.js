@@ -20,7 +20,7 @@ class AllChannels extends Component {
 
   render () {
     return (
-      <div className='channels' style={{ padding: '40px 50px' }}>
+      <div className='channels' style={{ padding: '100px 50px 30px 50px' }}>
         <nav className='uk-navbar-container' uk-navbar='true'>
           <div className='uk-navbar-left'>
             <div className='uk-navbar-item'>
@@ -73,20 +73,21 @@ class AllChannels extends Component {
         <div
           style={{
             display: 'flex',
-            margin: '30px',
-            justifyContent: 'flex-start',
+            // margin: '30px',
+            // justifyContent: 'flex-start',
             flexDirection: 'row',
             flexWrap: 'wrap',
-            alignContent: ' flex-start'
-          }}
+
+            }}
         >
           <div
             className='uk-align-center'
             style={{
               display: 'flex',
-              margin: '30px',
               flexDirection: 'row',
-              flexWrap: 'wrap'
+              flexWrap: 'wrap',
+                          width: '100%',
+            margin: 'auto'
             }}
           >
             <div className='uk-text-center'>
