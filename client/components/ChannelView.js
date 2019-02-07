@@ -30,6 +30,7 @@ class ChannelView extends Component {
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.setColorScheme = this.setColorScheme.bind(this);
+    this.rgb = this.rgb.bind(this);
     this.search = search.bind(this);
     this.socket = createClientSocket(IP);
   }
@@ -51,6 +52,7 @@ class ChannelView extends Component {
       });
       document.getElementsByClassName('chat-messages-container').scrollTop = 0;
     });
+    this.setColorScheme()
   }
 
   componentWillUnmount() {
@@ -58,16 +60,28 @@ class ChannelView extends Component {
     this.socket.emit('leave', this.props.match.params.id);
   }
 
+  componentWillReceiveProps() {
+    this.setColorScheme()
+  }
+
   // set color scheme on state
   async setColorScheme() {
-    if (this.props.pleayerState) {
+    if (this.props.playerState) {
       const currentAlbumUrl = this.props.playerState.track_window.current_track.album.images[0].url
       if (this.state.currentAlbumUrl !== currentAlbumUrl) {
-        const colorScheme = await Vibrant.from(dummyImageUrl).getPalette()
-        console.log(colorScheme)
+        const colorScheme = await Vibrant.from(currentAlbumUrl).getPalette()
+        this.setState({currentAlbumUrl, colorScheme})
       }
     }
   }
+
+  // convert color to CSS rgb value
+  rgb(r, g, b) {
+    r = Math.floor(r);
+    g = Math.floor(g);
+    b = Math.floor(b);
+    return ['rgb(', r, ',', g, ',', b, ')'].join('');
+  };
 
   async handleSearch(evt) {
     this.setState({
@@ -136,6 +150,7 @@ class ChannelView extends Component {
   };
 
   render() {
+    console.log("COLOR OBJECT: ", this.state.colorScheme)
     // variables for meta data
     const playerState = this.props.playerState;
     const albumCoverUrl = playerState
@@ -151,14 +166,38 @@ class ChannelView extends Component {
     const currentTrackArtist = playerState
       ? playerState.track_window.current_track.artists[0].name
       : null;
+
+// setting colors from the state
+    let colorScheme = this.state.colorScheme
+    let check = false
+    let vibrant, lightVibrant, darkVibrant, muted,lightMuted,darkMuted
+    if (colorScheme.Vibrant) {
+      check=true
+      vibrant = colorScheme.Vibrant ? this.rgb(colorScheme.Vibrant.r, colorScheme.Vibrant.g, colorScheme.Vibrant.b) : null
+      lightVibrant = colorScheme.LightVibrant ? this.rgb(colorScheme.LightVibrant.r, colorScheme.LightVibrant.g, colorScheme.LightVibrant.b) : null
+      darkVibrant = colorScheme.DarkVibrant ? this.rgb(colorScheme.DarkVibrant.r, colorScheme.DarkVibrant.g, colorScheme.DarkVibrant.b) : null
+      muted = colorScheme.Muted ? this.rgb(colorScheme.Muted.r, colorScheme.Muted.g, colorScheme.Muted.b) : null
+      lightMuted = colorScheme.LightMuted ? this.rgb(colorScheme.LightMuted.r, colorScheme.LightMuted.g, colorScheme.LightMuted.b) : null
+      darkMuted = colorScheme.DarkMuted ? this.rgb(colorScheme.DarkMuted.r, colorScheme.DarkMuted.g, colorScheme.DarkMuted.b) : null
+    }
+
     return (
-      <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left">
+      <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left" style={{backgroundColor:vibrant}}>
         <div>
           <div align="center">
             <br />
             <h2>{this.state.channelDetails.name}</h2>
             <p>{this.state.channelDetails.description}</p>
           </div>
+          {check && 
+          <div className="uk-align-center" style={{leftMargin:"auto", rightMargin:"auto", maxWidth:"200px", border:"solid", borderColor:"grey", textAlign:"center"}} >
+            <div style={{backgroundColor: vibrant}}>vibrant</div>
+            <div style={{backgroundColor: lightVibrant}}>lightVibrant</div>
+            <div style={{backgroundColor: darkVibrant}}>darkVibrant</div>
+            <div style={{backgroundColor: muted}}>muted</div>
+            <div style={{backgroundColor: lightMuted}}>lightMuted</div>
+            <div style={{backgroundColor: darkMuted}}>darkMuted</div>
+          </div>}
           <div uk-grid="true">
             <img
               style={{ objectFit: 'cover' }}
