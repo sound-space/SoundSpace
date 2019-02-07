@@ -32,7 +32,7 @@ app
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
   .use(cors())
-  .use(session({ secret: 'The sound of space' }))
+  .use(session({ secret: 'The sound of space', saveUninitialized: false, resave: false }))
   .use(passport.initialize())
   .use(passport.session());
 
@@ -73,13 +73,14 @@ app.get(
   '/login',
   passport.authenticate('spotify', {
     scope,
-    failureRedirect: '/login',
+    failureRedirect: '/',
+    showDialog: true
   })
 );
 
 app.get(
   '/callback',
-  passport.authenticate('spotify', { failureRedirect: '/login' }),
+  passport.authenticate('spotify', { failureRedirect: '/' }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/#/channels');
@@ -93,6 +94,7 @@ app.get('/me', function(req, res) {
 
 app.get('/logout', (req, res) => {
   req.logout();
+  req.session.destroy()
   res.json({});
 });
 
