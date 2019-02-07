@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import '../styles/ChannelViewStyles.css';
 import { search } from '../SpotifySearch';
 import Player from './Player';
+import * as Vibrant from 'node-vibrant'
 const IP =
   window.location.hostname === 'localhost'
     ? 'http://localhost:8080'
@@ -24,6 +25,8 @@ class ChannelView extends Component {
       channelDetails: {},
       searchQuery: '',
       searchResults: [],
+      currentAlbumUrl: '',
+      colorScheme: {}
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.search = search.bind(this);
@@ -52,6 +55,17 @@ class ChannelView extends Component {
   componentWillUnmount() {
     // If navigating away from ChannelView, disconnect from socket
     this.socket.emit('leave', this.props.match.params.id);
+  }
+
+  // set color scheme on state
+  async setColorScheme() {
+    if (this.props.pleayerState) {
+      const currentAlbumUrl = this.props.playerState.track_window.current_track.album.images[0].url
+      if (this.state.currentAlbumUrl !== currentAlbumUrl) {
+        const colorScheme = await Vibrant.from(dummyImageUrl).getPalette()
+        console.log(colorScheme)
+      }
+    }
   }
 
   async handleSearch(evt) {

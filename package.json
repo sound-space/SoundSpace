@@ -39,6 +39,7 @@
     "jest-pnp-resolver": "1.0.1",
     "jest-resolve": "23.6.0",
     "mini-css-extract-plugin": "0.4.3",
+    "node-vibrant": "^3.1.0-0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "passport": "^0.4.0",
     "passport-spotify": "^1.0.1",
@@ -93,5 +94,7 @@
       "react-app"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "worker-loader": "^2.0.0"
+  }
 }
