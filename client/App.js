@@ -20,7 +20,7 @@ class App extends React.Component {
         <nav>
           <Navbar props={this.props} channels={this.props.channels}/>
         </nav>
-        <main style={{ position: 'relative', top: '100px' }}>
+        <main>
           <Switch>
             {this.props.user.id &&
               <Switch>
