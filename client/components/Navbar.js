@@ -26,13 +26,14 @@ const NavBar = props => {
       {props.user.id && (
         <div className="uk-navbar-right" width="500">
           <a
+            id="logout-button"
             style={{
               marginTop: '5px',
               fontSize: '24px',
               fontFamily: 'Tajawal',
               fontWeight: 'bold',
               textShadow: '0px 0px 3px rgba(0,0,0,0.75)',
-              color: 'white',
+              // color: 'white',
               textDecoration: 'none',
             }}
             onClick={props.logout}

@@ -26,9 +26,9 @@
 
 nav {
   background-image: linear-gradient(
-    350deg,
-    rgb(0, 228, 133),
-    rgb(94, 166, 233) 70%
+    180deg,
+    rgb(45, 45, 45),
+    rgb(38, 38, 38) 70%
   );
 }
 
@@ -68,6 +68,10 @@ ion-icon {
 
 .signIn:hover {
   background-color: rgb(102, 186, 255);
+}
+
+#logout-button:hover {
+  color: rgb(196, 196, 196);
 }
 
 .fas {
