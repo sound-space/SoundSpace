@@ -21,6 +21,7 @@ const Landing = () => {
               className="headline"
               style={{
                 color: '#FFF',
+                fontSize: '7.5vw',
                 fontWeight: 'bold',
                 fontFamily: 'Tajawal',
                 lineHeight: '100px',
