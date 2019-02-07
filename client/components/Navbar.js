@@ -16,31 +16,35 @@ const NavBar = props => {
       <div>
         <a href="/#/channels">
           <img
-            style={{ width: '100px' }}
-            src="./assets/ss_logo_white.png"
+            style={{ height: '60px', width: 'auto' }}
+            src="./assets/SS_Logo-WHITE.svg"
             alt=""
           />
         </a>
       </div>
 
       {props.user.id && (
-        <div className="uk-navbar-right" width="500">
-          <a
+        <div
+          className="uk-navbar-right logout-container"
+          width="500"
+          style={{
+            height: '60px',
+          }}
+        >
+          <div
             id="logout-button"
             style={{
-              marginTop: '5px',
-              fontSize: '24px',
+              paddingTop: 9,
+              lineHeight: '60px',
+              fontSize: '20px',
               fontFamily: 'Tajawal',
               fontWeight: 'bold',
-              textShadow: '0px 0px 3px rgba(0,0,0,0.75)',
-              // color: 'white',
-              textDecoration: 'none',
             }}
             onClick={props.logout}
             className="nav-button uk-button uk-margin-right"
           >
-            LOG OUT
-          </a>
+            Log Out
+          </div>
         </div>
       )}
     </nav>

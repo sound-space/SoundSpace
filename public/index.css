@@ -69,7 +69,6 @@ ion-icon {
 .signIn:hover {
   background-color: rgb(102, 186, 255);
 }
-
 #logout-button:hover {
   color: rgb(196, 196, 196);
 }
