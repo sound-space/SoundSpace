@@ -29,6 +29,7 @@ class ChannelView extends Component {
       colorScheme: {}
     };
     this.handleSearch = this.handleSearch.bind(this);
+    this.setColorScheme = this.setColorScheme.bind(this);
     this.search = search.bind(this);
     this.socket = createClientSocket(IP);
   }
