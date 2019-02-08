@@ -156,6 +156,7 @@ class Player extends React.Component {
           <AudioViz
             vizData={this.state.vizData}
             currentSegment={this.state.currentSegment}
+            audioVizColors={this.props.audioVizColors}
           />
         </div>
         <div
@@ -171,6 +172,7 @@ class Player extends React.Component {
           <AudioViz
             vizData={this.state.vizData}
             currentSegment={this.state.currentSegment}
+            audioVizColors={this.props.audioVizColors}
           />
         </div>
       </div>

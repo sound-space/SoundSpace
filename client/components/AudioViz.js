@@ -14,7 +14,7 @@ export default class AudioViz extends Component {
       <div id="audio-viz">
         {vizData[currentSegment].pitches.map((pitch, idx) => (
           <div key={idx}>
-            <AudioBar pitch={pitch} idx={idx} />
+            <AudioBar pitch={pitch} idx={idx} audioVizColors={this.props.audioVizColors} />
           </div>
         ))}
       </div>

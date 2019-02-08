@@ -181,13 +181,18 @@ class ChannelView extends Component {
       darkMuted = colorScheme.DarkMuted ? this.rgb(colorScheme.DarkMuted.r, colorScheme.DarkMuted.g, colorScheme.DarkMuted.b) : null
     }
 
+    let backgroundColor = darkMuted ? darkMuted : darkVibrant ? darkVibrant : "darkgrey"
+    let primaryTextColor = lightVibrant ? lightVibrant : vibrant ? vibrant : lightMuted ? lightMuted : "lightgrey"
+    let secondaryTextColor = vibrant ? vibrant : muted ? muted : "grey"
+    let audioVizColors = [primaryTextColor, secondaryTextColor]
+
     return (
-      <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left" style={{backgroundColor:vibrant}}>
+      <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left" style={{backgroundColor:backgroundColor}}>
         <div>
           <div align="center">
             <br />
-            <h2>{this.state.channelDetails.name}</h2>
-            <p>{this.state.channelDetails.description}</p>
+            <h2 style={{color: primaryTextColor}}>{this.state.channelDetails.name}</h2>
+            <p style={{color: secondaryTextColor}}>{this.state.channelDetails.description}</p>
           </div>
           {check && 
           <div className="uk-align-center" style={{leftMargin:"auto", rightMargin:"auto", maxWidth:"200px", border:"solid", borderColor:"grey", textAlign:"center"}} >
@@ -223,13 +228,13 @@ class ChannelView extends Component {
               />
             </div>
             <div
-              style={{ color: 'rgb(0, 140, 255)' }}
+              style={{color: primaryTextColor}}
               className="uk-text-large"
             >
               {currentTrackName}
             </div>
-            <div>By {currentTrackArtist}</div>
-            <div>{currentTrackAlbum}</div>
+            <div style={{color: primaryTextColor}}>By {currentTrackArtist}</div>
+            <div style={{color: secondaryTextColor}}>{currentTrackAlbum}</div>
             <br />
 
             {this.state.channelDetails.isSuggestable ? (
@@ -296,7 +301,7 @@ class ChannelView extends Component {
             <br />
             <hr />
 
-            <p>Listeners: {this.state.numUsers}</p>
+            <p style={{color: primaryTextColor}}>Listeners: {this.state.numUsers}</p>
             <hr />
             <div className="chat-container">
               <div className="chat-input-container">
@@ -320,6 +325,7 @@ class ChannelView extends Component {
                       fontFamily: 'Tajawal',
                       fontSize: '40px',
                       fontWeight: '500',
+                      color: primaryTextColor
                     }}
                   >
                     Chat Room
@@ -361,6 +367,7 @@ class ChannelView extends Component {
           socket={this.socket}
           channelId={this.props.match.params.id}
           clearVotes={this.clearVotes}
+          audioVizColors={audioVizColors}
         />
       </div>
     );

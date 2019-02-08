@@ -16,7 +16,7 @@ export default class AudioViz extends Component {
 
   componentDidMount() {
     // update bars based ont the update rate
-    this.updateInterval = setInterval(this.setStyling, this.updateRate);
+    this.updateInterval = setInterval(this.setStylingWithColorScheme, this.updateRate);
   }
 
   componentWillUnmount() {
@@ -54,6 +54,25 @@ export default class AudioViz extends Component {
       left: -this.barLength / 2,
     });
   };
+
+  setStylingWithColorScheme = () => {
+        // grab the length of the bar based on window width
+    let baseBarLength = window.innerWidth / 5;
+    const { pitch, idx } = this.props;
+    let smoothing = (pitch * baseBarLength - this.barLength) / this.updateRate;
+    this.barLength += smoothing;
+    // pick the color based on the length of the bar
+    if (this.props.audioVizColors) {
+      
+    }
+    let barColor = this.props.audioVizColors ? this.props.audioVizColors[0] : "lightgrey"
+    this.setState({
+      top: 5 * idx + 'px',
+      width: this.barLength + 'px',
+      backgroundColor: barColor,
+      left: -this.barLength / 2,
+    });
+  }
 
   render() {
     return <div style={this.state} />;
