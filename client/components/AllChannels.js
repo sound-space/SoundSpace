@@ -73,21 +73,15 @@ class AllChannels extends Component {
         <div
           style={{
             display: 'flex',
-            // margin: '30px',
-            // justifyContent: 'flex-start',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-
+            justifyContent: 'center',
             }}
         >
           <div
             className='uk-align-center'
             style={{
               display: 'flex',
-              flexDirection: 'row',
               flexWrap: 'wrap',
-                          width: '100%',
-            margin: 'auto'
+              justifyContent:'flex-start'
             }}
           >
             <div className='uk-text-center'>

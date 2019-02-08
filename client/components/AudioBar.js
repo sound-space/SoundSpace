@@ -33,7 +33,7 @@ export default class AudioViz extends Component {
   };
 
   parseRgbString = (str) => {
-    if (!str || str === 'null') {
+    if (!str || str === 'black') {
       return [0,0,0]
     }
     let [r,g,b] = str.split(',')
