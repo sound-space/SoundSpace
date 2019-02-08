@@ -181,20 +181,21 @@ class ChannelView extends Component {
     }
     
     // to make background derived from the image 
-    // let backgroundColor = darkMuted ? darkMuted : darkVibrant ? darkVibrant : "rgb(50,50,50)"
+    let backgroundColor = darkMuted ? darkMuted : darkVibrant ? darkVibrant : "rgb(50,50,50)"
     // to make background black 
-    let backgroundColor = "black"
-    let primaryTextColor = lightVibrant ? lightVibrant : vibrant ? vibrant : lightMuted ? lightMuted : "rgb(230,230,230)"
+    // let backgroundColor = "rgb(50,50,50)" || "black"
+    // let primaryTextColor = lightVibrant ? lightVibrant : vibrant ? vibrant : lightMuted ? lightMuted : "rgb(230,230,230)"
+    let primaryTextColor = lightVibrant ? lightVibrant : lightMuted ? lightMuted : "rgb(230,230,230)"
     let secondaryTextColor = vibrant ? vibrant : muted ? muted : "rgb(120,120,120)"
-    let audioVizColors = [secondaryTextColor, backgroundColor]
+    let audioVizColors = [secondaryTextColor, primaryTextColor]
 
     return (
-      <div className="channelview uk-width-1-1 uk-container uk-container-expand" style={{backgroundColor:backgroundColor, paddingBottom: '80px'}}>
+      <div className="channelview uk-width-1-1 uk-container uk-container-expand" style={{paddingBottom: '80px'}}>
         <div>
           <div align='center'>
             <br />
-            <h2 style={{color: primaryTextColor, marginTop: '100px'}}>{this.state.channelDetails.name}</h2>
-            <p style={{color: secondaryTextColor}}>{this.state.channelDetails.description}</p>
+            <h2 style={{marginTop: '100px'}}>{this.state.channelDetails.name}</h2>
+            <p>{this.state.channelDetails.description}</p>
           </div>
           {/* comment in block below to see the colors we get */}
           {/* {check && 
@@ -231,16 +232,16 @@ class ChannelView extends Component {
               />
             </div>
             <div
-              style={{color: primaryTextColor, fontFamily: 'Tajawal',
+              style={{fontFamily: 'Tajawal',
               fontWeight: '700',}}
               className="uk-text-large"
             >
               {currentTrackName}
             </div>
-            <div style={{color: primaryTextColor,fontSize: '20px',
+            <div style={{fontSize: '20px',
                 fontFamily: 'Tajawal',
                 fontWeight: '500'}}>By {currentTrackArtist}</div>
-            <div style={{color: secondaryTextColor,                 fontSize: '20px',
+            <div style={{fontSize: '20px',
                 fontFamily: 'Tajawal',
                 fontWeight: '700'}}>{currentTrackAlbum}</div>
             <br />
@@ -309,7 +310,7 @@ class ChannelView extends Component {
             <br />
             <hr />
 
-            <p style={{ fontWeight: '700', marginBottom: '-30px', color: primaryTextColor }}>
+            <p style={{ fontWeight: '700', marginBottom: '-30px'}}>
               LISTENERS:
             </p>
             <h4 style={{ color: 'red', fontWeight: '700' }}>
@@ -337,8 +338,7 @@ class ChannelView extends Component {
                       marginTop: '20px',
                       fontFamily: 'Tajawal',
                       fontSize: '40px',
-                      fontWeight: '500',
-                      color: primaryTextColor
+                      fontWeight: '500'
                     }}
                   >
                     Chat

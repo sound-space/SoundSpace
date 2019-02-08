@@ -4,7 +4,8 @@
 } */
 
 .landing,
-.channels {
+.channels,
+.channelview {
   background: url(
     data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHUlEQVQYV2O8cuVKmo6OziwGKGCEMTAEYCoxVAAAXA0IBSg0edEAAAAASUVORK5CYII=
     )
