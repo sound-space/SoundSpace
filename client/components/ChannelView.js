@@ -150,7 +150,6 @@ class ChannelView extends Component {
   };
 
   render() {
-    console.log("COLOR OBJECT: ", this.state.colorScheme)
     // variables for meta data
     const playerState = this.props.playerState;
     const albumCoverUrl = playerState
@@ -170,7 +169,7 @@ class ChannelView extends Component {
 // setting colors from the state
     let colorScheme = this.state.colorScheme
     let check = false
-    let vibrant, lightVibrant, darkVibrant, muted,lightMuted,darkMuted
+    let vibrant, lightVibrant, darkVibrant, muted,lightMuted, darkMuted
     if (colorScheme.Vibrant) {
       check=true
       vibrant = colorScheme.Vibrant ? this.rgb(colorScheme.Vibrant.r, colorScheme.Vibrant.g, colorScheme.Vibrant.b) : null
@@ -180,11 +179,14 @@ class ChannelView extends Component {
       lightMuted = colorScheme.LightMuted ? this.rgb(colorScheme.LightMuted.r, colorScheme.LightMuted.g, colorScheme.LightMuted.b) : null
       darkMuted = colorScheme.DarkMuted ? this.rgb(colorScheme.DarkMuted.r, colorScheme.DarkMuted.g, colorScheme.DarkMuted.b) : null
     }
-
-    let backgroundColor = darkMuted ? darkMuted : darkVibrant ? darkVibrant : "darkgrey"
-    let primaryTextColor = lightVibrant ? lightVibrant : vibrant ? vibrant : lightMuted ? lightMuted : "lightgrey"
-    let secondaryTextColor = vibrant ? vibrant : muted ? muted : "grey"
-    let audioVizColors = [primaryTextColor, secondaryTextColor]
+    
+    // to make background derived from the image 
+    // let backgroundColor = darkMuted ? darkMuted : darkVibrant ? darkVibrant : "rgb(50,50,50)"
+    // to make background black 
+    let backgroundColor = "rgb(0,0,0)"
+    let primaryTextColor = lightVibrant ? lightVibrant : vibrant ? vibrant : lightMuted ? lightMuted : "rgb(230,230,230)"
+    let secondaryTextColor = vibrant ? vibrant : muted ? muted : "rgb(120,120,120)"
+    let audioVizColors = [secondaryTextColor, backgroundColor]
 
     return (
       <div className="uk-width-1-1 uk-container uk-container-expand uk-align-left" style={{backgroundColor:backgroundColor}}>

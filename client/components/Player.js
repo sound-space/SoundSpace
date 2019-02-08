@@ -45,6 +45,9 @@ class Player extends React.Component {
       }
 
       this.updateInterval = setInterval(() => {
+        if (vizData.length < counter) {
+          clearInterval(this.updateInterval);
+        }
         if (
           vizData[counter].start < timeOffset &&
           timeOffset > vizData[counter].end
@@ -53,9 +56,6 @@ class Player extends React.Component {
           this.setState({ currentSegment: counter });
         }
         timeOffset += 100;
-        if (vizData.length <= counter) {
-          clearInterval(this.updateInterval);
-        }
       }, 100);
       this.setState({
         vizData: vizData,

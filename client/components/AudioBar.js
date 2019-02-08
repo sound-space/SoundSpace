@@ -32,6 +32,16 @@ export default class AudioViz extends Component {
     return ['rgb(', r, ',', g, ',', b, ')'].join('');
   };
 
+  parseRgbString = (str) => {
+    if (!str || str === 'null') {
+      return [0,0,0]
+    }
+    let [r,g,b] = str.split(',')
+    r = r.slice(4)
+    b = b.slice(0,b.length-1)
+    return [r,g,b]
+  }
+
   setStyling = () => {
     // grab the length of the bar based on window width
     let baseBarLength = window.innerWidth / 5;
@@ -61,15 +71,31 @@ export default class AudioViz extends Component {
     const { pitch, idx } = this.props;
     let smoothing = (pitch * baseBarLength - this.barLength) / this.updateRate;
     this.barLength += smoothing;
-    // pick the color based on the length of the bar
+    // get RGB values from the passed string
+    let firstColor, secondColor
     if (this.props.audioVizColors) {
-      
+      firstColor = this.parseRgbString(this.props.audioVizColors[0])
+      secondColor = this.parseRgbString(this.props.audioVizColors[1])
     }
-    let barColor = this.props.audioVizColors ? this.props.audioVizColors[0] : "lightgrey"
+
+    // calculate deltas
+    let deltas = []
+    for (let i=0; i<3; i++) {
+      firstColor[i] = Number(firstColor[i])
+      secondColor[i] = Number(secondColor[i])
+      deltas.push(firstColor[i] - secondColor[i])
+    }
+
+    // make new RGB values
+    let barColor = []
+    for (let i=0; i<3; i++) {
+      barColor.push(secondColor[i] + (deltas[i]*pitch))
+    }
+    // let barColor = this.props.audioVizColors ? this.props.audioVizColors[0] : "lightgrey"
     this.setState({
       top: 5 * idx + 'px',
       width: this.barLength + 'px',
-      backgroundColor: barColor,
+      backgroundColor: this.rgb(...barColor),
       left: -this.barLength / 2,
     });
   }
