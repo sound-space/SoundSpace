@@ -4,13 +4,12 @@ module.exports = router;
 
 router.get('/', async (req, res, next) => {
   try {
-    // if (req.user) {
-    const channels = await Channel.findAll();
-    res.json(channels);
-    // }
-    // else {
-    //   res.send('You must be logged in to see channels')
-    // }
+    if (req.user) {
+      const channels = await Channel.findAll();
+      res.json(channels);
+    } else {
+      res.send('You must be logged in to see channels');
+    }
   } catch (error) {
     next(error);
   }
@@ -50,31 +49,31 @@ router.get('/:channelId/user', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   const { name, description, imageURL, isSuggestable } = req.body;
   try {
-    // if (req.user) {
-    const [newChannel, isNew] = await Channel.findOrCreate({
-      where: {
-        name,
-        description,
-        imageURL,
-      },
-      defaults: {
-        name,
-        description,
-        imageURL,
-        timestamp: Date.now(),
-        isSuggestable,
-      },
-    });
-    if (isNew) {
-      res.json(newChannel);
+    if (req.user) {
+      const [newChannel, isNew] = await Channel.findOrCreate({
+        where: {
+          name,
+          description,
+          imageURL,
+        },
+        defaults: {
+          name,
+          description,
+          imageURL,
+          timestamp: Date.now(),
+          isSuggestable,
+        },
+      });
+      if (isNew) {
+        res.json(newChannel);
+      } else {
+        res.status(409).json({ error: 'Channel already exists' });
+      }
+    } else if (req.user && req.channel.name === req.body.name) {
+      res.send('Channel already exists!');
     } else {
-      res.status(409).json({ error: 'Channel already exists' });
+      res.send('You must be logged in to create a new channel');
     }
-    // } else if (req.user && req.channel.name === req.body.name) {
-    //   res.send('Channel already exists!');
-    // } else {
-    //   res.send('You must be logged in to create a new channel');
-    // }
   } catch (error) {
     next(error);
   }
@@ -98,19 +97,23 @@ router.put('/:id', async (req, res, next) => {
 
 router.put('/:channelId/votes', async (req, res, next) => {
   try {
-    const channelId = Number(req.params.channelId);
-    const songToVoteOn = await Song.findOne({
-      where: {
-        channelId,
-        isPlaying: true,
-      },
-    });
-    if (songToVoteOn) {
-      songToVoteOn.votes += Number(req.body.vote);
-      await songToVoteOn.save();
-      res.status(204).send('Successfully voted on song!');
+    if (req.user) {
+      const channelId = Number(req.params.channelId);
+      const songToVoteOn = await Song.findOne({
+        where: {
+          channelId,
+          isPlaying: true,
+        },
+      });
+      if (songToVoteOn) {
+        songToVoteOn.votes += Number(req.body.vote);
+        await songToVoteOn.save();
+        res.status(204).send('Successfully voted on song!');
+      } else {
+        res.status(404).send('That song was not found, cannot register vote.');
+      }
     } else {
-      res.status(404).send('That song was not found, cannot register vote.');
+      res.send('You must be logged in to vote on tracks');
     }
   } catch (err) {
     console.error(err);

@@ -7,13 +7,13 @@
 .channels {
   background: url(
     data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHUlEQVQYV2O8cuVKmo6OziwGKGCEMTAEYCoxVAAAXA0IBSg0edEAAAAASUVORK5CYII=
-  )
+    )
     repeat;
   height: 'auto';
 }
 
 .headline {
-  font-size: 70px;
+  font-size: 90px;
 }
 
 .subheadline {
@@ -26,9 +26,9 @@
 
 nav {
   background-image: linear-gradient(
-    270deg,
-    rgb(66, 244, 137),
-    rgb(0, 140, 255) 100%
+    180deg,
+    rgb(45, 45, 45),
+    rgb(38, 38, 38) 70%
   );
 }
 
@@ -69,6 +69,9 @@ ion-icon {
 .signIn:hover {
   background-color: rgb(102, 186, 255);
 }
+#logout-button:hover {
+  color: rgb(196, 196, 196);
+}
 
 .fas {
   font-size: 2em;
@@ -76,7 +79,7 @@ ion-icon {
 
 .fa-thumbs-up:hover {
   cursor: pointer;
-  color: green;
+  color: rgb(66, 244, 137);
 }
 
 .fa-thumbs-down {
@@ -85,7 +88,7 @@ ion-icon {
 
 .fa-thumbs-down:hover {
   cursor: pointer;
-  color: red;
+  color: rgb(238, 81, 81);
 }
 
 nav-button,
@@ -96,7 +99,6 @@ button {
 
 nav,
 button:hover {
-  background-color: red;
   color: white;
 }
 
@@ -104,9 +106,10 @@ button:hover {
   color: ' rgb(0, 140, 255)';
 }
 
-/* .whatIsSS {
-  font-size: 40px;
-} */
+#formThumbnail:hover {
+  cursor: pointer;
+  color: 'black';
+}
 
 @media only screen and (min-width: 768px) {
   .headline {

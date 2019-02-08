@@ -12,11 +12,6 @@ class AllChannels extends Component {
     }
     this.handleSearch = this.handleSearch.bind(this)
   }
-
-  componentDidMount () {
-    // this.props.fetchChannels()
-  }
-
   handleSearch (evt) {
     this.setState({
       query: evt.target.value
@@ -25,7 +20,7 @@ class AllChannels extends Component {
 
   render () {
     return (
-      <div className='channels' style={{ padding: '40px 50px' }}>
+      <div className='channels' style={{ padding: '100px 50px 30px 50px' }}>
         <nav className='uk-navbar-container' uk-navbar='true'>
           <div className='uk-navbar-left'>
             <div className='uk-navbar-item'>
@@ -47,63 +42,86 @@ class AllChannels extends Component {
           style={{
             fontFamily: 'Tajawal',
             fontWeight: 'bold',
-            marginTop: '30px'
+            margin: '60px 0 10px 0'
           }}
         >
-          Sound Space Music Channels
+          SoundSpace Channels
         </h1>
         {this.state.query ? (
-          <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
+          <h3
+            style={{
+              fontFamily: 'Tajawal',
+              fontWeight: '500',
+              fontSize: '30px',
+              marginTop: '-10px'
+            }}
+          >
             Search Results
           </h3>
         ) : (
-          <h3 style={{ fontWeight: 'medium', marginTop: '-10px' }}>
+          <h3
+            style={{
+              fontFamily: 'Tajawal',
+              fontWeight: '500',
+              fontSize: '30px',
+              marginTop: '-10px'
+            }}
+          >
             Active Sound Channels: {this.props.channels.length}
           </h3>
         )}
         <div
-          className='uk-child-width-1-1 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-match uk-grid-small'
-          uk-grid='true'
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            }}
         >
-          <div className='uk-text-center'>
-            <div
-              className='uk-inline-clip uk-transition-toggle uk-light'
-              tabIndex='0'
-              uk-toggle='target: #channelFormId'
-            >
-              <img
+          <div
+            className='uk-align-center'
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent:'flex-start'
+            }}
+          >
+            <div className='uk-text-center'>
+              <div
                 style={{
+                  margin: '1em',
+                  width: '250px',
+                  height: '250px',
                   cursor: 'pointer',
-                  minWidth: '200px',
-                  minHeight: '200px',
-                  objectFit: 'cover'
+                  background: 'black'
                 }}
-                src='http://www.myseumoftoronto.com/wp-content/uploads/2018/05/plain-black-background.jpg'
-              />
-              <div className='uk-position-center'>
-                <span
-                  // className='uk-transition-fade'
-                  uk-icon='icon: plus; ratio: 4'
-                />
+                className='uk-inline-clip uk-transition-toggle uk-light'
+                tabIndex='0'
+                uk-toggle='target: #channelFormId'
+              >
+                <div className='uk-position-center'>
+                  <span uk-icon='icon: plus; ratio: 4' />
+                </div>
               </div>
+              <p
+                style={{ fontFamily: 'Tajawal', fontSize: '22px' }}
+                className='uk-margin-small-top'
+              >
+                New Channel
+              </p>
             </div>
-            <p style={{ fontSize: '22px' }} className='uk-margin-small-top'>
-              New Channel
-            </p>
-          </div>
-          {this.state.query
-            ? this.props.channels.map(channel => {
-              if (
-                channel.name
-                  .toLowerCase()
-                  .includes(this.state.query.toLowerCase())
-              ) {
+            {this.state.query
+              ? this.props.channels.map(channel => {
+                if (
+                  channel.name
+                    .toLowerCase()
+                    .includes(this.state.query.toLowerCase())
+                ) {
+                  return <ChannelCard key={channel.id} channel={channel} />
+                }
+              })
+              : this.props.channels.map(channel => {
                 return <ChannelCard key={channel.id} channel={channel} />
-              }
-            })
-            : this.props.channels.map(channel => {
-              return <ChannelCard key={channel.id} channel={channel} />
-            })}
+              })}
+          </div>
         </div>
       </div>
     )

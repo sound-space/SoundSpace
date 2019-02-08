@@ -1,41 +1,69 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { logUserOut } from '../store/user'
+import React from 'react';
+import { connect } from 'react-redux';
+import { logUserOut } from '../store/user';
 
 const NavBar = props => {
-  console.log('HISTORY: ', props)
   return (
     <nav
-      uk-navbar='true'
-      style={{ zIndex: '50', top: '0', position: 'fixed', width: '100%' }}
+      uk-navbar="true"
+      style={{
+        zIndex: '50',
+        top: '0',
+        position: 'fixed',
+        width: '100%',
+      }}
     >
       <div>
-        <img style={{ width: '100px' }} src='./assets/ss_logo.png' alt='' />
+        <a href="/#/channels">
+          <img
+            style={{ height: '60px', width: 'auto' }}
+            src="./assets/SS_Logo-WHITE.svg"
+            alt=""
+          />
+        </a>
       </div>
 
       {props.user.id && (
-        <div className="uk-navbar-right" width="500">
-          <button onClick={() => props.props.history.push('/channels')} className="nav-button uk-button uk-margin-right" >LEAVE</button>
-          <button className="nav-button uk-button uk-margin-right" onClick={props.logout}>LOGOUT</button>
+        <div
+          className="uk-navbar-right logout-container"
+          width="500"
+          style={{
+            height: '60px',
+          }}
+        >
+          <div
+            id="logout-button"
+            style={{
+              marginTop: 3,
+              lineHeight: '60px',
+              fontSize: '20px',
+              fontFamily: 'Tajawal',
+              fontWeight: 'bold',
+            }}
+            onClick={props.logout}
+            className="nav-button uk-button uk-margin-right"
+          >
+            Log Out
+          </div>
         </div>
       )}
     </nav>
-  )
-}
+  );
+};
 
 const mapStateToProps = state => {
-  return { user: state.userObj }
-}
+  return { user: state.userObj };
+};
 
 const mapDispatch = dispatch => {
   return {
-    logout () {
-      dispatch(logUserOut())
-    }
-  }
-}
+    logout() {
+      dispatch(logUserOut());
+    },
+  };
+};
 
 export default connect(
   mapStateToProps,
   mapDispatch
-)(NavBar)
+)(NavBar);

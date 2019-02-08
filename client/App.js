@@ -7,8 +7,6 @@ import Navbar from './components/Navbar'
 import { connect } from 'react-redux'
 import { getMe } from './store/user'
 import { fetchChannels } from './store/channels'
-// import { setPlayer } from './store/player'
-// import { checkForPlayer, createEventHandlers,  } from './EmbedPlayer'
 
 class App extends React.Component {
   componentDidMount () {
@@ -22,7 +20,7 @@ class App extends React.Component {
         <nav>
           <Navbar props={this.props} channels={this.props.channels}/>
         </nav>
-        <main style={{ position: 'relative', top: '100px' }}>
+        <main>
           <Switch>
             {this.props.user.id &&
               <Switch>
