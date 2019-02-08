@@ -15,12 +15,11 @@ const Landing = () => {
           })`
         }}
       >
-        <div className='uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical'>
+        <div className='uk-text-center uk-margin-auto uk-margin-auto-vertical'>
           <h1
             className='headline'
             style={{
               color: '#FFF',
-              fontSize: '80px',
               fontWeight: 'bold',
               fontFamily: 'Tajawal',
               lineHeight: '100px'
