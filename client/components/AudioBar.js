@@ -42,29 +42,6 @@ export default class AudioViz extends Component {
     return [r,g,b]
   }
 
-  setStyling = () => {
-    // grab the length of the bar based on window width
-    let baseBarLength = window.innerWidth / 5;
-    const { pitch, idx } = this.props;
-    let smoothing = (pitch * baseBarLength - this.barLength) / this.updateRate;
-    this.barLength += smoothing;
-    // pick the color based on the length of the bar
-    let r = pitch >= 0.7 ? 255 : 200 + pitch * 100;
-    let g = pitch <= 0 ? 255 : 255 - pitch * 60;
-    let b =
-      pitch >= 1
-        ? 255
-        : pitch >= 0.7
-        ? 190 + (pitch - 0.5) * 120
-        : 220 - pitch * 60;
-    this.setState({
-      top: 5 * idx + 'px',
-      width: this.barLength + 'px',
-      backgroundColor: this.rgb(r, g, b),
-      left: -this.barLength / 2,
-    });
-  };
-
   setStylingWithColorScheme = () => {
         // grab the length of the bar based on window width
     let baseBarLength = window.innerWidth / 5;
@@ -91,7 +68,6 @@ export default class AudioViz extends Component {
     for (let i=0; i<3; i++) {
       barColor.push(secondColor[i] + (deltas[i]*pitch))
     }
-    // let barColor = this.props.audioVizColors ? this.props.audioVizColors[0] : "lightgrey"
     this.setState({
       top: 5 * idx + 'px',
       width: this.barLength + 'px',

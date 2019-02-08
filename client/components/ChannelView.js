@@ -168,10 +168,8 @@ class ChannelView extends Component {
 
 // setting colors from the state
     let colorScheme = this.state.colorScheme
-    let check = false
     let vibrant, lightVibrant, darkVibrant, muted,lightMuted, darkMuted
     if (colorScheme.Vibrant) {
-      check=true
       vibrant = colorScheme.Vibrant ? this.rgb(colorScheme.Vibrant.r, colorScheme.Vibrant.g, colorScheme.Vibrant.b) : null
       lightVibrant = colorScheme.LightVibrant ? this.rgb(colorScheme.LightVibrant.r, colorScheme.LightVibrant.g, colorScheme.LightVibrant.b) : null
       darkVibrant = colorScheme.DarkVibrant ? this.rgb(colorScheme.DarkVibrant.r, colorScheme.DarkVibrant.g, colorScheme.DarkVibrant.b) : null
@@ -180,13 +178,8 @@ class ChannelView extends Component {
       darkMuted = colorScheme.DarkMuted ? this.rgb(colorScheme.DarkMuted.r, colorScheme.DarkMuted.g, colorScheme.DarkMuted.b) : null
     }
     
-    // to make background derived from the image 
-    let backgroundColor = darkMuted ? darkMuted : darkVibrant ? darkVibrant : "rgb(50,50,50)"
-    // to make background black 
-    // let backgroundColor = "rgb(50,50,50)" || "black"
-    // let primaryTextColor = lightVibrant ? lightVibrant : vibrant ? vibrant : lightMuted ? lightMuted : "rgb(230,230,230)"
-    let primaryTextColor = lightVibrant ? lightVibrant : lightMuted ? lightMuted : "rgb(230,230,230)"
-    let secondaryTextColor = vibrant ? vibrant : muted ? muted : "rgb(120,120,120)"
+    let secondaryTextColor = lightVibrant ? lightVibrant : lightMuted ? lightMuted : "rgb(230,230,230)"
+    let primaryTextColor = vibrant ? vibrant : muted ? muted : "rgb(120,120,120)"
     let audioVizColors = [secondaryTextColor, primaryTextColor]
 
     return (
@@ -197,16 +190,6 @@ class ChannelView extends Component {
             <h2 style={{marginTop: '100px'}}>{this.state.channelDetails.name}</h2>
             <p>{this.state.channelDetails.description}</p>
           </div>
-          {/* comment in block below to see the colors we get */}
-          {/* {check && 
-          <div className="uk-align-center" style={{leftMargin:"auto", rightMargin:"auto", maxWidth:"200px", border:"solid", borderColor:"grey", textAlign:"center"}} >
-            <div style={{backgroundColor: vibrant}}>vibrant</div>
-            <div style={{backgroundColor: lightVibrant}}>lightVibrant</div>
-            <div style={{backgroundColor: darkVibrant}}>darkVibrant</div>
-            <div style={{backgroundColor: muted}}>muted</div>
-            <div style={{backgroundColor: lightMuted}}>lightMuted</div>
-            <div style={{backgroundColor: darkMuted}}>darkMuted</div>
-          </div>} */}
           <div uk-grid="true">
             <img
               style={{ objectFit: 'cover' }}
