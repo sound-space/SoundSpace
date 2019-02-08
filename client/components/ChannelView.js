@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import createClientSocket from 'socket.io-client'
-import { connect } from 'react-redux'
-import '../styles/ChannelViewStyles.css'
-import { search } from '../SpotifySearch'
-import Player from './Player'
+import React, { Component } from 'react';
+import axios from 'axios';
+import createClientSocket from 'socket.io-client';
+import { connect } from 'react-redux';
+import '../styles/ChannelViewStyles.css';
+import { search } from '../SpotifySearch';
+import Player from './Player';
+import * as Vibrant from 'node-vibrant'
 const IP =
   window.location.hostname === 'localhost'
     ? 'http://localhost:8080'
@@ -23,11 +24,15 @@ class ChannelView extends Component {
       message: '',
       channelDetails: {},
       searchQuery: '',
-      searchResults: []
-    }
-    this.handleSearch = this.handleSearch.bind(this)
-    this.search = search.bind(this)
-    this.socket = createClientSocket(IP)
+      searchResults: [],
+      currentAlbumUrl: '',
+      colorScheme: {}
+    };
+    this.handleSearch = this.handleSearch.bind(this);
+    this.setColorScheme = this.setColorScheme.bind(this);
+    this.rgb = this.rgb.bind(this);
+    this.search = search.bind(this);
+    this.socket = createClientSocket(IP);
   }
 
   async componentDidMount () {
@@ -43,10 +48,11 @@ class ChannelView extends Component {
     this.socket.on('new-message', message => {
       const messages = [message, ...this.state.messages]
       this.setState({
-        messages
-      })
-      document.getElementsByClassName('chat-messages-container').scrollTop = 0
-    })
+        messages,
+      });
+      document.getElementsByClassName('chat-messages-container').scrollTop = 0;
+    });
+    this.setColorScheme()
   }
 
   componentWillUnmount () {
@@ -54,7 +60,30 @@ class ChannelView extends Component {
     this.socket.emit('leave', this.props.match.params.id)
   }
 
-  async handleSearch (evt) {
+  componentWillReceiveProps() {
+    this.setColorScheme()
+  }
+
+  // set color scheme on state
+  async setColorScheme() {
+    if (this.props.playerState) {
+      const currentAlbumUrl = this.props.playerState.track_window.current_track.album.images[0].url
+      if (this.state.currentAlbumUrl !== currentAlbumUrl) {
+        const colorScheme = await Vibrant.from(currentAlbumUrl).getPalette()
+        this.setState({currentAlbumUrl, colorScheme})
+      }
+    }
+  }
+
+  // convert color to CSS rgb value
+  rgb(r, g, b) {
+    r = Math.floor(r);
+    g = Math.floor(g);
+    b = Math.floor(b);
+    return ['rgb(', r, ',', g, ',', b, ')'].join('');
+  };
+
+  async handleSearch(evt) {
     this.setState({
       searchQuery: evt.target.value
     })
@@ -135,21 +164,33 @@ class ChannelView extends Component {
 
     const currentTrackArtist = playerState
       ? playerState.track_window.current_track.artists[0].name
-      : null
+      : null;
+
+// setting colors from the state
+    let colorScheme = this.state.colorScheme
+    let vibrant, lightVibrant, darkVibrant, muted,lightMuted, darkMuted
+    if (colorScheme.Vibrant) {
+      vibrant = colorScheme.Vibrant ? this.rgb(colorScheme.Vibrant.r, colorScheme.Vibrant.g, colorScheme.Vibrant.b) : null
+      lightVibrant = colorScheme.LightVibrant ? this.rgb(colorScheme.LightVibrant.r, colorScheme.LightVibrant.g, colorScheme.LightVibrant.b) : null
+      darkVibrant = colorScheme.DarkVibrant ? this.rgb(colorScheme.DarkVibrant.r, colorScheme.DarkVibrant.g, colorScheme.DarkVibrant.b) : null
+      muted = colorScheme.Muted ? this.rgb(colorScheme.Muted.r, colorScheme.Muted.g, colorScheme.Muted.b) : null
+      lightMuted = colorScheme.LightMuted ? this.rgb(colorScheme.LightMuted.r, colorScheme.LightMuted.g, colorScheme.LightMuted.b) : null
+      darkMuted = colorScheme.DarkMuted ? this.rgb(colorScheme.DarkMuted.r, colorScheme.DarkMuted.g, colorScheme.DarkMuted.b) : null
+    }
+    
+    let secondaryTextColor = lightVibrant ? lightVibrant : lightMuted ? lightMuted : "rgb(230,230,230)"
+    let primaryTextColor = vibrant ? vibrant : muted ? muted : "rgb(120,120,120)"
+    let audioVizColors = [secondaryTextColor, primaryTextColor]
+
     return (
-      <div
-        style={{ paddingBottom: '80px' }}
-        className='channelview uk-width-1-1 uk-container uk-container-expand'
-      >
+      <div className="channelview uk-width-1-1 uk-container uk-container-expand" style={{paddingBottom: '80px'}}>
         <div>
           <div align='center'>
             <br />
-            <h2 style={{ marginTop: '100px' }}>
-              {this.state.channelDetails.name}
-            </h2>
+            <h2 style={{marginTop: '100px'}}>{this.state.channelDetails.name}</h2>
             <p>{this.state.channelDetails.description}</p>
           </div>
-          <div uk-grid='true'>
+          <div uk-grid="true">
             <img
               style={{ objectFit: 'cover' }}
               className='uk-align-center album-img'
@@ -174,33 +215,18 @@ class ChannelView extends Component {
               />
             </div>
             <div
-              style={{
-                fontFamily: 'Tajawal',
-                fontWeight: '700',
-                color: 'rgb(0, 0, 0)'
-              }}
-              className='uk-text-large'
+              style={{fontFamily: 'Tajawal',
+              fontWeight: '700',}}
+              className="uk-text-large"
             >
               {currentTrackName}
             </div>
-            <div
-              style={{
-                fontSize: '20px',
+            <div style={{fontSize: '20px',
                 fontFamily: 'Tajawal',
-                fontWeight: '500'
-              }}
-            >
-              By: {currentTrackArtist}
-            </div>
-            <div
-              style={{
-                fontSize: '20px',
+                fontWeight: '500'}}>By {currentTrackArtist}</div>
+            <div style={{fontSize: '20px',
                 fontFamily: 'Tajawal',
-                fontWeight: '700'
-              }}
-            >
-              Album: {currentTrackAlbum}
-            </div>
+                fontWeight: '700'}}>{currentTrackAlbum}</div>
             <br />
 
             {this.state.channelDetails.isSuggestable ? (
@@ -267,7 +293,7 @@ class ChannelView extends Component {
             <br />
             <hr />
 
-            <p style={{ fontWeight: '700', marginBottom: '-30px' }}>
+            <p style={{ fontWeight: '700', marginBottom: '-30px'}}>
               LISTENERS:
             </p>
             <h4 style={{ color: 'red', fontWeight: '700' }}>
@@ -337,6 +363,7 @@ class ChannelView extends Component {
           socket={this.socket}
           channelId={this.props.match.params.id}
           clearVotes={this.clearVotes}
+          audioVizColors={audioVizColors}
         />
       </div>
     )
